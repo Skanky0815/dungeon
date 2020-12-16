@@ -1,0 +1,29 @@
+{
+  "key": "wood_2",
+  "text": "Vor dir taucht ein %s auf, was möchtest du tun?",
+  "npc": "Eber",
+  "commands": [
+    {
+      "key": "npc_status_wood_2",
+      "command": "npc_status"
+    },
+    {
+      "key": "fight_wood_2",
+      "command": "fight",
+      "failure": {
+        "action": "wood_2",
+        "text": "{0} schlägt daneben."
+      }
+    },
+    {
+      "key": "go_back_wood_2",
+      "command": "go",
+      "text": "Weg laufen.",
+      "do_text": "{0} dreht sich um und rennt weg.",
+      "success": {
+        "action": "wood_1",
+        "text": "{0} rennt so schnell er kann und entkommt dem Gegner."
+      }
+    }
+  ]
+}

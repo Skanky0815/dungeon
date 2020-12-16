@@ -1,0 +1,33 @@
+{
+  "key": "wood_3",
+  "text": "{0} get durch durch den Wald als vor ihm der Weg von einem umgestürtzten Baum versperrt wird, was wird er tun?",
+  "npc": null,
+  "commands": [
+    {
+      "key": "attribute_test_wood_3",
+      "command": "attribute_test",
+      "attribute": "agility",
+      "modifier": 0,
+      "text": "Versuchen über den Baum zu klettern.",
+      "do_text": "{0} versucht über den Baum zu klettern.",
+      "success": {
+        "action": "wood_2",
+        "text": "{0} ist über den Baum geklettert und geht tiefer in den Wald."
+      },
+      "failure": {
+        "action": "wood_3",
+        "text": "{0} versucht über den Baum zu klettern, schaft es jedoch nicht und muss umkehren."
+      }
+    },
+    {
+      "key": "go_back_wood_3",
+      "command": "go",
+      "text": "Zurück gehen",
+      "do_text": "{0} geht wieder zurück.",
+      "success": {
+        "action": "wood_1",
+        "text": "{0} dreht sich um und geht den Weg zueück, welchen er gekommen ist."
+      }
+    }
+  ]
+}

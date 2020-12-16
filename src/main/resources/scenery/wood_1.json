@@ -1,0 +1,27 @@
+{
+  "key": "wood_1",
+  "text": "Du gehst durch einen herbstlichen Mischwald, was möchtest du tun?",
+  "npc": null,
+  "commands": [
+    {
+      "key": "go_deeper_wood_1",
+      "command": "go",
+      "text": "Tiefer in den Wald gehen",
+      "do_text": "{0} geht tiefer in den Wald hinein.",
+      "success": {
+        "action": "wood_3",
+        "text": "{0} geht tiefer in den Wald hinein."
+      }
+    },
+    {
+      "key": "go_back_wood_1",
+      "command": "go",
+      "text": "Zurück gehen",
+      "do_text": "{0} geht wieder zurück.",
+      "success": {
+        "action": "wood_1",
+        "text": "{0} dreht sich um und geht den Weg zurück, welchen er gekommen ist."
+      }
+    }
+  ]
+}
