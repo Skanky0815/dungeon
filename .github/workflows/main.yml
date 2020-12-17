@@ -18,6 +18,3 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Run tests with Maven
         run: mvn -B test --file pom.xml
-      - name: JUnit Report
-        uses: mikepenz/action-junit-report@v1.1.1
-
