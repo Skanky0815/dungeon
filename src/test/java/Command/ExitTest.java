@@ -1,13 +1,14 @@
 package Command;
 
+import com.ginsberg.junit.exit.ExpectSystemExit;
 import org.junit.jupiter.api.Test;
 
 public class ExitTest {
 
     @Test
-    void Should() {
-        final var exist = new Exit();
-
-
+    @ExpectSystemExit
+    void doActionShouldExitTheGame() {
+        final var exist = new Exit("Bye Bye", "und weg");
+        exist.doAction();
     }
 }
