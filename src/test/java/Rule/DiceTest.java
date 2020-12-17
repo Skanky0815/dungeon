@@ -1,6 +1,5 @@
-package Character.Rule;
+package Rule;
 
-import Rule.Dice;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;

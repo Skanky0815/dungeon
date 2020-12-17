@@ -2,7 +2,7 @@ package Character.Enemy;
 
 import Rule.Damage;
 
-public class Behavior {
+final public class Behavior {
 
     final private String text;
     final private int min;

@@ -1,6 +1,5 @@
-package Character.Rule;
+package Rule;
 
-import Rule.TestResult;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;

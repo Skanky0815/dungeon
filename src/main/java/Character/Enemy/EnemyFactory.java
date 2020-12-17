@@ -1,6 +1,7 @@
 package Character.Enemy;
 
 import Character.Property.Dodge;
+import Rule.Damage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
@@ -9,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EnemyFactory {
+final public class EnemyFactory {
 
     private final ObjectMapper mapper = new ObjectMapper();
 
@@ -28,14 +29,35 @@ public class EnemyFactory {
 
     private List<Behavior> createBehaviorList(List<Map> behaviorListData) throws Exception {
         final var behaviorList = new ArrayList<Behavior>();
-        for (Map behaviorData : behaviorListData) {
-            behaviorList.add(new Behavior(
-                    (String) behaviorData.get("text"),
-                    (int) behaviorData.get("min"),
-                    (int) behaviorData.get("max"))
-            );
+        for (var behaviorData : behaviorListData) {
+           behaviorList.add(createBehavior(behaviorData));
         }
         return behaviorList;
+    }
+
+    private Behavior createBehavior(final Map<String, Object> behaviorData) {
+        if (behaviorData.get("damage") != null) {
+           return new Behavior(
+                    (String) behaviorData.get("text"),
+                    (int) behaviorData.get("min"),
+                    (int) behaviorData.get("max"),
+                    createDamage((Map) behaviorData.get("damage"))
+            );
+        }
+
+        return new Behavior(
+                (String) behaviorData.get("text"),
+                (int) behaviorData.get("min"),
+                (int) behaviorData.get("max")
+        );
+    }
+
+    private Damage createDamage(final Map<String, Object> damageData) {
+        return new Damage(
+                (int) damageData.get("diceCount"),
+                (int) damageData.get("diceType"),
+                (int) damageData.get("modifier")
+        );
     }
 
     private Map loadData(final String name) throws Exception {
