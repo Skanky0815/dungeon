@@ -17,6 +17,10 @@ public class Property {
         return value;
     }
 
+    public String toString() {
+        return value + (0 == modifier ? "" : " (+" + modifier + ")");
+    }
+
     public int getModifier() {
         return modifier;
     }

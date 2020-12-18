@@ -5,11 +5,11 @@ import de.dungeon.game.character.property.Magic;
 import de.dungeon.game.character.property.Melee;
 import de.dungeon.game.character.property.Range;
 
-final public class Player extends Character {
+public final class Player extends Character {
 
-    final private Melee melee;
-    final private Range range;
-    final private Magic magic;
+    private final Melee melee;
+    private final Range range;
+    private final Magic magic;
 
     public Player(String name, Melee melee, Range range, Magic magic, Dodge dodge, int armor) {
         super(name, 40, armor, dodge);

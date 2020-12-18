@@ -2,9 +2,9 @@ package de.dungeon.game.command;
 
 import de.dungeon.game.character.enemy.Enemy;
 
-abstract public class EnemyCommand extends Command {
+public abstract class EnemyCommand extends Command {
 
-    final protected Enemy enemy;
+    protected final Enemy enemy;
 
     public EnemyCommand(final String text, final String doText, final Enemy enemy) {
         super(text, doText);

@@ -6,9 +6,9 @@ import java.util.Map;
 
 public class Action {
 
-    final private String key;
-    final private FrontController controller;
-    final private String text;
+    private final String key;
+    private final FrontController controller;
+    private final String text;
     private Map<String, Command> commands;
     private Enemy enemy;
 

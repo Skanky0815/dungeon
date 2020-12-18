@@ -4,11 +4,11 @@ import de.dungeon.game.character.property.Dodge;
 
 public class Character {
 
-    final private String name;
-    final private int maxHealth;
+    private final String name;
+    private final int maxHealth;
     private int health;
-    final private int armor;
-    final private Dodge dodge;
+    private final int armor;
+    private final Dodge dodge;
 
     public Character(final String name, final int health, final int armor, final Dodge dodge) {
         this.name = name;

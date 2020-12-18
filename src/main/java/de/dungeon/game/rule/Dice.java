@@ -2,9 +2,9 @@ package de.dungeon.game.rule;
 
 import java.util.Random;
 
-final public class Dice {
+public final class Dice {
 
-    final private static Random random = new Random();
+    private final static Random random = new Random();
 
     public static int rollD6() {
         return random.nextInt((6 - 1)) + 1;

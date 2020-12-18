@@ -2,12 +2,12 @@ package de.dungeon.game.character.enemy;
 
 import de.dungeon.game.rule.Damage;
 
-final public class Behavior {
+public final class Behavior {
 
-    final private String text;
-    final private int min;
-    final private int max;
-    final private Damage damage;
+    private final String text;
+    private final int min;
+    private final int max;
+    private final Damage damage;
 
     public Behavior(final String text, final int min, final int max) {
       this(text, min, max, null);

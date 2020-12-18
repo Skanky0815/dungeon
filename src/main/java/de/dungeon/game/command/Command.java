@@ -11,6 +11,10 @@ abstract class Command {
         this.doText = doText;
     }
 
+    public Command(final String text) {
+        this(text, "");
+    }
+
     public void setSuccessAction(final Action successAction) {
         this.successAction = successAction;
     }
