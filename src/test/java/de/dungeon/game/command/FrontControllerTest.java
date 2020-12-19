@@ -1,6 +1,6 @@
 package de.dungeon.game.command;
 
-import de.dungeon.game.command.FrontController;
+import de.dungeon.game.FrontController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

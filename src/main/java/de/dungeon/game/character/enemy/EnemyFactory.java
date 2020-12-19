@@ -14,6 +14,7 @@ final public class EnemyFactory {
 
     private final ObjectMapper mapper = new ObjectMapper();
 
+    @SuppressWarnings (value="unchecked")
     public Enemy create(final String name) throws Exception {
         final var result = loadData(name);
 
@@ -35,7 +36,7 @@ final public class EnemyFactory {
         return behaviorList;
     }
 
-    private Behavior createBehavior(final Map<String, Object> behaviorData) {
+    private Behavior createBehavior(final Map behaviorData) {
         if (behaviorData.get("damage") != null) {
            return new Behavior(
                     (String) behaviorData.get("text"),
@@ -52,7 +53,7 @@ final public class EnemyFactory {
         );
     }
 
-    private Damage createDamage(final Map<String, Object> damageData) {
+    private Damage createDamage(final Map damageData) {
         return new Damage(
                 (int) damageData.get("diceCount"),
                 (int) damageData.get("diceType"),

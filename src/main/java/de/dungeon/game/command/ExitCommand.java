@@ -2,8 +2,8 @@ package de.dungeon.game.command;
 
 public class ExitCommand extends Command {
 
-    public ExitCommand(String text, String doText) {
-        super(text, doText);
+    public ExitCommand() {
+        super("Beenden");
     }
 
     @Override

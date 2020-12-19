@@ -16,6 +16,8 @@ public final class Player extends Character {
         this.melee = melee;
         this.range = range;
         this.magic = magic;
+
+        // TODO: add skills
     }
 
     public Melee getMelee() {

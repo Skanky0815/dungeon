@@ -1,8 +1,12 @@
 package de.dungeon.game.command;
 
-abstract class Command {
-    final private String text;
-    final private String doText;
+import de.dungeon.game.Action;
+
+public abstract class Command {
+    private final String text;
+    private final String doText;
+    private String successText;
+    private String failureText;
     private Action successAction;
     private Action failureAction;
 
@@ -15,27 +19,36 @@ abstract class Command {
         this(text, "");
     }
 
-    public void setSuccessAction(final Action successAction) {
-        this.successAction = successAction;
+    public void setSuccessAction(final Action action, final String text) {
+        this.successAction = action;
+        this.successText = text;
     }
 
-    public void setFailureAction(final Action failureAction) {
-        this.failureAction = failureAction;
+    public void setFailureAction(final Action action, final String text) {
+        this.failureAction = action;
+        this.failureText = text;
+    }
+
+    public String getText() {
+        return text;
     }
 
     public boolean doAction() {
+        System.out.println(doText);
         if (doing()) {
-            if (null == successAction) {
-                return true;
-            }
-            return successAction.run();
+            return handleAction(successText, successAction);
         }
 
-        if (null == failureAction) {
-            return false;
-        }
-        return failureAction.run();
+        return handleAction(failureText, failureAction);
     }
 
-    abstract protected boolean doing();
+    protected abstract boolean doing();
+
+    private boolean handleAction(final String text, final Action action) {
+        System.out.println(text);
+        if (null != action) {
+            action.run();
+        }
+        return true;
+    }
 }

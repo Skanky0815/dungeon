@@ -8,7 +8,7 @@ public class ExitCommandTest {
     @Test
     @ExpectSystemExit
     void doActionShouldExitTheGame() {
-        final var exist = new ExitCommand("Bye Bye", "und weg");
+        final var exist = new ExitCommand();
         exist.doAction();
     }
 }

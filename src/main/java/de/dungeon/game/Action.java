@@ -1,15 +1,16 @@
-package de.dungeon.game.command;
+package de.dungeon.game;
 
 import de.dungeon.game.character.enemy.Enemy;
+import de.dungeon.game.command.Command;
 
-import java.util.Map;
+import java.util.List;
 
 public class Action {
 
     private final String key;
     private final FrontController controller;
     private final String text;
-    private Map<String, Command> commands;
+    private List<Command> commands;
     private Enemy enemy;
 
     public Action(final String key, final FrontController controller, final String text) {
@@ -22,13 +23,23 @@ public class Action {
             final String key,
             final FrontController controller,
             final String text,
-            final Map<String, Command> commands
+            final List<Command> commands,
+            final Enemy enemy
     ) {
         this(key, controller, text);
         this.commands = commands;
+        this.enemy = enemy;
     }
 
-    public boolean run() {
-        return true;
+    public void run() {
+        var question = new StringBuilder((null == enemy ? text : text.formatted(enemy.getName())));
+        int key = 0;
+        for (Command command : commands) {
+            question.append("[%d] %s\n".formatted(key++, command.getText()));
+        }
+
+        if (!controller.action(question)) {
+            run();
+        }
     }
 }
