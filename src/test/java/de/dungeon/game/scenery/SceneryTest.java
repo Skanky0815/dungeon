@@ -1,9 +1,8 @@
-package de.dungeon.game;
+package de.dungeon.game.scenery;
 
+import de.dungeon.game.FrontController;
 import de.dungeon.game.character.enemy.Enemy;
 import de.dungeon.game.command.Command;
-import de.dungeon.game.scenery.Scenery;
-import de.dungeon.game.scenery.SceneryCallback;
 import de.dungeon.game.view.ViewTestCase;
 import org.junit.jupiter.api.Test;
 import org.mockito.stubbing.Answer;
