@@ -6,7 +6,7 @@ public class PlayerStatusView implements View {
 
     private Player player;
 
-    public void setPlayer(Player player) {
+    public void setPlayer(final Player player) {
         this.player = player;
     }
 
