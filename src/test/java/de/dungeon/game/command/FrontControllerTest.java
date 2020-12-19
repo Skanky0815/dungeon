@@ -12,7 +12,7 @@ public class FrontControllerTest {
 
     @BeforeEach
     void setUp() {
-        controller = new FrontController();
+        controller = new FrontController(new ExitCommand());
     }
 
     @Test

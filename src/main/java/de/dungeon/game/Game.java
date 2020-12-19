@@ -11,8 +11,8 @@ public class Game {
     private final Injector injector;
 
     public Game() {
-        controller = new FrontController();
         injector = Guice.createInjector();
+        controller = injector.getInstance(FrontController.class);
     }
 
     public static void main(String[] args) {
@@ -21,8 +21,7 @@ public class Game {
     }
 
     private void run() {
-        var text = new StringBuilder("Willkommen im Dungeon!\nWie willst du heißen?\n");
-        controller.action(text, this::createPlayerAndStartTheGame);
+        controller.action("Willkommen im Dungeon!\nWie willst du heißen?\n", this::createPlayerAndStartTheGame);
     }
 
     private void createPlayerAndStartTheGame(final String name) {

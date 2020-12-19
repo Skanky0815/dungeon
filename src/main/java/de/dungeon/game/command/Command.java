@@ -1,14 +1,14 @@
 package de.dungeon.game.command;
 
-import de.dungeon.game.Action;
+import de.dungeon.game.scenery.Scenery;
 
 public abstract class Command {
     private final String text;
     private final String doText;
     private String successText;
     private String failureText;
-    private Action successAction;
-    private Action failureAction;
+    private Scenery successAction;
+    private Scenery failureAction;
 
     public Command(final String text, final String doText) {
         this.text = text;
@@ -19,12 +19,12 @@ public abstract class Command {
         this(text, "");
     }
 
-    public void setSuccessAction(final Action action, final String text) {
+    public void setSuccessAction(final Scenery action, final String text) {
         this.successAction = action;
         this.successText = text;
     }
 
-    public void setFailureAction(final Action action, final String text) {
+    public void setFailureAction(final Scenery action, final String text) {
         this.failureAction = action;
         this.failureText = text;
     }
@@ -44,7 +44,7 @@ public abstract class Command {
 
     protected abstract boolean doing();
 
-    private boolean handleAction(final String text, final Action action) {
+    private boolean handleAction(final String text, final Scenery action) {
         System.out.println(text);
         if (null != action) {
             action.run();

@@ -1,7 +1,9 @@
 package de.dungeon.game;
 
+import com.google.inject.Inject;
 import de.dungeon.game.command.Command;
 import de.dungeon.game.command.ExitCommand;
+import de.dungeon.game.scenery.SceneryCallback;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,9 +16,10 @@ public class FrontController {
     private final Map<String, Command> commands;
     private final BufferedReader reader;
 
-    public FrontController() {
+    @Inject
+    public FrontController(final ExitCommand exitCommand) {
         commands = new HashMap<>() {{
-            put("x", new ExitCommand());
+            put("x", exitCommand);
         }};
 
         reader = new BufferedReader(new InputStreamReader(System.in));
@@ -26,14 +29,8 @@ public class FrontController {
         commands.put(key, command);
     }
 
-    public boolean action(StringBuilder text) {
-        return this.action(text, null);
-    }
-
-    public boolean action(StringBuilder text, ActionCallback callback) {
-        text.append(setupCommands());
-
-        System.out.println(text);
+    public boolean action(final String text, final SceneryCallback callback) {
+        System.out.println(text + setupCommands());
         final String input;
         try {
             input = reader.readLine();
