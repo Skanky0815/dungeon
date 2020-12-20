@@ -20,6 +20,14 @@ public final class Behavior {
         this.damage = damage;
     }
 
+    public int getMin() {
+        return min;
+    }
+
+    public int getMax() {
+        return max;
+    }
+
     public Damage getDamage() {
         return damage;
     }

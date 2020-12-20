@@ -5,6 +5,7 @@ import com.google.inject.Singleton;
 import de.dungeon.game.character.Player;
 import de.dungeon.game.character.enemy.Enemy;
 import de.dungeon.game.character.property.Property;
+import de.dungeon.game.view.EnemyStatusView;
 
 import java.util.Map;
 
@@ -40,7 +41,7 @@ public class CommandFactory {
     }
 
     private Command createEnemyStatusCommand(final Enemy enemy) {
-        return new EnemyStatusCommand(enemy);
+        return new EnemyStatusCommand(enemy, new EnemyStatusView());
     }
 
     private Command createAttributeTestCommand(final Map<String, Object> commandData) {

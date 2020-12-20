@@ -35,7 +35,7 @@ public class Scenery {
     }
 
     public void run() throws Exception {
-        var text = new StringBuffer((null == enemy ? this.text : this.text.formatted(enemy.getName()))).append("\n");
+        final var text = new StringBuffer((null == enemy ? this.text : this.text.formatted(enemy.getName()))).append("\n");
         addCommands(text);
 
         if (!controller.action(text.toString(), this::callback)) {

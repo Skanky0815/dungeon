@@ -33,6 +33,11 @@ public class PlayerBuilder {
         return new PlayerBuilder(name, melee, range, magic, dodge);
     }
 
+    public PlayerBuilder withRangeModifier(final int modifier) {
+        this.range.setModifier(modifier);
+        return this;
+    }
+
     public Player get() {
         return new Player(name, melee, range, magic, dodge, armor);
     }

@@ -27,6 +27,10 @@ final public class Enemy extends Character  {
         return actions;
     }
 
+    public List<Behavior> getBehaviorList() {
+        return behaviorList;
+    }
+
     public Behavior getBehavior(final int value) {
         return (Behavior) behaviorList.stream().filter(behavior -> behavior.isInRange(value)).toArray()[0];
     }

@@ -32,6 +32,6 @@ public class PlayerStatusView implements View {
                     player.getArmor()
             );
 
-        System.out.println(status);
+        System.out.print(status);
     }
 }
