@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class EnemyTest {
 
@@ -25,7 +25,18 @@ public class EnemyTest {
     }
 
     @Test
-    void getBehaviorShouldReturnTheBBehaviorInRange() {
+    void getBehaviorShouldReturnTheBehaviorInRange() {
         assertEquals("b", enemy.getBehavior(7).getText());
+    }
+
+    @Test
+    void isAliveShouldTrueIfEnemyHastMoreThen0Health() {
+        assertTrue(enemy.isAlive());
+    }
+
+    @Test
+    void isAliveShouldFalseIfEnemyIsDead() {
+        enemy.takeDamage(16);
+        assertFalse(enemy.isAlive());
     }
 }

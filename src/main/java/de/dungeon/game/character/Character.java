@@ -40,4 +40,8 @@ public class Character {
     public Dodge getDodge() {
         return dodge;
     }
+
+    public boolean isAlive() {
+        return health > 0;
+    }
 }
