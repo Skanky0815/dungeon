@@ -19,13 +19,13 @@ public class CommandFactory {
         this.player = player;
     }
 
-    public Command create(final Map<String, Object> commandData, final Enemy enemy) {
+    public Command create(final Map<String, Object> commandData, final Enemy enemy) throws CommandException {
         return switch ((String) commandData.get("command")) {
             case "npc_status" -> createEnemyStatusCommand(enemy);
             case "go" -> createGoCommand(commandData);
             case "attribute_test" -> createAttributeTestCommand(commandData);
             case "fight" -> createFightCommand(enemy);
-            default -> null;
+            default -> throw new UnknownCommandException((String) commandData.get("command"));
         };
     }
 
@@ -44,13 +44,13 @@ public class CommandFactory {
         return new EnemyStatusCommand(enemy, new EnemyStatusView());
     }
 
-    private Command createAttributeTestCommand(final Map<String, Object> commandData) {
-        Property property = switch ((String) commandData.get("attribute")) {
+    private Command createAttributeTestCommand(final Map<String, Object> commandData) throws CommandException {
+        final Property property = switch ((String) commandData.get("attribute")) {
             case "melee" -> player.getMelee();
             case "range" -> player.getRange();
             case "magic" -> player.getMagic();
             case "dodge" -> player.getDodge();
-            default -> null;
+            default -> throw new UnknownPropertyException((String) commandData.get("attribute"));
         };
 
         return new AttributeTestCommand(
