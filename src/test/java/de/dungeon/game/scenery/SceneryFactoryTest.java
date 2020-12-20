@@ -13,7 +13,7 @@ public class SceneryFactoryTest {
 
     @Test
     void initShouldWork() throws Exception {
-        final var player = (new PlayerBuilder()).build("Ruhindil", 1, 1, 1, 1).get();
+        final var player = PlayerBuilder.build("Ruhindil", 1, 1, 1, 1).get();
         final var controller = mock(FrontController.class);
         final var enemyFactory = mock(EnemyFactory.class);
         final var commandFactory = mock(CommandFactory.class);

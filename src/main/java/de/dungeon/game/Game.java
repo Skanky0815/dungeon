@@ -41,7 +41,7 @@ public class Game extends AbstractModule {
     }
 
     private void createPlayerAndStartTheGame(final String name) throws Exception {
-        player = (new PlayerBuilder()).build(name, 14, 8, 0, 5).get();
+        player = PlayerBuilder.build(name, 14, 8, 0, 5).get();
         System.out.printf("Du bist der %s. Viel Spaß beim spielen.\n\n", player.getName());
         controller.addCommand("c", injector.getInstance(PlayerStatusCommand.class));
         final var sceneryFactory = injector.getInstance(SceneryFactory.class);
