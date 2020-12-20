@@ -1,9 +1,10 @@
 package de.dungeon.game.command;
 
 import com.google.inject.Inject;
-import de.dungeon.game.character.Player;
+import com.google.inject.Singleton;
 import de.dungeon.game.view.PlayerStatusView;
 
+@Singleton
 public class PlayerStatusCommand extends Command {
 
     private final PlayerStatusView view;
@@ -12,10 +13,6 @@ public class PlayerStatusCommand extends Command {
     public PlayerStatusCommand(final PlayerStatusView view) {
         super("Charakterbogen");
         this.view = view;
-    }
-
-    public void setPlayer(final Player player) {
-        this.view.setPlayer(player);
     }
 
     @Override

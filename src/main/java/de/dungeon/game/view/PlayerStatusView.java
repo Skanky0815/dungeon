@@ -1,12 +1,16 @@
 package de.dungeon.game.view;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import de.dungeon.game.character.Player;
 
+@Singleton
 public class PlayerStatusView implements View {
 
-    private Player player;
+    private final Player player;
 
-    public void setPlayer(final Player player) {
+    @Inject
+    public PlayerStatusView(final Player player) {
         this.player = player;
     }
 

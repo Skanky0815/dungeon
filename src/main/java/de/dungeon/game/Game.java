@@ -1,42 +1,57 @@
 package de.dungeon.game;
 
+import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import de.dungeon.game.character.Player;
 import de.dungeon.game.character.PlayerBuilder;
 import de.dungeon.game.command.PlayerStatusCommand;
+import de.dungeon.game.scenery.Scenery;
+import de.dungeon.game.scenery.SceneryFactory;
 
-public class Game {
+public class Game extends AbstractModule {
 
     private final FrontController controller;
     private final Injector injector;
+    private Player player;
 
     public Game() {
-        injector = Guice.createInjector();
+        injector = Guice.createInjector(this);
         controller = injector.getInstance(FrontController.class);
     }
 
-    public static void main(String[] args) {
-        final var game = new Game();
-        game.run();
+    @Override
+    protected void configure() {
+        bind(Player.class).toProvider(() -> player);
     }
 
-    private void run() {
+    public static void main(final String[] args) {
+        final var game = new Game();
+
+        try {
+            game.run();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }
+
+    private void run() throws Exception {
         controller.action("Willkommen im Dungeon!\nWie willst du heißen?\n", this::createPlayerAndStartTheGame);
     }
 
-    private void createPlayerAndStartTheGame(final String name) {
-        final var playerBuilder = new PlayerBuilder();
-        final var player = playerBuilder.build(name, 14, 8, 0, 5).get();
+    private void createPlayerAndStartTheGame(final String name) throws Exception {
+        player = (new PlayerBuilder()).build(name, 14, 8, 0, 5).get();
         System.out.printf("Du bist der %s. Viel Spaß beim spielen.\n\n", player.getName());
-
-        final var playerStatusCommand = injector.getInstance(PlayerStatusCommand.class);
-        playerStatusCommand.setPlayer(player);
-
-        controller.addCommand("c", playerStatusCommand);
-        /*
-        command_factory: CommandFactory = CommandFactory(self.__player, self.__test)
-        action_factory: ActionFactory = ActionFactory(self.__player, self.__controller, command_factory)
-        action_factory.start()
-         */
+        controller.addCommand("c", injector.getInstance(PlayerStatusCommand.class));
+        final var sceneryFactory = injector.getInstance(SceneryFactory.class);
+        final var sceneries = sceneryFactory.init();
+        var index = (int) (Math.random() * sceneries.size());
+        for (Scenery scenery : sceneries.values()) {
+            if (--index < 0) {
+                scenery.run();
+                return;
+            }
+        };
     }
 }

@@ -34,7 +34,7 @@ public class Scenery {
         this.enemy = enemy;
     }
 
-    public void run() {
+    public void run() throws Exception {
         var text = new StringBuffer((null == enemy ? this.text : this.text.formatted(enemy.getName()))).append("\n");
         addCommands(text);
 
@@ -43,7 +43,7 @@ public class Scenery {
         }
     }
 
-    private void callback(final String input) {
+    private void callback(final String input) throws Exception {
         final var index = Integer.parseInt(input);
         if (index < 0 || index >= commands.size()) {
             System.out.printf("No option found for number %d\n", index);

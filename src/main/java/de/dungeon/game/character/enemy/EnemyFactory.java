@@ -1,5 +1,6 @@
 package de.dungeon.game.character.enemy;
 
+import com.google.inject.Singleton;
 import de.dungeon.game.character.property.Dodge;
 import de.dungeon.game.rule.Damage;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,7 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-final public class EnemyFactory {
+@Singleton
+public class EnemyFactory {
 
     private final ObjectMapper mapper = new ObjectMapper();
 
@@ -28,7 +30,7 @@ final public class EnemyFactory {
         );
     }
 
-    private List<Behavior> createBehaviorList(List<Map> behaviorListData) throws Exception {
+    private List<Behavior> createBehaviorList(List<Map> behaviorListData) {
         final var behaviorList = new ArrayList<Behavior>();
         for (var behaviorData : behaviorListData) {
            behaviorList.add(createBehavior(behaviorData));
@@ -62,7 +64,7 @@ final public class EnemyFactory {
     }
 
     private Map loadData(final String name) throws Exception {
-        final var file = new File(getClass().getResource(String.format("/npcs/%s.json", name)).toURI());
+        final var file = new File(getClass().getResource(String.format("/npcs/%s.json", name)).getFile());
         return mapper.readValue(file, HashMap.class);
     }
 }

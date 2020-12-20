@@ -33,7 +33,7 @@ public abstract class Command {
         return text;
     }
 
-    public boolean doAction() {
+    public boolean doAction() throws Exception {
         System.out.println(doText);
         if (doing()) {
             return handleAction(successText, successAction);
@@ -44,7 +44,7 @@ public abstract class Command {
 
     protected abstract boolean doing();
 
-    private boolean handleAction(final String text, final Scenery action) {
+    private boolean handleAction(final String text, final Scenery action) throws Exception {
         System.out.println(text);
         if (null != action) {
             action.run();

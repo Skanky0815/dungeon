@@ -7,7 +7,7 @@ public class ExitCommandTest {
 
     @Test
     @ExpectSystemExit
-    void doActionShouldExitTheGame() {
+    void doActionShouldExitTheGame() throws Exception {
         final var exist = new ExitCommand();
         exist.doAction();
     }

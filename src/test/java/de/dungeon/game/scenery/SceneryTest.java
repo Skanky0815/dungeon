@@ -17,7 +17,7 @@ import static org.mockito.Mockito.*;
 public class SceneryTest extends ViewTestCase {
 
     @Test
-    void runShouldCallTheControllerWithoutCommands() {
+    void runShouldCallTheControllerWithoutCommands() throws Exception {
         final var controllerMock = mock(FrontController.class);
         when(controllerMock.action(eq("text\n"), any()))
                 .thenAnswer((Answer<Boolean>) invocation -> {
@@ -33,7 +33,7 @@ public class SceneryTest extends ViewTestCase {
     }
 
     @Test
-    void runShouldCallTheControllerWithCommandsAndEnemy() {
+    void runShouldCallTheControllerWithCommandsAndEnemy() throws Exception {
         final var controllerMock = mock(FrontController.class);
         when(controllerMock.action(eq("text enemy text\n[0] my command\n"), any()))
                 .thenAnswer((Answer<Boolean>) invocation -> {

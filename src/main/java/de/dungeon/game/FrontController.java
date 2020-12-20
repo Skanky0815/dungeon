@@ -1,6 +1,7 @@
 package de.dungeon.game;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import de.dungeon.game.command.Command;
 import de.dungeon.game.command.ExitCommand;
 import de.dungeon.game.scenery.SceneryCallback;
@@ -11,6 +12,7 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
+@Singleton
 public class FrontController {
 
     private final Map<String, Command> commands;
@@ -29,7 +31,7 @@ public class FrontController {
         commands.put(key, command);
     }
 
-    public boolean action(final String text, final SceneryCallback callback) {
+    public boolean action(final String text, final SceneryCallback callback) throws Exception {
         System.out.println(text + setupCommands());
         final String input;
         try {

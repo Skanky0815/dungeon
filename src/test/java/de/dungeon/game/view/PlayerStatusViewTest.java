@@ -23,10 +23,7 @@ public class PlayerStatusViewTest extends ViewTestCase {
                 0
         );
 
-        final var view = new PlayerStatusView();
-
-        view.setPlayer(player);
-        view.render();
+        (new PlayerStatusView(player)).render();
 
         final var output = """
             Name: Ruhindil
