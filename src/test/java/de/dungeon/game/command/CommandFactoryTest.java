@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 
+import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CommandFactoryTest {
@@ -15,12 +17,12 @@ public class CommandFactoryTest {
 
     @BeforeEach
     void setUp() {
-        final var playerSub = PlayerBuilder.build("Player a", 1, 1, 1, 1).get();
+        final var playerSub = PlayerBuilder.build("Player A", 1, 1, 1, 1).get();
         commandFactory = new CommandFactory(playerSub);
     }
 
     @Test
-    void createShouldReturnAGoCommand() throws Exception {
+    void createShouldReturnAGoCommand() {
         final var commandData = new HashMap<String, Object>() {{
             put("command", "go");
             put("text", "Command Text");
@@ -33,34 +35,42 @@ public class CommandFactoryTest {
     }
 
     @Test
-    void createShouldReturnEnemyStatusCommand() throws Exception {
+    void createShouldReturnEnemyStatusCommand() {
         final var enemyStub = new Enemy("Enemy A", 15, 0, null, 0, null);
         final var commandData = new HashMap<String, Object>() {{
             put("command", "npc_status");
         }};
 
         final var command = commandFactory.create(commandData, enemyStub);
-        assertEquals("Command Text", command.getText());
+        assertThat(command.getText(), containsString("Enemy A"));
+        assertThat(command, instanceOf(EnemyCommand.class));
     }
 
     @Test
-    void createShouldReturnAttributeTestCommand() throws Exception {
+    void createShouldReturnAttributeTestCommand() {
         final var commandData = new HashMap<String, Object>() {{
             put("command", "attribute_test");
+            put("attribute", "agility");
+            put("modifier", 5);
+            put("text", "Command %s Text");
+            put("do_text", "%s do Text");
+            put("success", new HashMap<String, String>());
+            put("failure", new HashMap<String, String>());
         }};
 
         final var command = commandFactory.create(commandData, null);
-        assertEquals("Command Text", command.getText());
+        assertEquals("Command Player A Text", command.getText());
+        assertThat(command, instanceOf(AttributeTestCommand.class));
     }
 
     @Test
-    void createShouldReturnFightCommand() throws Exception {
+    void createShouldReturnFightCommand() {
         final var enemyStub = new Enemy("Enemy A", 15, 0, null, 0, null);
         final var commandData = new HashMap<String, Object>() {{
             put("command", "fight");
         }};
 
         final var command = commandFactory.create(commandData, enemyStub);
-        assertEquals("Command Text", command.getText());
+        assertThat(command, instanceOf(FightCommand.class));
     }
 }

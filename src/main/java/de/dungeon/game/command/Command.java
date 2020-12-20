@@ -34,7 +34,10 @@ public abstract class Command {
     }
 
     public boolean doAction() throws Exception {
-        System.out.println(doText);
+        if (null != doText) {
+            System.out.println(doText);
+        }
+
         if (doing()) {
             return handleAction(successText, successAction);
         }

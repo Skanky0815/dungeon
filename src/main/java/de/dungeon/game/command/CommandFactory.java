@@ -4,10 +4,9 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import de.dungeon.game.character.Player;
 import de.dungeon.game.character.enemy.Enemy;
+import de.dungeon.game.character.property.Property;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 @Singleton
 public class CommandFactory {
@@ -19,13 +18,14 @@ public class CommandFactory {
         this.player = player;
     }
 
-    public Command create(final Map<String, Object> commandData, final Enemy enemy) throws Exception {
-        return new HashMap<String, Callable<Command>>() {{
-            put("npc_status", () -> createEnemyStatusCommand(enemy));
-            put("go", () -> createGoCommand(commandData));
-            put("attribute_test", () -> null);
-            put("fight", () -> null);
-        }}.get(commandData.get("command")).call();
+    public Command create(final Map<String, Object> commandData, final Enemy enemy) {
+        return switch ((String) commandData.get("command")) {
+            case "npc_status" -> createEnemyStatusCommand(enemy);
+            case "go" -> createGoCommand(commandData);
+            case "attribute_test" -> createAttributeTestCommand(commandData);
+            case "fight" -> createFightCommand(enemy);
+            default -> null;
+        };
     }
 
     private Command createGoCommand(final Map<String, Object> commandData) {
@@ -40,11 +40,27 @@ public class CommandFactory {
     }
 
     private Command createEnemyStatusCommand(final Enemy enemy) {
-        return new Command("w") {
-            @Override
-            protected boolean doing() {
-                return false;
-            }
+        return new EnemyStatusCommand(enemy);
+    }
+
+    private Command createAttributeTestCommand(final Map<String, Object> commandData) {
+        Property property = switch ((String) commandData.get("attribute")) {
+            case "melee" -> player.getMelee();
+            case "range" -> player.getRange();
+            case "magic" -> player.getMagic();
+            case "dodge" -> player.getDodge();
+            default -> null;
         };
+
+        return new AttributeTestCommand(
+                ((String) commandData.get("text")).formatted(player.getName()),
+                ((String) commandData.get("do_text")).formatted(player.getName()),
+                (int) commandData.get("modifier"),
+                property
+        );
+    }
+
+    private Command createFightCommand(final Enemy enemy) {
+        return new FightCommand(player, enemy);
     }
 }
