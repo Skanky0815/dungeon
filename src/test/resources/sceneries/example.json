@@ -11,7 +11,7 @@
       "key": "example_2",
       "command": "fight",
       "failure": {
-        "action": "example",
+        "action": "example_2",
         "text": "%s schlägt daneben."
       }
     },
@@ -21,7 +21,7 @@
       "text": "Weg laufen.",
       "do_text": "%s dreht sich um und rennt weg.",
       "success": {
-        "action": "example",
+        "action": "example_2",
         "text": "%s rennt so schnell er kann und entkommt dem Gegner."
       }
     }

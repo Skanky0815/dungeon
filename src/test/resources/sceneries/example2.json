@@ -1,0 +1,12 @@
+{
+  "key": "example2",
+  "text": "example 2 text",
+  "commands": [
+    {
+      "key": "example_1",
+      "command": "go",
+      "text": "example 2 command text",
+      "do_text": "%s example 2 command do text"
+    }
+  ]
+}

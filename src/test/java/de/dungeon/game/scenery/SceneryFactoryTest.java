@@ -26,8 +26,14 @@ public class SceneryFactoryTest {
                 return false;
             }
         });
+        when(commandFactory.create(any(), any())).thenReturn(new Command("") {
+            @Override
+            protected boolean doing() {
+                return false;
+            }
+        });
 
         final var sceneries = (new SceneryFactory(player, controller, enemyFactory, commandFactory)).init();
-        assertEquals(3, sceneries.size());
+        assertEquals(2, sceneries.size());
     }
 }
