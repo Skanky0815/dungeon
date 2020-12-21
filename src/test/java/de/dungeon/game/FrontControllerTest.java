@@ -1,6 +1,7 @@
-package de.dungeon.game.command;
+package de.dungeon.game;
 
 import de.dungeon.game.FrontController;
+import de.dungeon.game.command.ExitCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

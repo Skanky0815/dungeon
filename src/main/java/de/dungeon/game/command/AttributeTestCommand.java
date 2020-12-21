@@ -15,7 +15,6 @@ public class AttributeTestCommand extends Command {
 
     @Override
     protected boolean doing() {
-        final var testResult = property.test(modifier);
-        return false;
+        return property.test(modifier).isSuccess();
     }
 }

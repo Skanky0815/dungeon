@@ -1,27 +1,27 @@
 {
-  "key": "wood_2",
+  "key": "example",
   "text": "Vor dir taucht ein %s auf, was möchtest du tun?",
   "npc": "Eber",
   "commands": [
     {
-      "key": "npc_status_wood_2",
+      "key": "example_1",
       "command": "npc_status"
     },
     {
-      "key": "fight_wood_2",
+      "key": "example_2",
       "command": "fight",
       "failure": {
-        "action": "wood_2",
+        "action": "example",
         "text": "%s schlägt daneben."
       }
     },
     {
-      "key": "go_back_wood_2",
+      "key": "example_3",
       "command": "go",
       "text": "Weg laufen.",
       "do_text": "%s dreht sich um und rennt weg.",
       "success": {
-        "action": "wood_1",
+        "action": "example",
         "text": "%s rennt so schnell er kann und entkommt dem Gegner."
       }
     }

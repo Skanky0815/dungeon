@@ -7,20 +7,20 @@
       "key": "go_deeper_wood_1",
       "command": "go",
       "text": "Tiefer in den Wald gehen",
-      "do_text": "{0} geht tiefer in den Wald hinein.",
+      "do_text": "%s geht tiefer in den Wald hinein.",
       "success": {
         "action": "wood_3",
-        "text": "{0} geht tiefer in den Wald hinein."
+        "text": "%s geht tiefer in den Wald hinein."
       }
     },
     {
       "key": "go_back_wood_1",
       "command": "go",
       "text": "Zurück gehen",
-      "do_text": "{0} geht wieder zurück.",
+      "do_text": "%s geht wieder zurück.",
       "success": {
         "action": "wood_1",
-        "text": "{0} dreht sich um und geht den Weg zurück, welchen er gekommen ist."
+        "text": "%s dreht sich um und geht den Weg zurück, welchen er gekommen ist."
       }
     }
   ]
