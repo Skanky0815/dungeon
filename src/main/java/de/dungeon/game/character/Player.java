@@ -24,6 +24,10 @@ public final class Player extends Character {
         return melee;
     }
 
+    public boolean tryToDoAMeleeAttack() {
+        return melee.test().isSuccess();
+    }
+
     public Range getRange() {
         return range;
     }

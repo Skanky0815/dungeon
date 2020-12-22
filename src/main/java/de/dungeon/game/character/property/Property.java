@@ -32,4 +32,12 @@ public class Property {
     public TestResult test(final int modifier) {
         return new TestResult(Dice.rollD20(), (value + this.modifier + modifier));
     }
+
+    public TestResult test() {
+       return test(0);
+    }
+
+    public boolean isTheTestSuccessfully() {
+        return test().isSuccess();
+    }
 }

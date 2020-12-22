@@ -41,6 +41,10 @@ public class Character {
         return dodge;
     }
 
+    public boolean tryToDoge() {
+        return dodge.isTheTestSuccessfully();
+    }
+
     public boolean isAlive() {
         return health > 0;
     }
