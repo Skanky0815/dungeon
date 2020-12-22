@@ -1,7 +1,7 @@
 {
   "key": "wood_2",
   "text": "Vor dir taucht ein %s auf, was möchtest du tun?",
-  "npc": "Eber",
+  "enemy": "Eber",
   "commands": [
     {
       "key": "npc_status_wood_2",

@@ -1,12 +1,11 @@
 {
   "key": "wood_3",
   "text": "%s get durch durch den Wald als vor ihm der Weg von einem umgestürtzten Baum versperrt wird, was wird er tun?",
-  "npc": null,
   "commands": [
     {
       "key": "attribute_test_wood_3",
       "command": "attribute_test",
-      "attribute": "agility",
+      "attribute": "dodge",
       "modifier": 0,
       "text": "Versuchen über den Baum zu klettern.",
       "do_text": "%s versucht über den Baum zu klettern.",

@@ -1,7 +1,6 @@
 {
   "key": "wood_1",
   "text": "Du gehst durch einen herbstlichen Mischwald, was möchtest du tun?",
-  "npc": null,
   "commands": [
     {
       "key": "go_deeper_wood_1",

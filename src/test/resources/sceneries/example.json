@@ -1,7 +1,7 @@
 {
   "key": "example",
   "text": "Vor dir taucht ein %s auf, was möchtest du tun?",
-  "npc": "Eber",
+  "enemy": "Eber",
   "commands": [
     {
       "key": "example_1",

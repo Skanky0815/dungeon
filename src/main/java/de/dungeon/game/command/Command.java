@@ -39,19 +39,23 @@ public abstract class Command {
         }
 
         if (doing()) {
-            return handleAction(successText, successAction);
+            return handleAction(successText, successAction, true);
         }
 
-        return handleAction(failureText, failureAction);
+        return handleAction(failureText, failureAction, false);
     }
 
     protected abstract boolean doing();
 
-    private boolean handleAction(final String text, final Scenery action) throws Exception {
+    private boolean handleAction(
+            final String text,
+            final Scenery action,
+            final boolean isSuccessful
+    ) throws Exception {
         System.out.println(text);
         if (null != action) {
             action.run();
         }
-        return true;
+        return isSuccessful;
     }
 }

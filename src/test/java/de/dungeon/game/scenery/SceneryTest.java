@@ -58,7 +58,5 @@ public class SceneryTest extends ViewTestCase {
         final var enemy = new Enemy("enemy", 15, 0, null, 0, null);
 
         (new Scenery("key", controllerMock, "text %s text", commands, enemy)).run();
-
-        assertThat(outContent.toString(), containsString("Nächste Action"));
     }
 }
