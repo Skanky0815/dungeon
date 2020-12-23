@@ -1,9 +1,13 @@
 package de.dungeon.game.character;
 
+import de.dungeon.game.character.player.Weapon;
 import de.dungeon.game.character.property.Dodge;
 import de.dungeon.game.character.property.Magic;
 import de.dungeon.game.character.property.Melee;
 import de.dungeon.game.character.property.Range;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class Player extends Character {
 
@@ -11,13 +15,23 @@ public final class Player extends Character {
     private final Range range;
     private final Magic magic;
 
-    public Player(String name, Melee melee, Range range, Magic magic, Dodge dodge, int armor) {
+    private final List<Weapon> weaponList;
+
+    public Player(
+            final String name,
+            final Melee melee,
+            final Range range,
+            final Magic magic,
+            final Dodge dodge,
+            final int armor,
+            final List<Weapon> weaponList
+    ) {
         super(name, 40, armor, dodge);
         this.melee = melee;
         this.range = range;
         this.magic = magic;
 
-        // TODO: add skills
+        this.weaponList = weaponList;
     }
 
     public Melee getMelee() {
@@ -34,5 +48,9 @@ public final class Player extends Character {
 
     public Magic getMagic() {
         return magic;
+    }
+
+    public List<Weapon> getWeaponList() {
+        return weaponList;
     }
 }

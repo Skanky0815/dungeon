@@ -1,6 +1,6 @@
 package de.dungeon.game.command;
 
-import de.dungeon.game.character.PlayerBuilder;
+import de.dungeon.game.character.player.PlayerBuilder;
 import de.dungeon.game.character.enemy.Enemy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,7 +1,7 @@
 package de.dungeon.game.scenery;
 
 import de.dungeon.game.FrontController;
-import de.dungeon.game.character.PlayerBuilder;
+import de.dungeon.game.character.player.PlayerBuilder;
 import de.dungeon.game.character.enemy.Enemy;
 import de.dungeon.game.character.enemy.EnemyFactory;
 import de.dungeon.game.command.Command;

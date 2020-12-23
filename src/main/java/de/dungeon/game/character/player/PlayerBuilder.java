@@ -1,9 +1,14 @@
-package de.dungeon.game.character;
+package de.dungeon.game.character.player;
 
+import de.dungeon.game.character.Player;
 import de.dungeon.game.character.property.Dodge;
 import de.dungeon.game.character.property.Magic;
 import de.dungeon.game.character.property.Melee;
 import de.dungeon.game.character.property.Range;
+import de.dungeon.game.rule.Damage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerBuilder {
 
@@ -13,6 +18,7 @@ public class PlayerBuilder {
     private final Magic magic;
     private final Dodge dodge;
     private final int armor;
+    private final List<Weapon> weaponList;
 
     private PlayerBuilder(final String name, final int melee, final int range, final int magic, final int dodge) {
         this.name = name;
@@ -21,6 +27,9 @@ public class PlayerBuilder {
         this.magic = new Magic(magic, 0);
         this.dodge = new Dodge(dodge, 0);
         this.armor = 0;
+        this.weaponList = new ArrayList<>() {{
+            add(new Weapon("Axt", new Damage(1, 6, 0), Melee.class));
+        }};
     }
 
     public static PlayerBuilder build(
@@ -39,6 +48,6 @@ public class PlayerBuilder {
     }
 
     public Player get() {
-        return new Player(name, melee, range, magic, dodge, armor);
+        return new Player(name, melee, range, magic, dodge, armor, weaponList);
     }
 }

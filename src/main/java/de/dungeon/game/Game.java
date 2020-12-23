@@ -4,7 +4,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import de.dungeon.game.character.Player;
-import de.dungeon.game.character.PlayerBuilder;
+import de.dungeon.game.character.player.PlayerBuilder;
 import de.dungeon.game.command.PlayerStatusCommand;
 import de.dungeon.game.scenery.Scenery;
 import de.dungeon.game.scenery.SceneryFactory;

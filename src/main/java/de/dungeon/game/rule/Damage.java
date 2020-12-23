@@ -23,4 +23,20 @@ public class Damage {
     public int getModifier() {
         return modifier;
     }
+
+    public int calculateDamage() throws UnknownDiceException {
+        var damage = modifier;
+        for (int i = 0; i < diceCount; i++) {
+            damage += rollForDamage();
+        }
+        return damage;
+    }
+
+    private int rollForDamage() throws UnknownDiceException {
+        return switch (diceType) {
+            case 6 -> Dice.rollD6();
+            case 20 -> Dice.rollD20();
+            default -> throw new UnknownDiceException(diceType);
+        };
+    }
 }

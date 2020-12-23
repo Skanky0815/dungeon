@@ -1,6 +1,6 @@
 package de.dungeon.game.view;
 
-import de.dungeon.game.character.PlayerBuilder;
+import de.dungeon.game.character.player.PlayerBuilder;
 
 import org.junit.jupiter.api.Test;
 
