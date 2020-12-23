@@ -4,13 +4,19 @@ import de.dungeon.game.character.property.Property;
 
 public class AttributeTestCommand extends Command {
 
-    private final int modifier;
-    private final Property property;
+    private int modifier;
+    private Property property;
 
-    public AttributeTestCommand(final String text, final String doText, final int modifier, final Property property) {
-        super(text, doText);
+    public AttributeTestCommand init(
+            final String text,
+            final String doText,
+            final int modifier,
+            final Property property
+    ) {
+        super.init(text, doText);
         this.modifier = modifier;
         this.property = property;
+        return this;
     }
 
     @Override

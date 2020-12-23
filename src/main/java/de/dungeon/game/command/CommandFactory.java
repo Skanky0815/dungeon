@@ -1,11 +1,11 @@
 package de.dungeon.game.command;
 
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import de.dungeon.game.character.Player;
 import de.dungeon.game.character.enemy.Enemy;
 import de.dungeon.game.character.property.Property;
-import de.dungeon.game.view.EnemyStatusView;
 
 import java.util.Map;
 
@@ -13,35 +13,34 @@ import java.util.Map;
 public class CommandFactory {
 
     private final Player player;
+    private final Injector injector;
 
     @Inject
-    public CommandFactory(final Player player) {
+    public CommandFactory(final Player player, final Injector injector) {
         this.player = player;
+        this.injector = injector;
     }
 
     public Command create(final Map<String, Object> commandData, final Enemy enemy) throws CommandException {
         return switch ((String) commandData.get("command")) {
-            case "npc_status" -> createEnemyStatusCommand(enemy);
+            case "npc_status" -> injector.getInstance(EnemyStatusCommand.class).init(enemy);
             case "go" -> createGoCommand(commandData);
             case "attribute_test" -> createAttributeTestCommand(commandData);
-            case "fight" -> createFightCommand(enemy);
+            case "fight" -> injector.getInstance(FightCommand.class).init(enemy);
             default -> throw new UnknownCommandException((String) commandData.get("command"));
         };
     }
 
     private Command createGoCommand(final Map<String, Object> commandData) {
-        return new Command(
+        return (new Command() {
+            @Override
+            protected boolean doing() {
+                return true;
+            }
+        }).init(
                 ((String) commandData.get("text")).formatted(player.getName()),
                 ((String) commandData.get("do_text")).formatted(player.getName())
-        ) {
-
-            @Override
-            protected boolean doing() { return true; }
-        };
-    }
-
-    private Command createEnemyStatusCommand(final Enemy enemy) {
-        return new EnemyStatusCommand(enemy, new EnemyStatusView());
+        );
     }
 
     private Command createAttributeTestCommand(final Map<String, Object> commandData) throws CommandException {
@@ -53,15 +52,11 @@ public class CommandFactory {
             default -> throw new UnknownPropertyException((String) commandData.get("attribute"));
         };
 
-        return new AttributeTestCommand(
+        return injector.getInstance(AttributeTestCommand.class).init(
                 ((String) commandData.get("text")).formatted(player.getName()),
                 ((String) commandData.get("do_text")).formatted(player.getName()),
                 (int) commandData.get("modifier"),
                 property
         );
-    }
-
-    private Command createFightCommand(final Enemy enemy) {
-        return new FightCommand(player, enemy);
     }
 }

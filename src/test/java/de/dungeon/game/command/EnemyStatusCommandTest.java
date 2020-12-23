@@ -17,7 +17,7 @@ class EnemyStatusCommandTest {
         final var enemy = new Enemy("Enemy A", 15, 0, new Dodge(7, 0), 2, new ArrayList<>());
         final var viewMock = mock(EnemyStatusView.class);
 
-        (new EnemyStatusCommand(enemy, viewMock)).doing();
+        (new EnemyStatusCommand(viewMock)).init(enemy).doing();
 
         verify(viewMock).setEnemy(enemy);
         verify(viewMock).render();

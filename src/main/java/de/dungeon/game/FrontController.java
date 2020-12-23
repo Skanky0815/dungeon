@@ -21,7 +21,7 @@ public class FrontController {
     @Inject
     public FrontController(final ExitCommand exitCommand) {
         commands = new HashMap<>() {{
-            put("x", exitCommand);
+            put("x", exitCommand.init());
         }};
 
         reader = new BufferedReader(new InputStreamReader(System.in));

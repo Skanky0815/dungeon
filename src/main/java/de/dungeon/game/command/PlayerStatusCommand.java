@@ -11,8 +11,12 @@ public class PlayerStatusCommand extends Command {
 
     @Inject
     public PlayerStatusCommand(final PlayerStatusView view) {
-        super("Charakterbogen");
         this.view = view;
+    }
+
+    public PlayerStatusCommand init() {
+        super.init("Charakterbogen", null);
+        return this;
     }
 
     @Override

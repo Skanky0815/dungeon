@@ -20,18 +20,18 @@ public class SceneryFactoryTest {
         final var enemyFactory = mock(EnemyFactory.class);
         final var commandFactory = mock(CommandFactory.class);
 
-        when(commandFactory.create(any(), any(Enemy.class))).thenReturn(new Command("") {
+        when(commandFactory.create(any(), any(Enemy.class))).thenReturn((new Command() {
             @Override
             protected boolean doing() {
                 return false;
             }
-        });
-        when(commandFactory.create(any(), any())).thenReturn(new Command("") {
+        }).init("", ""));
+        when(commandFactory.create(any(), any())).thenReturn((new Command() {
             @Override
             protected boolean doing() {
                 return false;
             }
-        });
+        }).init("", ""));
 
         final var sceneries = (new SceneryFactory(player, controller, enemyFactory, commandFactory)).init();
         assertEquals(2, sceneries.size());

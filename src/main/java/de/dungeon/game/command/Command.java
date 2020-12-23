@@ -3,20 +3,17 @@ package de.dungeon.game.command;
 import de.dungeon.game.scenery.Scenery;
 
 public abstract class Command {
-    private final String text;
-    private final String doText;
+    private String text;
+    private String doText;
     private String successText;
     private String failureText;
     private Scenery successAction;
     private Scenery failureAction;
 
-    public Command(final String text, final String doText) {
+    public Command init(final String text, final String doText) {
         this.text = text;
         this.doText = doText;
-    }
-
-    public Command(final String text) {
-        this(text, "");
+        return this;
     }
 
     public void setSuccessAction(final Scenery action, final String text) {

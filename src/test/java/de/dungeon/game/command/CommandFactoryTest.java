@@ -1,5 +1,6 @@
 package de.dungeon.game.command;
 
+import com.google.inject.Injector;
 import de.dungeon.game.character.player.PlayerBuilder;
 import de.dungeon.game.character.enemy.Enemy;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,15 +13,15 @@ import java.util.HashMap;
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 public class CommandFactoryTest {
 
-    private CommandFactory commandFactory;
+    private Injector injectorMock;
 
     @BeforeEach
     void setUp() {
-        final var playerSub = PlayerBuilder.build("Player A", 1, 1, 1, 1).get();
-        commandFactory = new CommandFactory(playerSub);
+        injectorMock = mock(Injector.class);
     }
 
     @Test
@@ -31,7 +32,7 @@ public class CommandFactoryTest {
             put("do_text", "Command Do Text");
         }};
 
-        final var command = commandFactory.create(commandData, null);
+        final var command = factory().create(commandData, null);
         assertEquals("Command Text", command.getText());
         assertTrue(command.doing());
     }
@@ -43,9 +44,13 @@ public class CommandFactoryTest {
             put("command", "npc_status");
         }};
 
-        final var command = commandFactory.create(commandData, enemyStub);
-        assertThat(command.getText(), containsString("Enemy A"));
-        assertThat(command, instanceOf(EnemyCommand.class));
+        final var enemyStatusMock = mock(EnemyStatusCommand.class);
+        when(injectorMock.getInstance(EnemyStatusCommand.class)).thenReturn(enemyStatusMock);
+        when(enemyStatusMock.init(enemyStub)).thenReturn(enemyStatusMock);
+
+        final var command = factory().create(commandData, enemyStub);
+        assertThat(command, instanceOf(EnemyStatusCommand.class));
+        verify(enemyStatusMock).init(enemyStub);
     }
 
     @ParameterizedTest
@@ -61,9 +66,14 @@ public class CommandFactoryTest {
             put("failure", new HashMap<String, String>());
         }};
 
-        final var command = commandFactory.create(commandData, null);
-        assertEquals("Command Player A Text", command.getText());
+        final var attributeTestCommand = mock(AttributeTestCommand.class);
+        when(injectorMock.getInstance(AttributeTestCommand.class)).thenReturn(attributeTestCommand);
+        when(attributeTestCommand.init(eq("Command Player A Text"), eq("Player A do Text"), eq(5), any()))
+                .thenReturn(attributeTestCommand);
+
+        final var command = factory().create(commandData, null);
         assertThat(command, instanceOf(AttributeTestCommand.class));
+        verify(attributeTestCommand).init(eq("Command Player A Text"), eq("Player A do Text"), eq(5), any());
     }
 
     @Test
@@ -79,7 +89,7 @@ public class CommandFactoryTest {
                 put("failure", new HashMap<String, String>());
             }};
 
-            commandFactory.create(commandData, null);
+            factory().create(commandData, null);
         });
 
         assertEquals("Property woop does not exists!", exception.getMessage());
@@ -92,8 +102,13 @@ public class CommandFactoryTest {
             put("command", "fight");
         }};
 
-        final var command = commandFactory.create(commandData, enemyStub);
+        final var fightCommand = mock(FightCommand.class);
+        when(injectorMock.getInstance(FightCommand.class)).thenReturn(fightCommand);
+        when(fightCommand.init(enemyStub)).thenReturn(fightCommand);
+
+        final var command = factory().create(commandData, enemyStub);
         assertThat(command, instanceOf(FightCommand.class));
+        verify(fightCommand).init(enemyStub);
     }
 
     @Test
@@ -103,9 +118,14 @@ public class CommandFactoryTest {
                 put("command", "woop");
             }};
 
-            commandFactory.create(commandData, null);
+            factory().create(commandData, null);
         });
 
         assertEquals("Command woop does not exists!", exception.getMessage());
+    }
+
+    private CommandFactory factory() {
+        final var playerSub = PlayerBuilder.build("Player A", 1, 1, 1, 1).get();
+        return new CommandFactory(playerSub, injectorMock);
     }
 }

@@ -1,5 +1,6 @@
 package de.dungeon.game.battle;
 
+import com.google.inject.Inject;
 import de.dungeon.game.character.Player;
 import de.dungeon.game.character.enemy.Enemy;
 import de.dungeon.game.character.player.Weapon;
@@ -10,6 +11,7 @@ public class PlayerAttack {
     private final Player player;
     private final DamageHandler damageHandler;
 
+    @Inject
     public PlayerAttack(final Player player, final DamageHandler damageHandler) {
         this.player = player;
         this.damageHandler = damageHandler;

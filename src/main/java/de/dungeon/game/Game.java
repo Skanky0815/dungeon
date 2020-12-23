@@ -4,7 +4,10 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import de.dungeon.game.character.Player;
+import de.dungeon.game.character.enemy.EnemyFactory;
 import de.dungeon.game.character.player.PlayerBuilder;
+import de.dungeon.game.command.CommandFactory;
+import de.dungeon.game.command.ExitCommand;
 import de.dungeon.game.command.PlayerStatusCommand;
 import de.dungeon.game.scenery.Scenery;
 import de.dungeon.game.scenery.SceneryFactory;
@@ -31,6 +34,7 @@ public class Game extends AbstractModule {
         try {
             game.run();
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             e.printStackTrace();
             System.exit(1);
         }
@@ -43,7 +47,7 @@ public class Game extends AbstractModule {
     private void createPlayerAndStartTheGame(final String name) throws Exception {
         player = PlayerBuilder.build(name, 14, 8, 0, 5).get();
         System.out.printf("Du bist der %s. Viel Spaß beim spielen.\n\n", player.getName());
-        controller.addCommand("c", injector.getInstance(PlayerStatusCommand.class));
+        controller.addCommand("c", injector.getInstance(PlayerStatusCommand.class).init());
         final var sceneryFactory = injector.getInstance(SceneryFactory.class);
         final var sceneries = sceneryFactory.init();
         var index = (int) (Math.random() * sceneries.size());

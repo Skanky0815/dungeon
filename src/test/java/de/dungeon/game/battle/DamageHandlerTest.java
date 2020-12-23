@@ -25,9 +25,7 @@ class DamageHandlerTest extends ViewTestCase {
         var attackerStub = new Character("char A", 20, 2, new Dodge(5));
         var defenderStub = new Character("char B", 20, 2, dodgeMock);
 
-
-        var handler = new DamageHandler();
-        handler.makeDamage(10, attackerStub, defenderStub);
+        (new DamageHandler()).makeDamage(10, attackerStub, defenderStub);
 
         assertEquals(12, defenderStub.getHealth());
     }
@@ -40,9 +38,7 @@ class DamageHandlerTest extends ViewTestCase {
         var attackerStub = new Character("char A", 20, 2, new Dodge(5));
         var defenderStub = new Character("char B", 20, 2, dodgeMock);
 
-
-        var handler = new DamageHandler();
-        handler.makeDamage(10, attackerStub, defenderStub);
+        (new DamageHandler()).makeDamage(10, attackerStub, defenderStub);
 
         assertEquals(17, defenderStub.getHealth());
     }

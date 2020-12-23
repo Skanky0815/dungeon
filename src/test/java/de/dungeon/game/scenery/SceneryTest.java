@@ -44,13 +44,13 @@ public class SceneryTest extends ViewTestCase {
                 .thenReturn(false)
                 .thenReturn(true);
 
-        final Command commandStub = new Command("my command") {
+        final Command commandStub = (new Command() {
             @Override
             protected boolean doing() {
                 assertTrue(true);
                 return false;
             }
-        };
+        }).init("my command", null);
 
         final var commands = new ArrayList<Command>() {{
             add(commandStub);

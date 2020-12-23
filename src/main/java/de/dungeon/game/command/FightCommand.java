@@ -1,6 +1,6 @@
 package de.dungeon.game.command;
 
-import de.dungeon.game.battle.DamageHandler;
+import com.google.inject.Inject;
 import de.dungeon.game.battle.EnemyAttack;
 import de.dungeon.game.battle.PlayerAttack;
 import de.dungeon.game.character.Player;
@@ -12,11 +12,22 @@ public class FightCommand extends EnemyCommand {
     private final PlayerAttack playerAttack;
     private final EnemyAttack enemyAttack;
 
-    public FightCommand(final Player player, final Enemy enemy) {
-        super("%s kämpft!".formatted(player.getName()), "%s angreifen.".formatted(enemy.getName()), enemy);
+    @Inject
+    public FightCommand(
+            final Player player,
+            final PlayerAttack playerAttack,
+            final EnemyAttack enemyAttack
+    ) {
         this.player = player;
-        this.playerAttack = new PlayerAttack(player, new DamageHandler());
-        this.enemyAttack = new EnemyAttack(enemy);
+        this.playerAttack = playerAttack;
+        this.enemyAttack = enemyAttack;
+    }
+
+    public FightCommand init(final Enemy enemy) {
+        super.setEnemy(enemy);
+        super.init("%s kämpft!".formatted(player.getName()), "%s angreifen.".formatted(enemy.getName()));
+        enemyAttack.setEnemy(enemy);
+        return this;
     }
 
     @Override

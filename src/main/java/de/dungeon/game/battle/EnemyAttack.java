@@ -8,7 +8,7 @@ public class EnemyAttack {
 
     private Enemy enemy;
 
-    public EnemyAttack(final Enemy enemy) {
+    public void setEnemy(Enemy enemy) {
         this.enemy = enemy;
     }
 
@@ -19,4 +19,5 @@ public class EnemyAttack {
             // TODO: hier gehts weiter mit dem herausfinden, was die action macht :D
         }
     }
+
 }
