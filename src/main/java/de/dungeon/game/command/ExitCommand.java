@@ -1,9 +1,17 @@
 package de.dungeon.game.command;
 
+import de.dungeon.game.Text;
+
 public class ExitCommand extends Command {
 
+    private final Text text;
+
+    public ExitCommand(final Text text) {
+        this.text = text;
+    }
+
     public ExitCommand init() {
-        super.init("Beenden", null);
+        super.init(text.get("game.exit"), null);
         return this;
     }
 

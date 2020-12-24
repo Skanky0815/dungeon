@@ -19,12 +19,12 @@ public class FrontController {
     private final BufferedReader reader;
 
     @Inject
-    public FrontController(final ExitCommand exitCommand) {
+    public FrontController(final ExitCommand exitCommand, final BufferedReader reader) {
+        this.reader = reader;
+
         commands = new HashMap<>() {{
             put("x", exitCommand.init());
         }};
-
-        reader = new BufferedReader(new InputStreamReader(System.in));
     }
 
     public void addCommand(final String key, final Command command) {
@@ -33,9 +33,8 @@ public class FrontController {
 
     public boolean action(final String text, final SceneryCallback callback) throws Exception {
         System.out.println(text + setupCommands());
-        final String input;
         try {
-            input = reader.readLine();
+            final var input = reader.readLine();
             if (commands.containsKey(input)) {
                 commands.get(input).doAction();
                 return false;

@@ -4,35 +4,35 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import de.dungeon.game.character.Player;
-import de.dungeon.game.character.enemy.EnemyFactory;
 import de.dungeon.game.character.player.PlayerBuilder;
-import de.dungeon.game.command.CommandFactory;
-import de.dungeon.game.command.ExitCommand;
 import de.dungeon.game.command.PlayerStatusCommand;
-import de.dungeon.game.scenery.Scenery;
 import de.dungeon.game.scenery.SceneryFactory;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class Game extends AbstractModule {
 
     private final FrontController controller;
     private final Injector injector;
+    private final Text text;
     private Player player;
 
     public Game() {
         injector = Guice.createInjector(this);
         controller = injector.getInstance(FrontController.class);
+        text = injector.getInstance(Text.class);
     }
 
     @Override
     protected void configure() {
         bind(Player.class).toProvider(() -> player);
+        bind(BufferedReader.class).toInstance(new BufferedReader(new InputStreamReader(System.in)));
     }
 
     public static void main(final String[] args) {
-        final var game = new Game();
-
         try {
-            game.run();
+            (new Game()).run();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -41,21 +41,21 @@ public class Game extends AbstractModule {
     }
 
     private void run() throws Exception {
-        controller.action("Willkommen im Dungeon!\nWie willst du heißen?\n", this::createPlayerAndStartTheGame);
+        controller.action(text.get("game.welcome"), this::createPlayerAndStartTheGame);
     }
 
     private void createPlayerAndStartTheGame(final String name) throws Exception {
         player = PlayerBuilder.build(name, 14, 8, 0, 5).get();
-        System.out.printf("Du bist der %s. Viel Spaß beim spielen.\n\n", player.getName());
+        System.out.printf(text.get("game.start"), player.getName());
         controller.addCommand("c", injector.getInstance(PlayerStatusCommand.class).init());
-        final var sceneryFactory = injector.getInstance(SceneryFactory.class);
-        final var sceneries = sceneryFactory.init();
+
+        final var sceneries = injector.getInstance(SceneryFactory.class).init();
         var index = (int) (Math.random() * sceneries.size());
-        for (Scenery scenery : sceneries.values()) {
+        for (var scenery : sceneries.values()) {
             if (--index < 0) {
                 scenery.run();
                 return;
             }
-        };
+        }
     }
 }

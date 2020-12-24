@@ -1,23 +1,42 @@
 package de.dungeon.game;
 
-import de.dungeon.game.FrontController;
 import de.dungeon.game.command.ExitCommand;
-import org.junit.jupiter.api.BeforeEach;
+import de.dungeon.game.view.ViewTestCase;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.io.BufferedReader;
 
-public class FrontControllerTest {
+import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
-    private FrontController controller;
+public class FrontControllerTest extends ViewTestCase {
 
-    @BeforeEach
-    void setUp() {
-        controller = new FrontController(new ExitCommand());
+    @Test
+    void actionShouldCallTheExitCommand() throws Exception {
+        final var exitCommand = mock(ExitCommand.class);
+        final var bufferReader = mock(BufferedReader.class);
+        when(bufferReader.readLine()).thenReturn("x");
+        when(exitCommand.getText()).thenReturn("Quit the game.");
+        when(exitCommand.init()).thenReturn(exitCommand);
+
+        (new FrontController(exitCommand, bufferReader)).action("What will you do?", null);
+
+        verify(exitCommand).doAction();
+        assertThat(outContent.toString(), containsString("What will you do?"));
+        assertThat(outContent.toString(), containsString("Quit the game."));
     }
 
     @Test
-    void Should() {
-        assertTrue(true);
+    void actionShouldCallTheCallback() throws Exception {
+        final var exitCommand = mock(ExitCommand.class);
+        final var bufferReader = mock(BufferedReader.class);
+        when(bufferReader.readLine()).thenReturn("input");
+        when(exitCommand.init()).thenReturn(exitCommand);
+
+        (new FrontController(exitCommand, bufferReader)).action("What will you do?", (final String input) -> {
+            assertEquals("input", input);
+        });
     }
 }
