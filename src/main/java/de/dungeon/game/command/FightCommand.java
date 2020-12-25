@@ -35,7 +35,7 @@ public class FightCommand extends EnemyCommand {
         System.out.printf("%s versucht %s anzugreifen\n", player.getName(), enemy.getName());
         playerAttack.attack(enemy);
         if (enemy.isAlive()) {
-            enemyAttack.attack(player);
+            enemyAttack.attack();
             return false;
         }
 
