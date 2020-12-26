@@ -6,10 +6,9 @@ import de.dungeon.game.character.property.Magic;
 import de.dungeon.game.character.property.Melee;
 import de.dungeon.game.character.property.Range;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public final class Player extends Character {
+public class Player extends Character {
 
     private final Melee melee;
     private final Range range;
@@ -38,8 +37,14 @@ public final class Player extends Character {
         return melee;
     }
 
-    public boolean tryToDoAMeleeAttack() {
-        return melee.test().isSuccess();
+    public boolean tryToAttackWithWeapon(final Weapon weapon) {
+        if (weapon.getTestProperty().isInstance(melee)) {
+            return true;
+        }
+        if (weapon.getTestProperty().isInstance(range)) {
+            return true;
+        }
+        return weapon.getTestProperty().isInstance(magic);
     }
 
     public Range getRange() {
@@ -50,7 +55,7 @@ public final class Player extends Character {
         return magic;
     }
 
-    public List<Weapon> getWeaponList() {
-        return weaponList;
+    public Weapon getWeapon(final int index) {
+        return weaponList.get(index);
     }
 }

@@ -33,7 +33,7 @@ public class FightCommand extends EnemyCommand {
     @Override
     protected boolean doing() {
         System.out.printf("%s versucht %s anzugreifen\n", player.getName(), enemy.getName());
-        playerAttack.attack(enemy);
+        playerAttack.attack(enemy, 0);
         if (enemy.isAlive()) {
             enemyAttack.attack();
             return false;

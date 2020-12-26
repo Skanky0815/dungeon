@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class FightCommandTest {
@@ -18,11 +17,11 @@ class FightCommandTest {
     void doingShouldCallPlayerAttack() {
         final var playerAttackMock = mock(PlayerAttack.class);
         final var enemyAttackMock = mock(EnemyAttack.class);
-        final var enemy = new Enemy("Enemy A", 15, 0, new Dodge(7, 0), 1, new ArrayList<>());
-        final var player = PlayerBuilder.build("Player A", 1, 1, 1, 1).get();
+        final var enemy = new Enemy("Enemy", 15, 0, new Dodge(7, 0), 1, new ArrayList<>());
+        final var player = PlayerBuilder.build("Player", 1, 1, 1, 1).get();
 
         (new FightCommand(player, playerAttackMock, enemyAttackMock)).init(enemy).doing();
 
-        verify(playerAttackMock).attack(enemy);
+        verify(playerAttackMock).attack(eq(enemy), eq(0));
     }
 }
