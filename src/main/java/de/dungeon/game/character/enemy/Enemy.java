@@ -5,10 +5,10 @@ import de.dungeon.game.character.property.Dodge;
 
 import java.util.List;
 
-final public class Enemy extends Character  {
+public class Enemy extends Character  {
 
-    final private List<Behavior> behaviorList;
-    final private int actions;
+    private final List<Behavior> behaviorList;
+    private final int actions;
 
     public Enemy(
             final String name,

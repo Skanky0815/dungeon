@@ -3,11 +3,13 @@ package de.dungeon.game.view;
 import de.dungeon.game.character.enemy.Behavior;
 import de.dungeon.game.character.enemy.Enemy;
 import de.dungeon.game.character.property.Dodge;
+import de.dungeon.game.rule.Dice;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 class EnemyStatusViewTest extends ViewTestCase {
 
@@ -17,7 +19,7 @@ class EnemyStatusViewTest extends ViewTestCase {
             add(new Behavior("do nothing", 1, 20));
         }};
 
-        final var enemy = new Enemy("Enemy A", 15, 2, new Dodge(7, 0), 2, behaviorList);
+        final var enemy = new Enemy("Enemy A", 15, 2, (Dodge) new Dodge(mock(Dice.class)).init(7), 2, behaviorList);
 
         final var view = new EnemyStatusView();
         view.setEnemy(enemy);

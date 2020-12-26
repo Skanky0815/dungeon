@@ -3,11 +3,8 @@ package de.dungeon.game.battle;
 import de.dungeon.game.character.Player;
 import de.dungeon.game.character.enemy.Enemy;
 import de.dungeon.game.character.player.Weapon;
-import de.dungeon.game.character.property.Dodge;
 import de.dungeon.game.rule.UnknownDiceException;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
 
 import static org.mockito.Mockito.*;
 
@@ -22,7 +19,7 @@ class PlayerAttackTest {
         when(player.getWeapon(1)).thenReturn(weapon);
         when(player.tryToAttackWithWeapon(weapon)).thenReturn(true);
 
-        final var enemy = new Enemy("Enemy", 15, 2, new Dodge(0, 0), 1, new ArrayList<>());
+        final var enemy = mock(Enemy.class);
         final var damageHandler = mock(DamageHandler.class);
 
         (new PlayerAttack(player, damageHandler)).attack(enemy, 1);
@@ -39,7 +36,7 @@ class PlayerAttackTest {
         when(player.getWeapon(1)).thenReturn(weapon);
         when(player.tryToAttackWithWeapon(weapon)).thenReturn(true);
 
-        final var enemy = new Enemy("Enemy", 15, 2, new Dodge(0, 0), 1, new ArrayList<>());
+        final var enemy = mock(Enemy.class);
         final var damageHandler = mock(DamageHandler.class);
 
         (new PlayerAttack(player, damageHandler)).attack(enemy, 1);

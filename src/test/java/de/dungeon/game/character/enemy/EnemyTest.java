@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 public class EnemyTest {
 
@@ -21,7 +22,7 @@ public class EnemyTest {
             new Behavior("b", 6, 10),
             new Behavior("c", 11, 20)
         ));
-        enemy = new Enemy("enemy", 15, 0, new Dodge(5), 1, behaviorList);
+        enemy = new Enemy("enemy", 15, 0, mock(Dodge.class), 1, behaviorList);
     }
 
     @Test

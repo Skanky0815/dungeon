@@ -2,14 +2,21 @@ package de.dungeon.game.rule;
 
 public class Damage {
 
-    final private int diceCount;
-    final private int diceType;
-    final private int modifier;
+    private final Dice dice;
 
-    public Damage(final int diceCount, final int diceType, final int modifier) {
+    private int diceCount;
+    private int diceType;
+    private int modifier;
+
+    public Damage(Dice dice) {
+        this.dice = dice;
+    }
+
+    public Damage init(final int diceCount, final int diceType, final int modifier) {
         this.diceCount = diceCount;
         this.diceType = diceType;
         this.modifier = modifier;
+        return this;
     }
 
     public int getDiceCount() {
@@ -34,8 +41,8 @@ public class Damage {
 
     private int rollForDamage() throws UnknownDiceException {
         return switch (diceType) {
-            case 6 -> Dice.rollD6();
-            case 20 -> Dice.rollD20();
+            case 6 -> dice.rollD6();
+            case 20 -> dice.rollD20();
             default -> throw new UnknownDiceException(diceType);
         };
     }

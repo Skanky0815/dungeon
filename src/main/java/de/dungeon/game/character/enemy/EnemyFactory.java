@@ -1,9 +1,11 @@
 package de.dungeon.game.character.enemy;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import de.dungeon.game.character.property.Dodge;
 import de.dungeon.game.rule.Damage;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.dungeon.game.rule.Dice;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,7 +16,14 @@ import java.util.Map;
 @Singleton
 public class EnemyFactory {
 
-    private final ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper;
+    private final Dice dice;
+
+    @Inject
+    public EnemyFactory(final ObjectMapper mapper, final Dice dice) {
+        this.mapper = mapper;
+        this.dice = dice;
+    }
 
     @SuppressWarnings (value="unchecked")
     public Enemy create(final String name) throws Exception {
@@ -24,7 +33,7 @@ public class EnemyFactory {
                 (String) result.get("name"),
                 (int) result.get("health"),
                 (int) result.get("armor"),
-                new Dodge((int) result.get("dodge")),
+                (Dodge) new Dodge(dice).init((int) result.get("dodge")),
                 (int) result.get("actions"),
                 createBehaviorList((List<Map>) result.get("behaviors"))
         );
@@ -56,7 +65,7 @@ public class EnemyFactory {
     }
 
     private Damage createDamage(final Map damageData) {
-        return new Damage(
+        return (new Damage(dice)).init(
                 (int) damageData.get("diceCount"),
                 (int) damageData.get("diceType"),
                 (int) damageData.get("modifier")

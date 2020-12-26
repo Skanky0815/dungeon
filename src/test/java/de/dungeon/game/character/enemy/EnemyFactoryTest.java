@@ -1,9 +1,12 @@
 package de.dungeon.game.character.enemy;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import de.dungeon.game.rule.Dice;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
 
 public class EnemyFactoryTest {
 
@@ -11,7 +14,8 @@ public class EnemyFactoryTest {
 
     @BeforeEach
     void setUp() {
-        factory = new EnemyFactory();
+        final var dice = mock(Dice.class);
+        factory = new EnemyFactory(new ObjectMapper(), dice);
     }
 
     @Test

@@ -1,8 +1,9 @@
 package de.dungeon.game.character.enemy;
 
 import de.dungeon.game.rule.Damage;
+import de.dungeon.game.rule.UnknownDiceException;
 
-public final class Behavior {
+public class Behavior {
 
     private final String text;
     private final int min;
@@ -30,6 +31,10 @@ public final class Behavior {
 
     public Damage getDamage() {
         return damage;
+    }
+
+    public int getDamageValue() throws UnknownDiceException {
+        return damage.calculateDamage();
     }
 
     public String getText() {

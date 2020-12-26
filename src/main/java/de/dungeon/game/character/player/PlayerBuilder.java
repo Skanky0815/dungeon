@@ -6,9 +6,11 @@ import de.dungeon.game.character.property.Magic;
 import de.dungeon.game.character.property.Melee;
 import de.dungeon.game.character.property.Range;
 import de.dungeon.game.rule.Damage;
+import de.dungeon.game.rule.Dice;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class PlayerBuilder {
 
@@ -20,15 +22,18 @@ public class PlayerBuilder {
     private final int armor;
     private final List<Weapon> weaponList;
 
+    // TODO: refactor this crap ore replace with some other nicer class stuff
     private PlayerBuilder(final String name, final int melee, final int range, final int magic, final int dodge) {
+        final var dice = new Dice(new Random());
+
         this.name = name;
-        this.melee = new Melee(melee, 0);
-        this.range = new Range(range, 0);
-        this.magic = new Magic(magic, 0);
-        this.dodge = new Dodge(dodge, 0);
+        this.melee = (Melee) new Melee(dice).init(melee);
+        this.range = (Range) new Range(dice).init(range);
+        this.magic = (Magic) new Magic(dice).init(magic);
+        this.dodge = (Dodge) new Dodge(dice).init(dodge);
         this.armor = 0;
         this.weaponList = new ArrayList<>() {{
-            add(new Weapon("Axt", new Damage(1, 6, 0), Melee.class));
+            add(new Weapon("Axt", new Damage(dice).init(1, 6, 0), Melee.class));
         }};
     }
 

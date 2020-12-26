@@ -5,12 +5,22 @@ import de.dungeon.game.rule.TestResult;
 
 public class Property {
 
-    final private int value;
+    private final Dice dice;
+    private int value;
     private int modifier;
 
-    public Property(int value, int modifier) {
+    public Property(final Dice dice) {
+        this.dice = dice;
+    }
+
+    public Property init(int value, int modifier) {
         this.value = value;
         this.modifier = modifier;
+        return this;
+    }
+
+    public Property init(int value) {
+        return this.init(value, 0);
     }
 
     public int getValue() {
@@ -30,7 +40,7 @@ public class Property {
     }
 
     public TestResult test(final int modifier) {
-        return new TestResult(Dice.rollD20(), (value + this.modifier + modifier));
+        return new TestResult(dice.rollD20(), (value + this.modifier + modifier));
     }
 
     public TestResult test() {

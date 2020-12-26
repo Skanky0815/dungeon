@@ -1,16 +1,23 @@
 package de.dungeon.game.rule;
 
+import com.google.inject.Inject;
+
 import java.util.Random;
 
-public final class Dice {
+public class Dice {
 
-    private final static Random random = new Random();
+    private final Random random;
 
-    public static int rollD6() {
-        return random.nextInt((6 - 1)) + 1;
+    @Inject
+    public Dice(final Random random) {
+        this.random = random;
     }
 
-    public static int rollD20() {
+    public int rollD20() {
         return random.nextInt((20 - 1)) + 1;
+    }
+
+    public int rollD6() {
+        return random.nextInt((6 - 1)) + 1;
     }
 }

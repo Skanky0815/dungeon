@@ -2,46 +2,45 @@ package de.dungeon.game.rule;
 
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.MatcherAssert.*;
-import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class DamageTest {
 
     @Test
     void calculateDamageShouldReturnADamageBetween1And6() throws UnknownDiceException {
-        final var damage = (new Damage(1, 6, 0)).calculateDamage();
-        assertThat(damage, greaterThanOrEqualTo(1));
-        assertThat(damage, lessThanOrEqualTo(6));
+        assertEquals(4, damage(4).init(1, 6, 0).calculateDamage());
     }
 
     @Test
     void calculateDamageShouldReturnADamageBetween1And20() throws UnknownDiceException {
-        final var damage = (new Damage(1, 20, 0)).calculateDamage();
-        assertThat(damage, greaterThanOrEqualTo(1));
-        assertThat(damage, lessThanOrEqualTo(20));
+        assertEquals(10, damage(10).init(1, 20, 0).calculateDamage());
     }
 
     @Test
     void calculateDamageShouldReturnADamageBetween4And10BecauseOfModifier4() throws UnknownDiceException {
-        final var damage = (new Damage(1, 6, 4)).calculateDamage();
-        assertThat(damage, greaterThanOrEqualTo(4));
-        assertThat(damage, lessThanOrEqualTo(10));
+        assertEquals(8, damage(4).init(1, 6, 4).calculateDamage());
     }
 
     @Test
     void calculateDamageShouldReturnADamageBetween2And12BecauseOfTwoD6() throws UnknownDiceException {
-        final var damage = (new Damage(2, 6, 0)).calculateDamage();
-        assertThat(damage, greaterThanOrEqualTo(2));
-        assertThat(damage, lessThanOrEqualTo(12));
+        assertEquals(2, damage(1).init(2, 6, 0).calculateDamage());
     }
 
     @Test
     void calculateDamageShouldThrownAUnknownDiceException() {
         final var exception = assertThrows(UnknownDiceException.class, () -> {
-            (new Damage(1, 3, 0)).calculateDamage();
+            damage(0).init(1, 3, 0).calculateDamage();
         });
 
         assertEquals("Dice 3 does not exists!", exception.getMessage());
+    }
+
+    private Damage damage(final int diceValue) {
+        final var dice = mock(Dice.class);
+        when(dice.rollD6()).thenReturn(diceValue);
+        when(dice.rollD20()).thenReturn(diceValue);
+
+        return new Damage(dice);
     }
 }

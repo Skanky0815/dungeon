@@ -21,9 +21,7 @@ public class PlayerAttack {
         if (player.tryToAttackWithWeapon(weapon)) {
             try {
                 damageHandler.makeDamage(weapon.getDamage(), player, enemy);
-            } catch (UnknownDiceException ignore) {
-
-            }
+            } catch (UnknownDiceException ignore) { }
         }
     }
 }
