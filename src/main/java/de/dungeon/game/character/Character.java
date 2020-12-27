@@ -1,6 +1,7 @@
 package de.dungeon.game.character;
 
 import de.dungeon.game.character.property.Dodge;
+import org.jetbrains.annotations.NotNull;
 
 public class Character {
 
@@ -10,7 +11,7 @@ public class Character {
     private final int armor;
     private final Dodge dodge;
 
-    public Character(final String name, final int health, final int armor, final Dodge dodge) {
+    public Character(@NotNull final String name, final int health, final int armor, @NotNull final Dodge dodge) {
         this.name = name;
         this.maxHealth = this.health = health;
         this.armor = armor;

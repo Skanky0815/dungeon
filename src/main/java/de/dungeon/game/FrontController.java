@@ -5,6 +5,8 @@ import com.google.inject.Singleton;
 import de.dungeon.game.command.Command;
 import de.dungeon.game.command.ExitCommand;
 import de.dungeon.game.scenery.SceneryCallback;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,7 +20,7 @@ public class FrontController {
     private final BufferedReader reader;
 
     @Inject
-    public FrontController(final ExitCommand exitCommand, final BufferedReader reader) {
+    public FrontController(@NotNull final ExitCommand exitCommand, @NotNull final BufferedReader reader) {
         this.reader = reader;
 
         commands = new HashMap<>() {{
@@ -26,11 +28,11 @@ public class FrontController {
         }};
     }
 
-    public void addCommand(final String key, final Command command) {
+    public void addCommand(@NotNull final String key, @NotNull final Command command) {
         commands.put(key, command);
     }
 
-    public boolean action(final String text, final SceneryCallback callback) throws Exception {
+    public boolean action(@NotNull final String text, @Nullable final SceneryCallback callback) throws Exception {
         System.out.println(text + setupCommands());
         try {
             final var input = reader.readLine();

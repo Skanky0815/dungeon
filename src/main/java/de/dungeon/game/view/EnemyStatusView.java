@@ -2,12 +2,13 @@ package de.dungeon.game.view;
 
 import de.dungeon.game.character.enemy.behavior.Behavior;
 import de.dungeon.game.character.enemy.Enemy;
+import org.jetbrains.annotations.NotNull;
 
 public class EnemyStatusView implements View {
 
     private Enemy enemy;
 
-    public void setEnemy(final Enemy enemy) {
+    public void setEnemy(@NotNull final Enemy enemy) {
         this.enemy = enemy;
     }
 

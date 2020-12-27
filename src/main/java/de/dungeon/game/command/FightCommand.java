@@ -5,6 +5,7 @@ import de.dungeon.game.battle.EnemyAttack;
 import de.dungeon.game.battle.PlayerAttack;
 import de.dungeon.game.character.Player;
 import de.dungeon.game.character.enemy.Enemy;
+import org.jetbrains.annotations.NotNull;
 
 public class FightCommand extends EnemyCommand {
 
@@ -14,16 +15,16 @@ public class FightCommand extends EnemyCommand {
 
     @Inject
     public FightCommand(
-            final Player player,
-            final PlayerAttack playerAttack,
-            final EnemyAttack enemyAttack
+            @NotNull final Player player,
+            @NotNull final PlayerAttack playerAttack,
+            @NotNull final EnemyAttack enemyAttack
     ) {
         this.player = player;
         this.playerAttack = playerAttack;
         this.enemyAttack = enemyAttack;
     }
 
-    public FightCommand init(final Enemy enemy) {
+    public FightCommand init(@NotNull final Enemy enemy) {
         super.setEnemy(enemy);
         super.init("%s kämpft!".formatted(player.getName()), "%s angreifen.".formatted(enemy.getName()));
         enemyAttack.setEnemy(enemy);

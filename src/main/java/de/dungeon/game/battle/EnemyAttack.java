@@ -3,6 +3,7 @@ package de.dungeon.game.battle;
 import com.google.inject.Inject;
 import de.dungeon.game.character.enemy.Enemy;
 import de.dungeon.game.rule.Dice;
+import org.jetbrains.annotations.NotNull;
 
 public class EnemyAttack {
 
@@ -10,11 +11,11 @@ public class EnemyAttack {
     private Enemy enemy;
 
     @Inject
-    public EnemyAttack(final Dice dice) {
+    public EnemyAttack(@NotNull final Dice dice) {
         this.dice = dice;
     }
 
-    public void setEnemy(Enemy enemy) {
+    public void setEnemy(@NotNull Enemy enemy) {
         this.enemy = enemy;
     }
 

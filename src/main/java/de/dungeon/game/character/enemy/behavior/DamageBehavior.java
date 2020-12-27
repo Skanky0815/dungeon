@@ -5,6 +5,7 @@ import de.dungeon.game.battle.DamageHandler;
 import de.dungeon.game.character.Player;
 import de.dungeon.game.rule.Damage;
 import de.dungeon.game.rule.UnknownDiceException;
+import org.jetbrains.annotations.NotNull;
 
 public class DamageBehavior extends Behavior {
 
@@ -15,14 +16,14 @@ public class DamageBehavior extends Behavior {
 
     @Inject
     public DamageBehavior(
-            final DamageHandler damageHandler,
-            final Player player
+            @NotNull final DamageHandler damageHandler,
+            @NotNull final Player player
     ) {
         this.damageHandler = damageHandler;
         this.player = player;
     }
 
-    public DamageBehavior setDamage(final Damage damage) {
+    public DamageBehavior setDamage(@NotNull final Damage damage) {
         this.damage = damage;
         return this;
     }

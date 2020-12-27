@@ -32,7 +32,7 @@ public class CommandFactoryTest {
             put("do_text", "Command Do Text");
         }};
 
-        final var command = factory().create(commandData, null);
+        final var command = factory().create(commandData);
         assertEquals("Command Text", command.getText());
         assertTrue(command.doing());
     }
@@ -71,7 +71,7 @@ public class CommandFactoryTest {
         when(attributeTestCommand.init(eq("Command Player A Text"), eq("Player A do Text"), eq(5), any()))
                 .thenReturn(attributeTestCommand);
 
-        final var command = factory().create(commandData, null);
+        final var command = factory().create(commandData);
         assertThat(command, instanceOf(AttributeTestCommand.class));
         verify(attributeTestCommand).init(eq("Command Player A Text"), eq("Player A do Text"), eq(5), any());
     }
@@ -89,7 +89,7 @@ public class CommandFactoryTest {
                 put("failure", new HashMap<String, String>());
             }};
 
-            factory().create(commandData, null);
+            factory().create(commandData);
         });
 
         assertEquals("Property woop does not exists!", exception.getMessage());
@@ -118,7 +118,7 @@ public class CommandFactoryTest {
                 put("command", "woop");
             }};
 
-            factory().create(commandData, null);
+            factory().create(commandData, mock(Enemy.class));
         });
 
         assertEquals("Command woop does not exists!", exception.getMessage());

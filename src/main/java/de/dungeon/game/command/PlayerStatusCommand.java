@@ -3,6 +3,7 @@ package de.dungeon.game.command;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import de.dungeon.game.view.PlayerStatusView;
+import org.jetbrains.annotations.NotNull;
 
 @Singleton
 public class PlayerStatusCommand extends Command {
@@ -10,7 +11,7 @@ public class PlayerStatusCommand extends Command {
     private final PlayerStatusView view;
 
     @Inject
-    public PlayerStatusCommand(final PlayerStatusView view) {
+    public PlayerStatusCommand(@NotNull final PlayerStatusView view) {
         this.view = view;
     }
 

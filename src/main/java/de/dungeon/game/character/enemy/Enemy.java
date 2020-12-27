@@ -3,6 +3,7 @@ package de.dungeon.game.character.enemy;
 import de.dungeon.game.character.Character;
 import de.dungeon.game.character.enemy.behavior.Behavior;
 import de.dungeon.game.character.property.Dodge;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -12,12 +13,12 @@ public class Enemy extends Character  {
     private final int actions;
 
     public Enemy(
-            final String name,
+            @NotNull final String name,
             final int health,
             final int armor,
-            final Dodge dodge,
+            @NotNull final Dodge dodge,
             final int actions,
-            final List<Behavior> behaviorList
+            @NotNull final List<Behavior> behaviorList
     ) {
         super(name, health, armor, dodge);
         this.actions = actions;

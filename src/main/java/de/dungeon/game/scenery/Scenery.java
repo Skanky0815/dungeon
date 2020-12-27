@@ -3,6 +3,7 @@ package de.dungeon.game.scenery;
 import de.dungeon.game.FrontController;
 import de.dungeon.game.character.enemy.Enemy;
 import de.dungeon.game.command.Command;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ public class Scenery {
     private List<Command> commands;
     private Enemy enemy;
 
-    public Scenery(final String key, final FrontController controller, final String text) {
+    public Scenery(@NotNull final String key, @NotNull final FrontController controller, @NotNull final String text) {
         this.key = key;
         this.controller = controller;
         this.text = text;
@@ -23,15 +24,25 @@ public class Scenery {
     }
 
     public Scenery(
-            final String key,
-            final FrontController controller,
-            final String text,
-            final List<Command> commands,
-            final Enemy enemy
+            @NotNull final String key,
+            @NotNull final FrontController controller,
+            @NotNull final String text,
+            @NotNull final List<Command> commands,
+            @NotNull final Enemy enemy
     ) {
         this(key, controller, text);
         this.commands = commands;
         this.enemy = enemy;
+    }
+
+    public Scenery(
+            @NotNull final String key,
+            @NotNull final FrontController controller,
+            @NotNull final String text,
+            @NotNull final List<Command> commands
+    ) {
+        this(key, controller, text);
+        this.commands = commands;
     }
 
     public void run() throws Exception {
@@ -43,7 +54,7 @@ public class Scenery {
         }
     }
 
-    private void callback(final String input) throws Exception {
+    private void callback(@NotNull final String input) throws Exception {
         final var index = Integer.parseInt(input);
         if (index < 0 || index >= commands.size()) {
             System.out.printf("No option found for number %d\n", index);
@@ -57,7 +68,7 @@ public class Scenery {
         }
     }
 
-    private void addCommands(final StringBuffer text) {
+    private void addCommands(@NotNull final StringBuffer text) {
         var key = 0;
         for (Command command : commands) {
             text.append("[%d] %s\n".formatted(key++, command.getText()));

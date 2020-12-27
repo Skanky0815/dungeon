@@ -13,7 +13,7 @@ class TypeMapper {
     private final DamageBehaviorFactory damageBehaviorFactory;
 
     @Inject
-    public TypeMapper(final DamageBehaviorFactory damageBehaviorFactory) {
+    public TypeMapper(@NotNull final DamageBehaviorFactory damageBehaviorFactory) {
         this.damageBehaviorFactory = damageBehaviorFactory;
     }
 

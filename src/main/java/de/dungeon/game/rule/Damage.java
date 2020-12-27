@@ -1,6 +1,7 @@
 package de.dungeon.game.rule;
 
 import com.google.inject.Inject;
+import org.jetbrains.annotations.NotNull;
 
 public class Damage {
 
@@ -11,7 +12,7 @@ public class Damage {
     private int modifier;
 
     @Inject
-    public Damage(Dice dice) {
+    public Damage(@NotNull Dice dice) {
         this.dice = dice;
     }
 

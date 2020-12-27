@@ -7,6 +7,7 @@ import de.dungeon.game.character.Player;
 import de.dungeon.game.character.player.PlayerBuilder;
 import de.dungeon.game.command.PlayerStatusCommand;
 import de.dungeon.game.scenery.SceneryFactory;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -44,7 +45,7 @@ public class Game extends AbstractModule {
         controller.action(text.get("game.welcome"), this::createPlayerAndStartTheGame);
     }
 
-    private void createPlayerAndStartTheGame(final String name) throws Exception {
+    private void createPlayerAndStartTheGame(@NotNull final String name) throws Exception {
         player = PlayerBuilder.build(name, 14, 8, 0, 5).get();
         System.out.printf(text.get("game.start"), player.getName());
         controller.addCommand("c", injector.getInstance(PlayerStatusCommand.class).init());

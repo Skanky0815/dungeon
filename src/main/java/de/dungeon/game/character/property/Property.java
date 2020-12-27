@@ -2,6 +2,7 @@ package de.dungeon.game.character.property;
 
 import de.dungeon.game.rule.Dice;
 import de.dungeon.game.rule.TestResult;
+import org.jetbrains.annotations.NotNull;
 
 public class Property {
 
@@ -9,7 +10,7 @@ public class Property {
     private int value;
     private int modifier;
 
-    public Property(final Dice dice) {
+    public Property(@NotNull final Dice dice) {
         this.dice = dice;
     }
 

@@ -1,6 +1,7 @@
 package de.dungeon.game.rule;
 
 import com.google.inject.Inject;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
@@ -9,7 +10,7 @@ public class Dice {
     private final Random random;
 
     @Inject
-    public Dice(final Random random) {
+    public Dice(@NotNull final Random random) {
         this.random = random;
     }
 

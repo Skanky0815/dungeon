@@ -7,6 +7,7 @@ import de.dungeon.game.character.property.Melee;
 import de.dungeon.game.character.property.Range;
 import de.dungeon.game.rule.Damage;
 import de.dungeon.game.rule.Dice;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,13 @@ public class PlayerBuilder {
     private final List<Weapon> weaponList;
 
     // TODO: refactor this crap ore replace with some other nicer class stuff
-    private PlayerBuilder(final String name, final int melee, final int range, final int magic, final int dodge) {
+    private PlayerBuilder(
+            @NotNull final String name,
+            final int melee,
+            final int range,
+            final int magic,
+            final int dodge
+    ) {
         final var dice = new Dice(new Random());
 
         this.name = name;
@@ -38,7 +45,7 @@ public class PlayerBuilder {
     }
 
     public static PlayerBuilder build(
-            final String name,
+            @NotNull final String name,
             final int melee,
             final int range,
             final int magic,

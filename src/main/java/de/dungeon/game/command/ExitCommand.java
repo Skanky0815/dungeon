@@ -2,13 +2,14 @@ package de.dungeon.game.command;
 
 import com.google.inject.Inject;
 import de.dungeon.game.Text;
+import org.jetbrains.annotations.NotNull;
 
 public class ExitCommand extends Command {
 
     private final Text text;
 
     @Inject
-    public ExitCommand(final Text text) {
+    public ExitCommand(@NotNull final Text text) {
         this.text = text;
     }
 

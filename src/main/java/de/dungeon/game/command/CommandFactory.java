@@ -6,6 +6,8 @@ import com.google.inject.Singleton;
 import de.dungeon.game.character.Player;
 import de.dungeon.game.character.enemy.Enemy;
 import de.dungeon.game.character.property.Property;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
@@ -16,22 +18,31 @@ public class CommandFactory {
     private final Injector injector;
 
     @Inject
-    public CommandFactory(final Player player, final Injector injector) {
+    public CommandFactory(@NotNull final Player player, @NotNull final Injector injector) {
         this.player = player;
         this.injector = injector;
     }
 
-    public Command create(final Map<String, Object> commandData, final Enemy enemy) throws CommandException {
+    public Command create(@NotNull final Map<String, Object> commandData) throws CommandException {
         return switch ((String) commandData.get("command")) {
-            case "npc_status" -> injector.getInstance(EnemyStatusCommand.class).init(enemy);
             case "go" -> createGoCommand(commandData);
             case "attribute_test" -> createAttributeTestCommand(commandData);
+            default -> throw new UnknownCommandException((String) commandData.get("command"));
+        };
+    }
+
+    public Command create(
+            @NotNull final Map<String, Object> commandData,
+            @NotNull final Enemy enemy
+    ) throws CommandException {
+        return switch ((String) commandData.get("command")) {
+            case "npc_status" -> injector.getInstance(EnemyStatusCommand.class).init(enemy);
             case "fight" -> injector.getInstance(FightCommand.class).init(enemy);
             default -> throw new UnknownCommandException((String) commandData.get("command"));
         };
     }
 
-    private Command createGoCommand(final Map<String, Object> commandData) {
+    private Command createGoCommand(@NotNull final Map<String, Object> commandData) {
         return (new Command() {
             @Override
             protected boolean doing() {
@@ -43,7 +54,7 @@ public class CommandFactory {
         );
     }
 
-    private Command createAttributeTestCommand(final Map<String, Object> commandData) throws CommandException {
+    private Command createAttributeTestCommand(@NotNull final Map<String, Object> commandData) throws CommandException {
         final Property property = switch ((String) commandData.get("attribute")) {
             case "melee" -> player.getMelee();
             case "range" -> player.getRange();

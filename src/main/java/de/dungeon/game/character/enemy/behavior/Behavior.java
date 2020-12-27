@@ -1,6 +1,7 @@
 package de.dungeon.game.character.enemy.behavior;
 
 import de.dungeon.game.character.enemy.Enemy;
+import org.jetbrains.annotations.NotNull;
 
 public class Behavior {
 
@@ -10,13 +11,13 @@ public class Behavior {
     private int min;
     private int max;
 
-    public void init(final String text, final int min, final int max) {
+    public void init(@NotNull final String text, final int min, final int max) {
         this.text = text;
         this.min = min;
         this.max = max;
     }
 
-    public void setEnemy(final Enemy enemy) {
+    public void setEnemy(@NotNull final Enemy enemy) {
         this.enemy = enemy;
     }
 

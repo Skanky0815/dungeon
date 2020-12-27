@@ -1,6 +1,7 @@
 package de.dungeon.game.command;
 
 import de.dungeon.game.character.property.Property;
+import org.jetbrains.annotations.NotNull;
 
 public class AttributeTestCommand extends Command {
 
@@ -8,10 +9,10 @@ public class AttributeTestCommand extends Command {
     private Property property;
 
     public AttributeTestCommand init(
-            final String text,
-            final String doText,
+            @NotNull final String text,
+            @NotNull final String doText,
             final int modifier,
-            final Property property
+            @NotNull final Property property
     ) {
         super.init(text, doText);
         this.modifier = modifier;

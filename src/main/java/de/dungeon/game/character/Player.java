@@ -5,6 +5,7 @@ import de.dungeon.game.character.property.Dodge;
 import de.dungeon.game.character.property.Magic;
 import de.dungeon.game.character.property.Melee;
 import de.dungeon.game.character.property.Range;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -17,13 +18,13 @@ public class Player extends Character {
     private final List<Weapon> weaponList;
 
     public Player(
-            final String name,
-            final Melee melee,
-            final Range range,
-            final Magic magic,
-            final Dodge dodge,
+            @NotNull final String name,
+            @NotNull final Melee melee,
+            @NotNull final Range range,
+            @NotNull final Magic magic,
+            @NotNull final Dodge dodge,
             final int armor,
-            final List<Weapon> weaponList
+            @NotNull final List<Weapon> weaponList
     ) {
         super(name, 40, armor, dodge);
         this.melee = melee;
@@ -37,7 +38,7 @@ public class Player extends Character {
         return melee;
     }
 
-    public boolean tryToAttackWithWeapon(final Weapon weapon) {
+    public boolean tryToAttackWithWeapon(@NotNull final Weapon weapon) {
         if (weapon.getTestProperty().isInstance(melee)) {
             return true;
         }

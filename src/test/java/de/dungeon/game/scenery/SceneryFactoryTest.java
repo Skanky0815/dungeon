@@ -1,7 +1,7 @@
 package de.dungeon.game.scenery;
 
 import de.dungeon.game.FrontController;
-import de.dungeon.game.character.player.PlayerBuilder;
+import de.dungeon.game.character.Player;
 import de.dungeon.game.character.enemy.Enemy;
 import de.dungeon.game.character.enemy.EnemyFactory;
 import de.dungeon.game.command.Command;
@@ -15,23 +15,25 @@ public class SceneryFactoryTest {
 
     @Test
     void initShouldWork() throws Exception {
-        final var player = PlayerBuilder.build("Ruhindil", 1, 1, 1, 1).get();
+        final var player = mock(Player.class);
         final var controller = mock(FrontController.class);
         final var enemyFactory = mock(EnemyFactory.class);
         final var commandFactory = mock(CommandFactory.class);
+
+        when(enemyFactory.create(anyString())).thenReturn(mock(Enemy.class));
 
         when(commandFactory.create(any(), any(Enemy.class))).thenReturn((new Command() {
             @Override
             protected boolean doing() {
                 return false;
             }
-        }).init("", ""));
+        }).init("a", "do a"));
         when(commandFactory.create(any(), any())).thenReturn((new Command() {
             @Override
             protected boolean doing() {
                 return false;
             }
-        }).init("", ""));
+        }).init("b", "do b"));
 
         final var sceneries = (new SceneryFactory(player, controller, enemyFactory, commandFactory)).init();
         assertEquals(2, sceneries.size());

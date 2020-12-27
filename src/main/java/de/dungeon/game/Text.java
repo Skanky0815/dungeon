@@ -1,6 +1,7 @@
 package de.dungeon.game;
 
 import com.google.inject.Singleton;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 import java.util.MissingResourceException;
@@ -20,7 +21,7 @@ public class Text {
         resourceBundle = PropertyResourceBundle.getBundle("texts.main", local);
     }
 
-    public String get(final String key) {
+    public String get(@NotNull final String key) {
         if (null != resourceBundle) {
             try {
                 return resourceBundle.getString(key);
