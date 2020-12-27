@@ -11,7 +11,7 @@ public class PlayerStatusCommandTest {
     void doActionShouldCallTheRenderMethodOfTheView() throws Exception {
         final var viewMock = mock(PlayerStatusView.class);
 
-        (new PlayerStatusCommand(viewMock)).doAction();
+        (new PlayerStatusCommand(viewMock)).init().doAction();
 
         verify(viewMock).render();
     }
