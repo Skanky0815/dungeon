@@ -15,8 +15,10 @@ class EnemyStatusViewTest extends ViewTestCase {
 
     @Test
     void renderShouldPrintTheEnemyStatus() {
+        final var behavior = new Behavior();
+        behavior.init("do nothing", 1, 20);
         final var behaviorList = new ArrayList<Behavior>() {{
-            add(new Behavior("do nothing", 1, 20));
+            add(behavior);
         }};
 
         final var enemy = new Enemy("Enemy A", 15, 2, (Dodge) new Dodge(mock(Dice.class)).init(7), 2, behaviorList);

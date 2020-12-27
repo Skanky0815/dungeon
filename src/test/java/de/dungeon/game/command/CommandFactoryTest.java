@@ -39,18 +39,18 @@ public class CommandFactoryTest {
 
     @Test
     void createShouldReturnEnemyStatusCommand() throws Exception {
-        final var enemyStub = new Enemy("Enemy A", 15, 0, null, 0, null);
+        final var enemy = mock(Enemy.class);
         final var commandData = new HashMap<String, Object>() {{
             put("command", "npc_status");
         }};
 
         final var enemyStatusMock = mock(EnemyStatusCommand.class);
         when(injectorMock.getInstance(EnemyStatusCommand.class)).thenReturn(enemyStatusMock);
-        when(enemyStatusMock.init(enemyStub)).thenReturn(enemyStatusMock);
+        when(enemyStatusMock.init(enemy)).thenReturn(enemyStatusMock);
 
-        final var command = factory().create(commandData, enemyStub);
+        final var command = factory().create(commandData, enemy);
         assertThat(command, instanceOf(EnemyStatusCommand.class));
-        verify(enemyStatusMock).init(enemyStub);
+        verify(enemyStatusMock).init(enemy);
     }
 
     @ParameterizedTest
@@ -97,18 +97,18 @@ public class CommandFactoryTest {
 
     @Test
     void createShouldReturnFightCommand() throws Exception {
-        final var enemyStub = new Enemy("Enemy A", 15, 0, null, 0, null);
+        final var enemy = mock(Enemy.class);
         final var commandData = new HashMap<String, Object>() {{
             put("command", "fight");
         }};
 
         final var fightCommand = mock(FightCommand.class);
         when(injectorMock.getInstance(FightCommand.class)).thenReturn(fightCommand);
-        when(fightCommand.init(enemyStub)).thenReturn(fightCommand);
+        when(fightCommand.init(enemy)).thenReturn(fightCommand);
 
-        final var command = factory().create(commandData, enemyStub);
+        final var command = factory().create(commandData, enemy);
         assertThat(command, instanceOf(FightCommand.class));
-        verify(fightCommand).init(enemyStub);
+        verify(fightCommand).init(enemy);
     }
 
     @Test

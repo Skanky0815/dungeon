@@ -1,5 +1,5 @@
 {
-  "name": "Eber",
+  "name": "enemy",
   "health": 15,
   "dodge": 5,
   "armor": 0,
@@ -9,14 +9,19 @@
       "min": 1,
       "max": 4,
       "type": "damage",
-      "text": "Der Eber greift dich mit seinen Hauern direkt an",
+      "text": "do some damage",
       "damage": {"diceCount":  1, "diceType": 6, "modifier": 4}
     },
     {
       "min": 5,
+      "max": 10,
+      "text": "do some other stuff"
+    },
+    {
+      "min": 11,
       "max": 20,
       "type": "escape",
-      "text": "Flucht: Der Eber verschwindet in das Unterholz des Waldes."
+      "text": "run away"
     }
   ]
 }

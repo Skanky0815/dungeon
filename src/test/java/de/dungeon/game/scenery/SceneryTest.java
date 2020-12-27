@@ -55,7 +55,8 @@ public class SceneryTest extends ViewTestCase {
         final var commands = new ArrayList<Command>() {{
             add(commandStub);
         }};
-        final var enemy = new Enemy("enemy", 15, 0, null, 0, null);
+        final var enemy = mock(Enemy.class);
+        when(enemy.getName()).thenReturn("enemy");
 
         (new Scenery("key", controllerMock, "text %s text", commands, enemy)).run();
     }

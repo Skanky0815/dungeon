@@ -18,9 +18,9 @@ public class EnemyTest {
     @BeforeEach
     void setUp() {
         final List<Behavior> behaviorList = new ArrayList<>(Arrays.asList(
-            new Behavior("a", 1, 5),
-            new Behavior("b", 6, 10),
-            new Behavior("c", 11, 20)
+            createBehavior("a", 1, 5),
+            createBehavior("b", 6, 10),
+            createBehavior("c", 11, 20)
         ));
         enemy = new Enemy("enemy", 15, 0, mock(Dodge.class), 1, behaviorList);
     }
@@ -39,5 +39,11 @@ public class EnemyTest {
     void isAliveShouldFalseIfEnemyIsDead() {
         enemy.takeDamage(16);
         assertFalse(enemy.isAlive());
+    }
+
+    private Behavior createBehavior(final String text, final int min, final int max) {
+        final var behavior = new Behavior();
+        behavior.init(text, min, max);
+        return behavior;
     }
 }

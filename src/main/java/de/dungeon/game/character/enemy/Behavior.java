@@ -1,24 +1,21 @@
 package de.dungeon.game.character.enemy;
 
-import de.dungeon.game.rule.Damage;
-import de.dungeon.game.rule.UnknownDiceException;
-
 public class Behavior {
 
-    private final String text;
-    private final int min;
-    private final int max;
-    private final Damage damage;
+    protected Enemy enemy;
 
-    public Behavior(final String text, final int min, final int max) {
-      this(text, min, max, null);
-    }
+    private String text;
+    private int min;
+    private int max;
 
-    public Behavior(final String text, final int min, final int max, final Damage damage) {
+    public void init(final String text, final int min, final int max) {
         this.text = text;
         this.min = min;
         this.max = max;
-        this.damage = damage;
+    }
+
+    public void setEnemy(final Enemy enemy) {
+        this.enemy = enemy;
     }
 
     public int getMin() {
@@ -29,12 +26,8 @@ public class Behavior {
         return max;
     }
 
-    public Damage getDamage() {
-        return damage;
-    }
-
-    public int getDamageValue() throws UnknownDiceException {
-        return damage.calculateDamage();
+    public void doBehavior() {
+        System.out.println(text);
     }
 
     public String getText() {

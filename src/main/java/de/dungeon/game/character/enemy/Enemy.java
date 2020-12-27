@@ -20,6 +20,7 @@ public class Enemy extends Character  {
     ) {
         super(name, health, armor, dodge);
         this.actions = actions;
+        behaviorList.forEach(behavior -> behavior.setEnemy(this));
         this.behaviorList = behaviorList;
     }
 

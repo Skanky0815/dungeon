@@ -3,7 +3,6 @@ package de.dungeon.game.character.enemy;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import de.dungeon.game.character.property.Dodge;
-import de.dungeon.game.rule.Damage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.dungeon.game.rule.Dice;
 
@@ -18,11 +17,13 @@ public class EnemyFactory {
 
     private final ObjectMapper mapper;
     private final Dice dice;
+    private final BehaviorFactory behaviorFactory;
 
     @Inject
-    public EnemyFactory(final ObjectMapper mapper, final Dice dice) {
+    public EnemyFactory(final ObjectMapper mapper, final Dice dice, final BehaviorFactory behaviorFactory) {
         this.mapper = mapper;
         this.dice = dice;
+        this.behaviorFactory = behaviorFactory;
     }
 
     @SuppressWarnings (value="unchecked")
@@ -39,37 +40,12 @@ public class EnemyFactory {
         );
     }
 
-    private List<Behavior> createBehaviorList(List<Map> behaviorListData) {
+    private List<Behavior> createBehaviorList(List<Map> behaviorListData) throws UnknownBehaviorTypeException {
         final var behaviorList = new ArrayList<Behavior>();
         for (var behaviorData : behaviorListData) {
-           behaviorList.add(createBehavior(behaviorData));
+           behaviorList.add(behaviorFactory.create(behaviorData));
         }
         return behaviorList;
-    }
-
-    private Behavior createBehavior(final Map behaviorData) {
-        if (behaviorData.get("damage") != null) {
-           return new Behavior(
-                    (String) behaviorData.get("text"),
-                    (int) behaviorData.get("min"),
-                    (int) behaviorData.get("max"),
-                    createDamage((Map) behaviorData.get("damage"))
-            );
-        }
-
-        return new Behavior(
-                (String) behaviorData.get("text"),
-                (int) behaviorData.get("min"),
-                (int) behaviorData.get("max")
-        );
-    }
-
-    private Damage createDamage(final Map damageData) {
-        return (new Damage(dice)).init(
-                (int) damageData.get("diceCount"),
-                (int) damageData.get("diceType"),
-                (int) damageData.get("modifier")
-        );
     }
 
     private Map loadData(final String name) throws Exception {

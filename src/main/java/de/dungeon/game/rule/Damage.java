@@ -1,5 +1,7 @@
 package de.dungeon.game.rule;
 
+import com.google.inject.Inject;
+
 public class Damage {
 
     private final Dice dice;
@@ -8,6 +10,7 @@ public class Damage {
     private int diceType;
     private int modifier;
 
+    @Inject
     public Damage(Dice dice) {
         this.dice = dice;
     }

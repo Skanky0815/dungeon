@@ -12,7 +12,8 @@ public class BehaviorTest {
 
     @BeforeEach
     void setUp() {
-        behavior = new Behavior("behavior text", 5, 10);
+        behavior = new Behavior();
+        behavior.init("behavior text", 5, 10);
     }
 
     @Test
