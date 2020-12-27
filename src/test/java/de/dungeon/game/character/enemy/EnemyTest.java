@@ -1,5 +1,6 @@
 package de.dungeon.game.character.enemy;
 
+import de.dungeon.game.character.enemy.behavior.Behavior;
 import de.dungeon.game.character.property.Dodge;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

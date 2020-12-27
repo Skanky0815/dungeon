@@ -1,4 +1,4 @@
-package de.dungeon.game.character.enemy;
+package de.dungeon.game.character.enemy.behavior;
 
 import com.google.inject.Inject;
 import de.dungeon.game.battle.DamageHandler;

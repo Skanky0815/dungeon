@@ -1,4 +1,4 @@
-package de.dungeon.game.character.enemy;
+package de.dungeon.game.character.enemy.behavior;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

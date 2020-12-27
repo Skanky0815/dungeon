@@ -1,7 +1,9 @@
-package de.dungeon.game.character.enemy;
+package de.dungeon.game.character.enemy.behavior.factory;
 
 import com.google.inject.Injector;
-import de.dungeon.game.rule.Damage;
+import de.dungeon.game.character.enemy.UnknownBehaviorTypeException;
+import de.dungeon.game.character.enemy.behavior.Behavior;
+import de.dungeon.game.character.enemy.behavior.DamageBehavior;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -9,18 +11,19 @@ import java.util.HashMap;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class BehaviorFactoryTest {
+class FactoryTest {
 
     @Test
     void createShouldThrownAUnknownBehaviorTypeException() {
-        final var exception = assertThrows(UnknownBehaviorTypeException.class, () -> {
+        assertThrows(UnknownBehaviorTypeException.class, () -> {
             final var map = new HashMap<>() {{
                 put("type", "woops");
             }};
-            new BehaviorFactory(mock(Injector.class)).create(map);
-        });
+            final var typeMapper = mock(TypeMapper.class);
+            when(typeMapper.createBehaviorByType(map)).thenThrow(UnknownBehaviorTypeException.class);
 
-        assertEquals("Behavior type woops not implemented!", exception.getMessage());
+            new Factory(mock(Injector.class), typeMapper).create(map);
+        });
     }
 
     @Test
@@ -35,36 +38,26 @@ class BehaviorFactoryTest {
             put("text", "some text");
         }};
 
-        assertEquals(behavior, new BehaviorFactory(injector).create(map));
+        assertEquals(behavior, new Factory(injector, mock(TypeMapper.class)).create(map));
         verify(behavior).init(eq("some text"), eq(1), eq(5));
     }
 
     @Test
     void createShouldCreateADamageBehavior() throws Exception {
         final var behavior = mock(DamageBehavior.class);
-        final var damage = mock(Damage.class);
-        when(damage.init(1, 6, 0)).thenReturn(damage);
-        when(behavior.setDamage(damage)).thenReturn(behavior);
-
         final var injector = mock(Injector.class);
-        when(injector.getInstance(DamageBehavior.class)).thenReturn(behavior);
-        when(injector.getInstance(Damage.class)).thenReturn(damage);
 
         final var map = new HashMap<>() {{
             put("type", "damage");
             put("min", 1);
             put("max", 5);
             put("text", "some text");
-            put("damage", new HashMap<>() {{
-                put("diceCount", 1);
-                put("diceType", 6);
-                put("modifier", 0);
-            }});
         }};
 
-        assertEquals(behavior, new BehaviorFactory(injector).create(map));
-        verify(damage).init(eq(1), eq(6), eq(0));
-        verify(behavior).init(eq("some text"), eq(1), eq(5));
-        verify(behavior).setDamage(eq(damage));
+        final var typeMapper = mock(TypeMapper.class);
+        when(typeMapper.createBehaviorByType(map)).thenReturn(behavior);
+
+        assertEquals(behavior, new Factory(injector, typeMapper).create(map));
+        verify(typeMapper).createBehaviorByType(eq(map));
     }
 }

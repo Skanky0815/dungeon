@@ -1,6 +1,6 @@
 package de.dungeon.game.view;
 
-import de.dungeon.game.character.enemy.Behavior;
+import de.dungeon.game.character.enemy.behavior.Behavior;
 import de.dungeon.game.character.enemy.Enemy;
 
 public class EnemyStatusView implements View {

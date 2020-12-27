@@ -1,4 +1,6 @@
-package de.dungeon.game.character.enemy;
+package de.dungeon.game.character.enemy.behavior;
+
+import de.dungeon.game.character.enemy.Enemy;
 
 public class Behavior {
 

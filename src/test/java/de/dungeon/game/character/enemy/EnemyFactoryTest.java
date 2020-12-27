@@ -1,6 +1,9 @@
 package de.dungeon.game.character.enemy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.dungeon.game.character.enemy.behavior.Behavior;
+import de.dungeon.game.character.enemy.behavior.DamageBehavior;
+import de.dungeon.game.character.enemy.behavior.factory.Factory;
 import de.dungeon.game.rule.Dice;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +14,7 @@ public class EnemyFactoryTest {
 
     @Test
     void createShouldLoadAEnemyFromTheJSONFile() throws Exception {
-        final var behaviorFactory = mock(BehaviorFactory.class);
+        final var behaviorFactory = mock(Factory.class);
         final var damageBehavior = mock(DamageBehavior.class);
 
         when(behaviorFactory.create(anyMap())).thenReturn(damageBehavior, mock(Behavior.class), mock((Behavior.class)));

@@ -1,6 +1,6 @@
 package de.dungeon.game.battle;
 
-import de.dungeon.game.character.enemy.Behavior;
+import de.dungeon.game.character.enemy.behavior.Behavior;
 import de.dungeon.game.character.enemy.Enemy;
 import de.dungeon.game.rule.Dice;
 import org.junit.jupiter.api.Test;

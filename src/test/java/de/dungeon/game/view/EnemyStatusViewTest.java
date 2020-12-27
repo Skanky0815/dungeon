@@ -1,6 +1,6 @@
 package de.dungeon.game.view;
 
-import de.dungeon.game.character.enemy.Behavior;
+import de.dungeon.game.character.enemy.behavior.Behavior;
 import de.dungeon.game.character.enemy.Enemy;
 import de.dungeon.game.character.property.Dodge;
 import de.dungeon.game.rule.Dice;

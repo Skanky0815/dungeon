@@ -2,6 +2,8 @@ package de.dungeon.game.character.enemy;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import de.dungeon.game.character.enemy.behavior.Behavior;
+import de.dungeon.game.character.enemy.behavior.factory.Factory;
 import de.dungeon.game.character.property.Dodge;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.dungeon.game.rule.Dice;
@@ -17,10 +19,10 @@ public class EnemyFactory {
 
     private final ObjectMapper mapper;
     private final Dice dice;
-    private final BehaviorFactory behaviorFactory;
+    private final Factory behaviorFactory;
 
     @Inject
-    public EnemyFactory(final ObjectMapper mapper, final Dice dice, final BehaviorFactory behaviorFactory) {
+    public EnemyFactory(final ObjectMapper mapper, final Dice dice, final Factory behaviorFactory) {
         this.mapper = mapper;
         this.dice = dice;
         this.behaviorFactory = behaviorFactory;
