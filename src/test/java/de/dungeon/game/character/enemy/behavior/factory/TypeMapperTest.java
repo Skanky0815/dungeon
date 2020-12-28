@@ -1,6 +1,5 @@
 package de.dungeon.game.character.enemy.behavior.factory;
 
-import de.dungeon.game.character.enemy.UnknownBehaviorTypeException;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;

@@ -1,7 +1,6 @@
 package de.dungeon.game.character.enemy.behavior.factory;
 
 import com.google.inject.Injector;
-import de.dungeon.game.character.enemy.UnknownBehaviorTypeException;
 import de.dungeon.game.character.enemy.behavior.Behavior;
 import de.dungeon.game.character.enemy.behavior.DamageBehavior;
 import org.junit.jupiter.api.Test;
@@ -11,7 +10,7 @@ import java.util.HashMap;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class FactoryTest {
+class BehaviorFactoryTest {
 
     @Test
     void createShouldThrownAUnknownBehaviorTypeException() {
@@ -22,7 +21,7 @@ class FactoryTest {
             final var typeMapper = mock(TypeMapper.class);
             when(typeMapper.createBehaviorByType(map)).thenThrow(UnknownBehaviorTypeException.class);
 
-            new Factory(mock(Injector.class), typeMapper).create(map);
+            new BehaviorFactory(mock(Injector.class), typeMapper).create(map);
         });
     }
 
@@ -38,7 +37,7 @@ class FactoryTest {
             put("text", "some text");
         }};
 
-        assertEquals(behavior, new Factory(injector, mock(TypeMapper.class)).create(map));
+        assertEquals(behavior, new BehaviorFactory(injector, mock(TypeMapper.class)).create(map));
         verify(behavior).init(eq("some text"), eq(1), eq(5));
     }
 
@@ -57,7 +56,7 @@ class FactoryTest {
         final var typeMapper = mock(TypeMapper.class);
         when(typeMapper.createBehaviorByType(map)).thenReturn(behavior);
 
-        assertEquals(behavior, new Factory(injector, typeMapper).create(map));
+        assertEquals(behavior, new BehaviorFactory(injector, typeMapper).create(map));
         verify(typeMapper).createBehaviorByType(eq(map));
     }
 }

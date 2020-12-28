@@ -6,7 +6,7 @@ import com.google.inject.Injector;
 import de.dungeon.game.character.Player;
 import de.dungeon.game.character.player.PlayerBuilder;
 import de.dungeon.game.command.PlayerStatusCommand;
-import de.dungeon.game.scenery.factory.Factory;
+import de.dungeon.game.scenery.factory.SceneryFactory;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
@@ -50,7 +50,7 @@ public class Game extends AbstractModule {
         System.out.printf(text.get("game.start"), player.getName());
         controller.addCommand("c", injector.getInstance(PlayerStatusCommand.class).init());
 
-        final var sceneries = injector.getInstance(Factory.class).init();
+        final var sceneries = injector.getInstance(SceneryFactory.class).init();
         var index = (int) (Math.random() * sceneries.size());
         for (var scenery : sceneries.values()) {
             if (--index < 0) {

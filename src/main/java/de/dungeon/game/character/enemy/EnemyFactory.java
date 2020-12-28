@@ -3,7 +3,8 @@ package de.dungeon.game.character.enemy;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import de.dungeon.game.character.enemy.behavior.Behavior;
-import de.dungeon.game.character.enemy.behavior.factory.Factory;
+import de.dungeon.game.character.enemy.behavior.factory.BehaviorFactory;
+import de.dungeon.game.character.enemy.behavior.factory.UnknownBehaviorTypeException;
 import de.dungeon.game.character.property.Dodge;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.dungeon.game.rule.Dice;
@@ -20,13 +21,13 @@ public class EnemyFactory {
 
     private final ObjectMapper mapper;
     private final Dice dice;
-    private final Factory behaviorFactory;
+    private final BehaviorFactory behaviorFactory;
 
     @Inject
     public EnemyFactory(
             @NotNull final ObjectMapper mapper,
             @NotNull final Dice dice,
-            @NotNull final Factory behaviorFactory
+            @NotNull final BehaviorFactory behaviorFactory
     ) {
         this.mapper = mapper;
         this.dice = dice;

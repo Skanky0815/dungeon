@@ -5,21 +5,21 @@ import de.dungeon.game.character.Player;
 import de.dungeon.game.character.enemy.Enemy;
 import de.dungeon.game.character.enemy.EnemyFactory;
 import de.dungeon.game.command.Command;
-import de.dungeon.game.command.factory.Factory;
+import de.dungeon.game.command.factory.CommandFactory;
 import de.dungeon.game.scenery.Scenery;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class FactoryTest {
+public class SceneryFactoryTest {
 
     @Test
     void initShouldWork() throws Exception {
         final var player = mock(Player.class);
         final var injector = mock(Injector.class);
         final var enemyFactory = mock(EnemyFactory.class);
-        final var commandFactory = mock(Factory.class);
+        final var commandFactory = mock(CommandFactory.class);
 
         when(enemyFactory.create(anyString())).thenReturn(mock(Enemy.class));
 
@@ -43,7 +43,7 @@ public class FactoryTest {
 
         when(injector.getInstance(Scenery.class)).thenReturn(sceneryA, sceneryB);
 
-        final var sceneries = (new de.dungeon.game.scenery.factory.Factory(injector, player, enemyFactory, commandFactory)).init();
+        final var sceneries = new SceneryFactory(injector, player, enemyFactory, commandFactory).init();
         assertEquals(2, sceneries.size());
     }
 }

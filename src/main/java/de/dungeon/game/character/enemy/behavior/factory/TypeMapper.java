@@ -1,7 +1,6 @@
 package de.dungeon.game.character.enemy.behavior.factory;
 
 import com.google.inject.Inject;
-import de.dungeon.game.character.enemy.UnknownBehaviorTypeException;
 import de.dungeon.game.character.enemy.behavior.Behavior;
 
 import org.jetbrains.annotations.NotNull;

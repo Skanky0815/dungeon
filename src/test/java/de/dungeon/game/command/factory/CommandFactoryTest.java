@@ -18,7 +18,7 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class FactoryTest {
+public class CommandFactoryTest {
 
     private Injector injectorMock;
 
@@ -127,8 +127,8 @@ public class FactoryTest {
         assertEquals("Command woop does not exists!", exception.getMessage());
     }
 
-    private Factory factory() {
+    private CommandFactory factory() {
         final var playerSub = PlayerBuilder.build("Player A", 1, 1, 1, 1).get();
-        return new Factory(playerSub, injectorMock);
+        return new CommandFactory(playerSub, injectorMock);
     }
 }

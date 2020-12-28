@@ -1,4 +1,4 @@
-package de.dungeon.game.character.enemy;
+package de.dungeon.game.character.enemy.behavior.factory;
 
 import org.jetbrains.annotations.NotNull;
 

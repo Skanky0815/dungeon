@@ -8,6 +8,7 @@ import de.dungeon.game.character.Player;
 import de.dungeon.game.character.enemy.Enemy;
 import de.dungeon.game.character.enemy.EnemyFactory;
 import de.dungeon.game.command.Command;
+import de.dungeon.game.command.factory.CommandFactory;
 import de.dungeon.game.scenery.Scenery;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,23 +16,23 @@ import java.io.File;
 import java.util.*;
 
 @Singleton
-public class Factory {
+public class SceneryFactory {
 
     private final ObjectMapper mapper = new ObjectMapper();
     private final Injector injector;
     private final Player player;
     private final EnemyFactory enemyFactory;
-    private final de.dungeon.game.command.factory.Factory commandFactory;
+    private final CommandFactory commandFactory;
     private final Map<String, Command> commands = new HashMap<>();
     private final Map<String, Scenery> sceneries = new HashMap<>();
     private final Map<String, Map> sceneriesData = new HashMap<>();
 
     @Inject
-    public Factory(
+    public SceneryFactory(
             @NotNull final Injector injector,
             @NotNull final Player player,
             @NotNull final EnemyFactory enemyFactory,
-            @NotNull final de.dungeon.game.command.factory.Factory commandFactory
+            @NotNull final CommandFactory commandFactory
     ) {
         this.injector = injector;
         this.player = player;
@@ -49,7 +50,7 @@ public class Factory {
         return sceneries;
     }
 
-    private File[] loadFiles() throws NoSceneriesException {
+    private File[] loadFiles() throws Exception {
         final var dir = new File(getClass().getClassLoader().getResource("sceneries").getFile());
         final var files = dir.listFiles();
         if (null == files) {

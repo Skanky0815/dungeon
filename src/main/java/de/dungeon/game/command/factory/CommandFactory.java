@@ -12,13 +12,13 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Map;
 
 @Singleton
-public class Factory {
+public class CommandFactory {
 
     private final Player player;
     private final Injector injector;
 
     @Inject
-    public Factory(@NotNull final Player player, @NotNull final Injector injector) {
+    public CommandFactory(@NotNull final Player player, @NotNull final Injector injector) {
         this.player = player;
         this.injector = injector;
     }
