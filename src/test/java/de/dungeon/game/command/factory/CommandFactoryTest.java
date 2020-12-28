@@ -11,8 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.HashMap;
-
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,13 +27,12 @@ public class CommandFactoryTest {
 
     @Test
     void createShouldReturnAGoCommand() throws Exception {
-        final var commandData = new HashMap<String, Object>() {{
-            put("command", "go");
-            put("text", "Command Text");
-            put("do_text", "Command Do Text");
-        }};
+        final var mapper = new CommandMapper();
+        mapper.setCommand("go");
+        mapper.setText("Command Text");
+        mapper.setDoText("Command Do Text");
 
-        final var command = factory().create(commandData);
+        final var command = factory().create(mapper);
         assertEquals("Command Text", command.getText());
         assertTrue(command.doAction());
     }
@@ -43,15 +40,14 @@ public class CommandFactoryTest {
     @Test
     void createShouldReturnEnemyStatusCommand() throws Exception {
         final var enemy = mock(Enemy.class);
-        final var commandData = new HashMap<String, Object>() {{
-            put("command", "npc_status");
-        }};
+        final var mapper = new CommandMapper();
+        mapper.setCommand("npc_status");
 
         final var enemyStatusMock = mock(EnemyStatusCommand.class);
         when(injectorMock.getInstance(EnemyStatusCommand.class)).thenReturn(enemyStatusMock);
         when(enemyStatusMock.setEnemy(enemy)).thenReturn(enemyStatusMock);
 
-        final var command = factory().create(commandData, enemy);
+        final var command = factory().create(mapper, enemy);
         assertThat(command, instanceOf(EnemyStatusCommand.class));
         verify(enemyStatusMock).setEnemy(enemy);
     }
@@ -59,22 +55,19 @@ public class CommandFactoryTest {
     @ParameterizedTest
     @ValueSource(strings = {"melee", "range", "magic", "dodge"})
     void createShouldReturnAttributeTestCommand(final String attribute) throws Exception {
-        final var commandData = new HashMap<String, Object>() {{
-            put("command", "attribute_test");
-            put("attribute", attribute);
-            put("modifier", 5);
-            put("text", "Command %s Text");
-            put("do_text", "%s do Text");
-            put("success", new HashMap<String, String>());
-            put("failure", new HashMap<String, String>());
-        }};
+        final var mapper = new CommandMapper();
+        mapper.setCommand("attribute_test");
+        mapper.setAttribute(attribute);
+        mapper.setModifier(5);
+        mapper.setText("Command %s Text");
+        mapper.setDoText("%s do Text");
 
         final var attributeTestCommand = mock(AttributeTestCommand.class);
         when(injectorMock.getInstance(AttributeTestCommand.class)).thenReturn(attributeTestCommand);
         when(attributeTestCommand.init(eq("Command Player A Text"), eq("Player A do Text"), eq(5), any()))
                 .thenReturn(attributeTestCommand);
 
-        final var command = factory().create(commandData);
+        final var command = factory().create(mapper);
         assertThat(command, instanceOf(AttributeTestCommand.class));
         verify(attributeTestCommand).init(eq("Command Player A Text"), eq("Player A do Text"), eq(5), any());
     }
@@ -82,17 +75,14 @@ public class CommandFactoryTest {
     @Test
     void createShouldThrownAUnknownPropertyException() {
         final var exception = assertThrows(UnknownPropertyException.class, () -> {
-            final var commandData = new HashMap<String, Object>() {{
-                put("command", "attribute_test");
-                put("attribute", "woop");
-                put("modifier", 5);
-                put("text", "Command %s Text");
-                put("do_text", "%s do Text");
-                put("success", new HashMap<String, String>());
-                put("failure", new HashMap<String, String>());
-            }};
+            final var mapper = new CommandMapper();
+            mapper.setCommand("attribute_test");
+            mapper.setAttribute("woop");
+            mapper.setModifier(5);
+            mapper.setText("Command %s Text");
+            mapper.setDoText("%s do Text");
 
-            factory().create(commandData);
+            factory().create(mapper);
         });
 
         assertEquals("Property woop does not exists!", exception.getMessage());
@@ -101,15 +91,14 @@ public class CommandFactoryTest {
     @Test
     void createShouldReturnFightCommand() throws Exception {
         final var enemy = mock(Enemy.class);
-        final var commandData = new HashMap<String, Object>() {{
-            put("command", "fight");
-        }};
+        final var mapper = new CommandMapper();
+        mapper.setCommand("fight");
 
         final var fightCommand = mock(FightCommand.class);
         when(injectorMock.getInstance(FightCommand.class)).thenReturn(fightCommand);
         when(fightCommand.setEnemy(enemy)).thenReturn(fightCommand);
 
-        final var command = factory().create(commandData, enemy);
+        final var command = factory().create(mapper, enemy);
         assertThat(command, instanceOf(FightCommand.class));
         verify(fightCommand).setEnemy(enemy);
     }
@@ -117,11 +106,10 @@ public class CommandFactoryTest {
     @Test
     void createShouldThrownAExceptionForUnknownCommand() {
         final var exception = assertThrows(UnknownCommandException.class, () -> {
-            final var commandData = new HashMap<String, Object>() {{
-                put("command", "woop");
-            }};
+            final var mapper = new CommandMapper();
+            mapper.setCommand("woop");
 
-            factory().create(commandData, mock(Enemy.class));
+            factory().create(mapper, mock(Enemy.class));
         });
 
         assertEquals("Command woop does not exists!", exception.getMessage());

@@ -9,8 +9,6 @@ import de.dungeon.game.character.property.Property;
 import de.dungeon.game.command.*;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Map;
-
 @Singleton
 public class CommandFactory {
 
@@ -23,51 +21,48 @@ public class CommandFactory {
         this.injector = injector;
     }
 
-    public Command create(@NotNull final Map<String, Object> commandData) throws CommandException {
-        return switch ((String) commandData.get("command")) {
-            case "go" -> createGoCommand(commandData);
-            case "attribute_test" -> createAttributeTestCommand(commandData);
-            default -> throw new UnknownCommandException((String) commandData.get("command"));
+    public Command create(@NotNull final CommandMapper mapper) throws CommandException {
+        return switch (mapper.getCommand()) {
+            case "go" -> createGoCommand(mapper);
+            case "attribute_test" -> createAttributeTestCommand(mapper);
+            default -> throw new UnknownCommandException(mapper.getCommand());
         };
     }
 
-    public Command create(
-            @NotNull final Map<String, Object> commandData,
-            @NotNull final Enemy enemy
-    ) throws CommandException {
-        final var command = switch ((String) commandData.get("command")) {
+    public Command create(@NotNull final CommandMapper mapper, @NotNull final Enemy enemy) throws CommandException {
+        final var command = switch (mapper.getCommand()) {
             case "npc_status" -> injector.getInstance(EnemyStatusCommand.class);
             case "fight" -> injector.getInstance(FightCommand.class);
-            default -> throw new UnknownCommandException((String) commandData.get("command"));
+            default -> throw new UnknownCommandException(mapper.getCommand());
         };
         return command.setEnemy(enemy);
     }
 
-    private Command createGoCommand(@NotNull final Map<String, Object> commandData) {
+    private Command createGoCommand(@NotNull final CommandMapper mapper) {
         return (new Command() {
             @Override
             protected boolean doing() {
                 return true;
             }
         }).init(
-                ((String) commandData.get("text")).formatted(player.getName()),
-                ((String) commandData.get("do_text")).formatted(player.getName())
+                mapper.getText().formatted(player.getName()),
+                mapper.getDoText().formatted(player.getName())
         );
     }
 
-    private Command createAttributeTestCommand(@NotNull final Map<String, Object> commandData) throws CommandException {
-        final Property property = switch ((String) commandData.get("attribute")) {
+    private Command createAttributeTestCommand(@NotNull final CommandMapper mapper) throws CommandException {
+        final Property property = switch (mapper.getAttribute()) {
             case "melee" -> player.getMelee();
             case "range" -> player.getRange();
             case "magic" -> player.getMagic();
             case "dodge" -> player.getDodge();
-            default -> throw new UnknownPropertyException((String) commandData.get("attribute"));
+            default -> throw new UnknownPropertyException(mapper.getAttribute());
         };
 
         return injector.getInstance(AttributeTestCommand.class).init(
-                ((String) commandData.get("text")).formatted(player.getName()),
-                ((String) commandData.get("do_text")).formatted(player.getName()),
-                (int) commandData.get("modifier"),
+                mapper.getText().formatted(player.getName()),
+                mapper.getDoText().formatted(player.getName()),
+                mapper.getModifier(),
                 property
         );
     }

@@ -9,6 +9,7 @@ import de.dungeon.game.character.enemy.Enemy;
 import de.dungeon.game.character.enemy.factory.EnemyFactory;
 import de.dungeon.game.command.Command;
 import de.dungeon.game.command.factory.CommandFactory;
+import de.dungeon.game.command.factory.CommandMapper;
 import de.dungeon.game.scenery.Scenery;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,7 +19,7 @@ import java.util.*;
 @Singleton
 public class SceneryFactory {
 
-    private final ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
     private final Injector injector;
     private final Player player;
     private final EnemyFactory enemyFactory;
@@ -61,40 +62,40 @@ public class SceneryFactory {
     }
 
     private void create(@NotNull final File file) throws Exception {
-        final var data = mapper.readValue(file, HashMap.class);
-        final var scenery = createScenery(injector.getInstance(Scenery.class), data);
-        sceneries.put((String) data.get("key"), scenery);
+        final var mapper = objectMapper.readValue(file, SceneryMapper.class);
+        final var scenery = createScenery(injector.getInstance(Scenery.class), mapper);
+        sceneries.put(mapper.getKey(), scenery);
     }
 
     @SuppressWarnings(value = "uncheced")
-    private Scenery createScenery(@NotNull final Scenery scenery, @NotNull final Map data) throws Exception {
-        final var text = ((String) data.get("text")).formatted(player.getName());
-        final var key = (String) data.get("key");
-        if (data.containsKey("enemy")) {
-            final var enemy = enemyFactory.create((String) data.get("enemy"));
-            return scenery.init(key, text, setupCommands((List) data.get("commands"), enemy), enemy);
+    private Scenery createScenery(@NotNull final Scenery scenery, @NotNull final SceneryMapper mapper) throws Exception {
+        final var text = mapper.getText().formatted(player.getName());
+        final var key = mapper.getKey();
+        if (mapper.hasEnemy()) {
+            final var enemy = enemyFactory.create(mapper.getEnemy());
+            return scenery.init(key, text, setupCommands(mapper.getCommands(), enemy), enemy);
         }
-        return scenery.init(key, text, setupCommands((List) data.get("commands")));
+        return scenery.init(key, text, setupCommands(mapper.getCommands()));
     }
 
     private ArrayList<Command> setupCommands(
-            @NotNull final List<Map<String, Object>> commandsData,
+            @NotNull final List<CommandMapper> commandMapperList,
             @NotNull final Enemy enemy
     ) throws Exception {
         final var commands = new ArrayList<Command>();
-        for (Map<String, Object> commandData : commandsData) {
-            final var command = commandFactory.create(commandData, enemy);
-            this.commands.put((String) commandData.get("key"), command);
+        for (var mapper : commandMapperList) {
+            final var command = commandFactory.create(mapper, enemy);
+            this.commands.put(mapper.getKey(), command);
             commands.add(command);
         }
         return commands;
     }
 
-    private ArrayList<Command> setupCommands(@NotNull final List<Map<String, Object>> commandsData) throws Exception {
+    private ArrayList<Command> setupCommands(@NotNull final List<CommandMapper> commandMapperList) throws Exception {
         final var commands = new ArrayList<Command>();
-        for (Map<String, Object> commandData : commandsData) {
-            final var command = commandFactory.create(commandData);
-            this.commands.put((String) commandData.get("key"), command);
+        for (var mapper : commandMapperList) {
+            final var command = commandFactory.create(mapper);
+            this.commands.put((String) mapper.getKey(), command);
             commands.add(command);
         }
         return commands;
