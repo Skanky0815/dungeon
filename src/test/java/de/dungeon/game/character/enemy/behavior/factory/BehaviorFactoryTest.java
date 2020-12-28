@@ -15,13 +15,12 @@ class BehaviorFactoryTest {
     @Test
     void createShouldThrownAUnknownBehaviorTypeException() {
         assertThrows(UnknownBehaviorTypeException.class, () -> {
-            final var map = new HashMap<>() {{
-                put("type", "woops");
-            }};
+            final var mapper = new BehaviorMapper();
+            mapper.setType("woops");
             final var typeMapper = mock(TypeMapper.class);
-            when(typeMapper.createBehaviorByType(map)).thenThrow(UnknownBehaviorTypeException.class);
+            when(typeMapper.createBehaviorByType(mapper)).thenThrow(UnknownBehaviorTypeException.class);
 
-            new BehaviorFactory(mock(Injector.class), typeMapper).create(map);
+            new BehaviorFactory(mock(Injector.class), typeMapper).create(mapper);
         });
     }
 
@@ -31,13 +30,12 @@ class BehaviorFactoryTest {
         final var injector = mock(Injector.class);
         when(injector.getInstance(Behavior.class)).thenReturn(behavior);
 
-        final var map = new HashMap<>() {{
-            put("min", 1);
-            put("max", 5);
-            put("text", "some text");
-        }};
+        final var mapper = new BehaviorMapper();
+        mapper.setMin(1);
+        mapper.setMax(5);
+        mapper.setText("some text");
 
-        assertEquals(behavior, new BehaviorFactory(injector, mock(TypeMapper.class)).create(map));
+        assertEquals(behavior, new BehaviorFactory(injector, mock(TypeMapper.class)).create(mapper));
         verify(behavior).init(eq("some text"), eq(1), eq(5));
     }
 
@@ -46,17 +44,16 @@ class BehaviorFactoryTest {
         final var behavior = mock(DamageBehavior.class);
         final var injector = mock(Injector.class);
 
-        final var map = new HashMap<>() {{
-            put("type", "damage");
-            put("min", 1);
-            put("max", 5);
-            put("text", "some text");
-        }};
+        final var mapper = new BehaviorMapper();
+        mapper.setType("damage");
+        mapper.setMin(1);
+        mapper.setMax(5);
+        mapper.setText("some text");
 
         final var typeMapper = mock(TypeMapper.class);
-        when(typeMapper.createBehaviorByType(map)).thenReturn(behavior);
+        when(typeMapper.createBehaviorByType(mapper)).thenReturn(behavior);
 
-        assertEquals(behavior, new BehaviorFactory(injector, typeMapper).create(map));
-        verify(typeMapper).createBehaviorByType(eq(map));
+        assertEquals(behavior, new BehaviorFactory(injector, typeMapper).create(mapper));
+        verify(typeMapper).createBehaviorByType(eq(mapper));
     }
 }

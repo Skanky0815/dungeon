@@ -5,8 +5,6 @@ import com.google.inject.Injector;
 import de.dungeon.game.character.enemy.behavior.Behavior;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Map;
-
 public class BehaviorFactory {
 
     private final Injector injector;
@@ -18,17 +16,17 @@ public class BehaviorFactory {
         this.typeMapper = typeMapper;
     }
 
-    public Behavior create(@NotNull final Map behaviorData) throws UnknownBehaviorTypeException {
-        final var behavior = createBehaviorByTypeOrDefault(behaviorData);
-        behavior.init((String) behaviorData.get("text"), (int) behaviorData.get("min"), (int) behaviorData.get("max"));
+    public Behavior create(@NotNull final BehaviorMapper mapper) throws UnknownBehaviorTypeException {
+        final var behavior = createBehaviorByTypeOrDefault(mapper);
+        behavior.init(mapper.getText(), mapper.getMin(), mapper.getMax());
         return behavior;
     }
 
     private Behavior createBehaviorByTypeOrDefault(
-            @NotNull final Map behaviorData
+            @NotNull final BehaviorMapper mapper
     ) throws UnknownBehaviorTypeException {
-        if (behaviorData.containsKey("type")) {
-            return typeMapper.createBehaviorByType(behaviorData);
+        if (null != mapper.getType()) {
+            return typeMapper.createBehaviorByType(mapper);
         }
 
         return injector.getInstance(Behavior.class);

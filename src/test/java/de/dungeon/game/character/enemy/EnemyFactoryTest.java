@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.dungeon.game.character.enemy.behavior.Behavior;
 import de.dungeon.game.character.enemy.behavior.DamageBehavior;
 import de.dungeon.game.character.enemy.behavior.factory.BehaviorFactory;
+import de.dungeon.game.character.enemy.behavior.factory.BehaviorMapper;
+import de.dungeon.game.character.enemy.factory.EnemyFactory;
 import de.dungeon.game.rule.Dice;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +19,8 @@ public class EnemyFactoryTest {
         final var behaviorFactory = mock(BehaviorFactory.class);
         final var damageBehavior = mock(DamageBehavior.class);
 
-        when(behaviorFactory.create(anyMap())).thenReturn(damageBehavior, mock(Behavior.class), mock((Behavior.class)));
+        when(behaviorFactory.create(any(BehaviorMapper.class)))
+                .thenReturn(damageBehavior, mock(Behavior.class), mock((Behavior.class)));
 
         final var dice = mock(Dice.class);
         final var factory = new EnemyFactory(new ObjectMapper(), dice, behaviorFactory);

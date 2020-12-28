@@ -5,8 +5,6 @@ import de.dungeon.game.character.enemy.behavior.DamageBehavior;
 import de.dungeon.game.rule.Damage;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -14,17 +12,17 @@ class DamageBehaviorFactoryTest {
 
     @Test
     void createShouldReturnADamageBehaviorWithDamage() {
-        final var map = new HashMap<>() {{
-            put("type", "damage");
-            put("min", 1);
-            put("max", 5);
-            put("text", "some text");
-            put("damage", new HashMap<>() {{
-                put("diceCount", 1);
-                put("diceType", 6);
-                put("modifier", 0);
-            }});
-        }};
+        final var damageMapper = new DamageMapper();
+        damageMapper.setDiceCount(1);
+        damageMapper.setDiceType(6);
+        damageMapper.setModifier(0);
+
+        final var behaviorMapper = new BehaviorMapper();
+        behaviorMapper.setType("damage");
+        behaviorMapper.setMin(1);
+        behaviorMapper.setMax(5);
+        behaviorMapper.setText("some text");
+        behaviorMapper.setDamageMapper(damageMapper);
 
         final var behavior = mock(DamageBehavior.class);
         final var damage = mock(Damage.class);
@@ -35,7 +33,7 @@ class DamageBehaviorFactoryTest {
         when(injector.getInstance(DamageBehavior.class)).thenReturn(behavior);
         when(injector.getInstance(Damage.class)).thenReturn(damage);
 
-        assertEquals(behavior, new DamageBehaviorFactory(injector).create(map));
+        assertEquals(behavior, new DamageBehaviorFactory(injector).create(behaviorMapper));
 
         verify(behavior).setDamage(eq(damage));
         verify(damage).init(eq(1), eq(6), eq(0));

@@ -10,7 +10,7 @@
       "max": 4,
       "type": "damage",
       "text": "do some damage",
-      "damage": {"diceCount":  1, "diceType": 6, "modifier": 4}
+      "damage": {"dice_count":  1, "dice_type": 6, "modifier": 4}
     },
     {
       "min": 5,

@@ -6,7 +6,7 @@ import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import de.dungeon.game.character.Player;
 import de.dungeon.game.character.enemy.Enemy;
-import de.dungeon.game.character.enemy.EnemyFactory;
+import de.dungeon.game.character.enemy.factory.EnemyFactory;
 import de.dungeon.game.command.Command;
 import de.dungeon.game.command.factory.CommandFactory;
 import de.dungeon.game.scenery.Scenery;
