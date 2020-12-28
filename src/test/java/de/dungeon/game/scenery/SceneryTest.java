@@ -3,6 +3,7 @@ package de.dungeon.game.scenery;
 import de.dungeon.game.FrontController;
 import de.dungeon.game.character.enemy.Enemy;
 import de.dungeon.game.command.Command;
+import de.dungeon.game.scenery.factory.SceneryCallback;
 import de.dungeon.game.view.ViewTestCase;
 import org.junit.jupiter.api.Test;
 import org.mockito.stubbing.Answer;
@@ -27,7 +28,7 @@ public class SceneryTest extends ViewTestCase {
                 })
                 .thenReturn(true);
 
-        (new Scenery("key", controllerMock, "text")).run();
+        new Scenery(controllerMock).init("key", "text", new ArrayList<>()).run();
 
         assertThat(outContent.toString(), containsString("No option found for number 0\n"));
     }
@@ -58,6 +59,6 @@ public class SceneryTest extends ViewTestCase {
         final var enemy = mock(Enemy.class);
         when(enemy.getName()).thenReturn("enemy");
 
-        (new Scenery("key", controllerMock, "text %s text", commands, enemy)).run();
+        new Scenery(controllerMock).init("key", "text %s text", commands, enemy).run();
     }
 }

@@ -1,8 +1,11 @@
-package de.dungeon.game.command;
+package de.dungeon.game.command.factory;
 
 import com.google.inject.Injector;
 import de.dungeon.game.character.player.PlayerBuilder;
 import de.dungeon.game.character.enemy.Enemy;
+import de.dungeon.game.command.AttributeTestCommand;
+import de.dungeon.game.command.EnemyStatusCommand;
+import de.dungeon.game.command.FightCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,7 +18,7 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class CommandFactoryTest {
+public class FactoryTest {
 
     private Injector injectorMock;
 
@@ -34,7 +37,7 @@ public class CommandFactoryTest {
 
         final var command = factory().create(commandData);
         assertEquals("Command Text", command.getText());
-        assertTrue(command.doing());
+        assertTrue(command.doAction());
     }
 
     @Test
@@ -46,11 +49,11 @@ public class CommandFactoryTest {
 
         final var enemyStatusMock = mock(EnemyStatusCommand.class);
         when(injectorMock.getInstance(EnemyStatusCommand.class)).thenReturn(enemyStatusMock);
-        when(enemyStatusMock.init(enemy)).thenReturn(enemyStatusMock);
+        when(enemyStatusMock.setEnemy(enemy)).thenReturn(enemyStatusMock);
 
         final var command = factory().create(commandData, enemy);
         assertThat(command, instanceOf(EnemyStatusCommand.class));
-        verify(enemyStatusMock).init(enemy);
+        verify(enemyStatusMock).setEnemy(enemy);
     }
 
     @ParameterizedTest
@@ -104,11 +107,11 @@ public class CommandFactoryTest {
 
         final var fightCommand = mock(FightCommand.class);
         when(injectorMock.getInstance(FightCommand.class)).thenReturn(fightCommand);
-        when(fightCommand.init(enemy)).thenReturn(fightCommand);
+        when(fightCommand.setEnemy(enemy)).thenReturn(fightCommand);
 
         final var command = factory().create(commandData, enemy);
         assertThat(command, instanceOf(FightCommand.class));
-        verify(fightCommand).init(enemy);
+        verify(fightCommand).setEnemy(enemy);
     }
 
     @Test
@@ -124,8 +127,8 @@ public class CommandFactoryTest {
         assertEquals("Command woop does not exists!", exception.getMessage());
     }
 
-    private CommandFactory factory() {
+    private Factory factory() {
         final var playerSub = PlayerBuilder.build("Player A", 1, 1, 1, 1).get();
-        return new CommandFactory(playerSub, injectorMock);
+        return new Factory(playerSub, injectorMock);
     }
 }

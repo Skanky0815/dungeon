@@ -1,4 +1,4 @@
-package de.dungeon.game.command;
+package de.dungeon.game.command.factory;
 
 import org.jetbrains.annotations.NotNull;
 

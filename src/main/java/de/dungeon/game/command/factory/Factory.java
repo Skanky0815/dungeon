@@ -1,4 +1,4 @@
-package de.dungeon.game.command;
+package de.dungeon.game.command.factory;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -6,19 +6,19 @@ import com.google.inject.Singleton;
 import de.dungeon.game.character.Player;
 import de.dungeon.game.character.enemy.Enemy;
 import de.dungeon.game.character.property.Property;
+import de.dungeon.game.command.*;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
 @Singleton
-public class CommandFactory {
+public class Factory {
 
     private final Player player;
     private final Injector injector;
 
     @Inject
-    public CommandFactory(@NotNull final Player player, @NotNull final Injector injector) {
+    public Factory(@NotNull final Player player, @NotNull final Injector injector) {
         this.player = player;
         this.injector = injector;
     }
@@ -35,11 +35,12 @@ public class CommandFactory {
             @NotNull final Map<String, Object> commandData,
             @NotNull final Enemy enemy
     ) throws CommandException {
-        return switch ((String) commandData.get("command")) {
-            case "npc_status" -> injector.getInstance(EnemyStatusCommand.class).init(enemy);
-            case "fight" -> injector.getInstance(FightCommand.class).init(enemy);
+        final var command = switch ((String) commandData.get("command")) {
+            case "npc_status" -> injector.getInstance(EnemyStatusCommand.class);
+            case "fight" -> injector.getInstance(FightCommand.class);
             default -> throw new UnknownCommandException((String) commandData.get("command"));
         };
+        return command.setEnemy(enemy);
     }
 
     private Command createGoCommand(@NotNull final Map<String, Object> commandData) {

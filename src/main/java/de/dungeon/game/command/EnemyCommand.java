@@ -7,7 +7,8 @@ public abstract class EnemyCommand extends Command {
 
     protected Enemy enemy;
 
-    public void setEnemy(@NotNull final Enemy enemy) {
+    public EnemyCommand setEnemy(@NotNull final Enemy enemy) {
         this.enemy = enemy;
+        return this;
     }
 }

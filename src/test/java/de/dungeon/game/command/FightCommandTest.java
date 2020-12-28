@@ -20,7 +20,7 @@ class FightCommandTest {
         
         final var player = mock(Player.class);
 
-        new FightCommand(player, playerAttack, enemyAttack).init(enemy).doing();
+        new FightCommand(player, playerAttack, enemyAttack).setEnemy(enemy).doing();
 
         verify(playerAttack).attack(eq(enemy), eq(0));
         verify(enemyAttack).attack();;
@@ -35,7 +35,7 @@ class FightCommandTest {
 
         final var player = mock(Player.class);
 
-        assertTrue(new FightCommand(player, playerAttack, enemyAttack).init(enemy).doing());
+        assertTrue(new FightCommand(player, playerAttack, enemyAttack).setEnemy(enemy).doing());
         verify(enemyAttack, never()).attack();
     }
 }

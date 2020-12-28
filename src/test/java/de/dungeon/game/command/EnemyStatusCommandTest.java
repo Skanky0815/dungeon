@@ -13,7 +13,7 @@ class EnemyStatusCommandTest {
         final var enemy = mock(Enemy.class);
         final var viewMock = mock(EnemyStatusView.class);
 
-        (new EnemyStatusCommand(viewMock)).init(enemy).doing();
+        (new EnemyStatusCommand(viewMock)).setEnemy(enemy).doing();
 
         verify(viewMock).setEnemy(enemy);
         verify(viewMock).render();

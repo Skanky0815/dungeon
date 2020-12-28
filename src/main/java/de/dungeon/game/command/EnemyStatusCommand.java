@@ -14,11 +14,10 @@ public class EnemyStatusCommand extends EnemyCommand {
         this.view = view;
     }
 
-    public EnemyStatusCommand init(@NotNull final Enemy enemy) {
+    public EnemyStatusCommand setEnemy(@NotNull final Enemy enemy) {
         super.init("Den Status von %s abfragen.".formatted(enemy.getName()), null);
-        setEnemy(enemy);
         view.setEnemy(enemy);
-        return this;
+        return (EnemyStatusCommand) super.setEnemy(enemy);
     }
 
     @Override

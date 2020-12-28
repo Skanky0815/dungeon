@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import de.dungeon.game.command.Command;
 import de.dungeon.game.command.ExitCommand;
-import de.dungeon.game.scenery.SceneryCallback;
+import de.dungeon.game.scenery.factory.SceneryCallback;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

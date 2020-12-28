@@ -24,11 +24,10 @@ public class FightCommand extends EnemyCommand {
         this.enemyAttack = enemyAttack;
     }
 
-    public FightCommand init(@NotNull final Enemy enemy) {
-        super.setEnemy(enemy);
+    public FightCommand setEnemy(@NotNull final Enemy enemy) {
         super.init("%s kämpft!".formatted(player.getName()), "%s angreifen.".formatted(enemy.getName()));
         enemyAttack.setEnemy(enemy);
-        return this;
+        return (FightCommand) super.setEnemy(enemy);
     }
 
     @Override

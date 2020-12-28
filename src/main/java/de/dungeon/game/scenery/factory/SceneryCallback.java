@@ -1,4 +1,4 @@
-package de.dungeon.game.scenery;
+package de.dungeon.game.scenery.factory;
 
 import org.jetbrains.annotations.NotNull;
 

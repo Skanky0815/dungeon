@@ -1,48 +1,45 @@
 package de.dungeon.game.scenery;
 
+import com.google.inject.Inject;
 import de.dungeon.game.FrontController;
 import de.dungeon.game.character.enemy.Enemy;
 import de.dungeon.game.command.Command;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Scenery {
 
-    private final String key;
     private final FrontController controller;
-    private final String text;
+
+    private String key;
+    private String text;
     private List<Command> commands;
     private Enemy enemy;
 
-    public Scenery(@NotNull final String key, @NotNull final FrontController controller, @NotNull final String text) {
-        this.key = key;
+    @Inject
+    public Scenery(@NotNull final FrontController controller) {
         this.controller = controller;
-        this.text = text;
-        commands = new ArrayList<>();
     }
 
-    public Scenery(
+    public Scenery init(
             @NotNull final String key,
-            @NotNull final FrontController controller,
+            @NotNull final String text,
+            @NotNull final List<Command> commands
+    ) {
+        this.key = key;
+        this.text = text;
+        this.commands = commands;
+        return this;
+    }
+    public Scenery init(
+            @NotNull final String key,
             @NotNull final String text,
             @NotNull final List<Command> commands,
             @NotNull final Enemy enemy
     ) {
-        this(key, controller, text);
-        this.commands = commands;
         this.enemy = enemy;
-    }
-
-    public Scenery(
-            @NotNull final String key,
-            @NotNull final FrontController controller,
-            @NotNull final String text,
-            @NotNull final List<Command> commands
-    ) {
-        this(key, controller, text);
-        this.commands = commands;
+        return this.init(key, text, commands);
     }
 
     public void run() throws Exception {

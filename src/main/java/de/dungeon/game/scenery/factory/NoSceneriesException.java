@@ -1,4 +1,4 @@
-package de.dungeon.game.scenery;
+package de.dungeon.game.scenery.factory;
 
 public class NoSceneriesException extends Exception {
     public NoSceneriesException() {

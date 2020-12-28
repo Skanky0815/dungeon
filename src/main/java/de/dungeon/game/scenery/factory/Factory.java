@@ -1,41 +1,40 @@
-package de.dungeon.game.scenery;
+package de.dungeon.game.scenery.factory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 import com.google.inject.Singleton;
-import de.dungeon.game.FrontController;
 import de.dungeon.game.character.Player;
 import de.dungeon.game.character.enemy.Enemy;
 import de.dungeon.game.character.enemy.EnemyFactory;
 import de.dungeon.game.command.Command;
-import de.dungeon.game.command.CommandFactory;
+import de.dungeon.game.scenery.Scenery;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.*;
 
 @Singleton
-public class SceneryFactory {
+public class Factory {
 
     private final ObjectMapper mapper = new ObjectMapper();
+    private final Injector injector;
     private final Player player;
-    private final FrontController controller;
     private final EnemyFactory enemyFactory;
-    private final CommandFactory commandFactory;
+    private final de.dungeon.game.command.factory.Factory commandFactory;
     private final Map<String, Command> commands = new HashMap<>();
     private final Map<String, Scenery> sceneries = new HashMap<>();
     private final Map<String, Map> sceneriesData = new HashMap<>();
 
     @Inject
-    public SceneryFactory(
+    public Factory(
+            @NotNull final Injector injector,
             @NotNull final Player player,
-            @NotNull final FrontController controller,
             @NotNull final EnemyFactory enemyFactory,
-            @NotNull final CommandFactory commandFactory
+            @NotNull final de.dungeon.game.command.factory.Factory commandFactory
     ) {
+        this.injector = injector;
         this.player = player;
-        this.controller = controller;
         this.enemyFactory = enemyFactory;
         this.commandFactory = commandFactory;
     }
@@ -45,7 +44,7 @@ public class SceneryFactory {
         for (File file : files) {
             create(file);
         }
-        handFailureAndSuccess();
+        loopOverSceneriesAndAddFailureAndSuccessActions();
 
         return sceneries;
     }
@@ -53,37 +52,28 @@ public class SceneryFactory {
     private File[] loadFiles() throws NoSceneriesException {
         final var dir = new File(getClass().getClassLoader().getResource("sceneries").getFile());
         final var files = dir.listFiles();
-        if (null == files) throw new NoSceneriesException();
+        if (null == files) {
+            throw new NoSceneriesException();
+        }
+
         return files;
     }
 
-    @SuppressWarnings (value="unchecked")
     private void create(@NotNull final File file) throws Exception {
         final var data = mapper.readValue(file, HashMap.class);
-        sceneriesData.put((String) data.get("key"), data);
+        final var scenery = createScenery(injector.getInstance(Scenery.class), data);
+        sceneries.put((String) data.get("key"), scenery);
+    }
 
-        final var text = (String) data.get("text");
-
-        Scenery scenery;
+    @SuppressWarnings(value = "uncheced")
+    private Scenery createScenery(@NotNull final Scenery scenery, @NotNull final Map data) throws Exception {
+        final var text = ((String) data.get("text")).formatted(player.getName());
+        final var key = (String) data.get("key");
         if (data.containsKey("enemy")) {
             final var enemy = enemyFactory.create((String) data.get("enemy"));
-            scenery = new Scenery(
-                    (String) data.get("key"),
-                    controller,
-                    text.formatted(player.getName()),
-                    setupCommands((List<Map<String, Object>>) data.get("commands"), enemy),
-                    enemy
-            );
-        } else {
-            scenery = new Scenery(
-                    (String) data.get("key"),
-                    controller,
-                    text.formatted(player.getName()),
-                    setupCommands((List<Map<String, Object>>) data.get("commands"))
-            );
+            return scenery.init(key, text, setupCommands((List) data.get("commands"), enemy), enemy);
         }
-
-        sceneries.put((String) data.get("key"), scenery);
+        return scenery.init(key, text, setupCommands((List) data.get("commands")));
     }
 
     private ArrayList<Command> setupCommands(
@@ -110,33 +100,44 @@ public class SceneryFactory {
     }
 
     @SuppressWarnings(value = "unchecked")
-    private void handFailureAndSuccess() {
+    private void loopOverSceneriesAndAddFailureAndSuccessActions() {
         for (Map.Entry<String, ?> entry : sceneriesData.entrySet()) {
             final List<Map> commands = ((Map<String, List>) entry.getValue()).get("commands");
             for (var commandsData : commands) {
-                handleSuccess((Map<String, Map<String, String>>) commandsData);
-                handleFailure((Map<String, Map<String, String>>) commandsData);
+                handleFailureAndSuccess((Map<String, Map>) commandsData, "success", this::handSuccessAction);
+                handleFailureAndSuccess((Map<String, Map>) commandsData, "failure", this::handFailureAction);
             }
         }
     }
 
-    private void handleSuccess(@NotNull final Map<String, Map<String, String>> commandData) {
-        if (!commandData.containsKey("success")) return;
+    @SuppressWarnings(value = "unchecked")
+    private void handleFailureAndSuccess(
+            @NotNull final Map commandData,
+            @NotNull final String actionType,
+            @NotNull final LinkedSceneryCallback callback
+    ) {
+        if (!commandData.containsKey(actionType)) return;
 
-        final var success = (Map<String, String>) commandData.get("success");
-        commands.get(commandData.get("key")).setSuccessAction(
-                sceneries.get(success.get("action")),
-                success.get("text").formatted(player.getName())
-        );
+        final var actionData = (Map<String, String>) commandData.get(actionType);
+        final var command = commands.get(commandData.get("key"));
+        final var linkedScenery = sceneries.get(actionData.get("action"));
+        final var text = actionData.get("text").formatted(player.getName());
+        callback.call(command, linkedScenery, text);
     }
 
-    private void handleFailure(@NotNull final Map<String, Map<String, String>> commandData) {
-        if (!commandData.containsKey("failure")) return;
+    private void handSuccessAction(
+            @NotNull final Command command,
+            @NotNull final Scenery scenery,
+            @NotNull final String text
+    ) {
+        command.setSuccessAction(scenery, text);
+    }
 
-        final var failure = (Map<String, String>) commandData.get("failure");
-        commands.get(commandData.get("key")).setFailureAction(
-                sceneries.get(failure.get("action")),
-                failure.get("text").formatted(player.getName())
-        );
+    private void handFailureAction(
+            @NotNull final Command command,
+            @NotNull final Scenery scenery,
+            @NotNull final String text
+    ) {
+        command.setFailureAction(scenery, text);
     }
 }
