@@ -13,15 +13,12 @@ public class Enemy extends Character  {
     private final int actions;
 
     public Enemy(
-            @NotNull final String name,
-            final int health,
-            final int armor,
+            @NotNull final EnemyProperty property,
             @NotNull final Dodge dodge,
-            final int actions,
             @NotNull final List<Behavior> behaviorList
     ) {
-        super(name, health, armor, dodge);
-        this.actions = actions;
+        super(property.getName(), property.getHealth(), property.getArmor(), dodge);
+        this.actions = property.getActions();
         behaviorList.forEach(behavior -> behavior.setEnemy(this));
         this.behaviorList = behaviorList;
     }

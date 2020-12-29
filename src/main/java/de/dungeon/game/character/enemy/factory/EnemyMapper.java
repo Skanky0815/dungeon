@@ -1,10 +1,11 @@
 package de.dungeon.game.character.enemy.factory;
 
+import de.dungeon.game.character.enemy.EnemyProperty;
 import de.dungeon.game.character.enemy.behavior.factory.BehaviorMapper;
 
 import java.util.List;
 
-public class EnemyMapper {
+public class EnemyMapper implements EnemyProperty {
 
     private String name;
     private int health;
@@ -59,5 +60,14 @@ public class EnemyMapper {
 
     public void setBehaviors(List<BehaviorMapper> behaviors) {
         this.behaviors = behaviors;
+    }
+
+    public static EnemyMapper build(final String name, final int health, final int armor, final int actions) {
+        final var mapper = new EnemyMapper();
+        mapper.setName(name);
+        mapper.setHealth(health);
+        mapper.setArmor(armor);
+        mapper.setActions(actions);
+        return mapper;
     }
 }

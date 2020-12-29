@@ -1,6 +1,7 @@
 package de.dungeon.game.character.player;
 
 import de.dungeon.game.character.Player;
+import de.dungeon.game.character.enemy.behavior.factory.DamageMapper;
 import de.dungeon.game.character.property.Dodge;
 import de.dungeon.game.character.property.Magic;
 import de.dungeon.game.character.property.Melee;
@@ -40,7 +41,7 @@ public class PlayerBuilder {
         this.dodge = (Dodge) new Dodge(dice).init(dodge);
         this.armor = 0;
         this.weaponList = new ArrayList<>() {{
-            add(new Weapon("Axt", new Damage(dice).init(1, 6, 0), Melee.class));
+            add(new Weapon("Axt", new Damage(dice).init(DamageMapper.build(1, 6, 0)), Melee.class));
         }};
     }
 

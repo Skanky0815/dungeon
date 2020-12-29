@@ -19,11 +19,7 @@ class DamageBehaviorFactory extends BehaviorTypeFactory {
         return injector.getInstance(DamageBehavior.class).setDamage(createDamage(mapper.getDamageMapper()));
     }
 
-    private Damage createDamage(@NotNull final DamageMapper damage) {
-        return injector.getInstance(Damage.class).init(
-                damage.getDiceCount(),
-                damage.getDiceType(),
-                damage.getModifier()
-        );
+    private Damage createDamage(@NotNull final DamageMapper mapper) {
+        return injector.getInstance(Damage.class).init(mapper);
     }
 }

@@ -5,8 +5,6 @@ import de.dungeon.game.character.enemy.behavior.Behavior;
 import de.dungeon.game.character.enemy.behavior.DamageBehavior;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -36,7 +34,7 @@ class BehaviorFactoryTest {
         mapper.setText("some text");
 
         assertEquals(behavior, new BehaviorFactory(injector, mock(TypeMapper.class)).create(mapper));
-        verify(behavior).init(eq("some text"), eq(1), eq(5));
+        verify(behavior).init(eq(mapper));
     }
 
     @Test

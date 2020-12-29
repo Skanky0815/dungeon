@@ -11,10 +11,10 @@ public class Behavior {
     private int min;
     private int max;
 
-    public void init(@NotNull final String text, final int min, final int max) {
-        this.text = text;
-        this.min = min;
-        this.max = max;
+    public void init(@NotNull final BehaviorProperty property) {
+        this.text = property.getText();
+        this.min = property.getMin();
+        this.max = property.getMax();
     }
 
     public void setEnemy(@NotNull final Enemy enemy) {

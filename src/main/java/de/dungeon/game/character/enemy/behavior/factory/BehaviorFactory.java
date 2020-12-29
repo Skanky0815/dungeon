@@ -18,7 +18,7 @@ public class BehaviorFactory {
 
     public Behavior create(@NotNull final BehaviorMapper mapper) throws UnknownBehaviorTypeException {
         final var behavior = createBehaviorByTypeOrDefault(mapper);
-        behavior.init(mapper.getText(), mapper.getMin(), mapper.getMax());
+        behavior.init(mapper);
         return behavior;
     }
 

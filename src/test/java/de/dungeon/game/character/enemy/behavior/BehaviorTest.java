@@ -1,5 +1,6 @@
 package de.dungeon.game.character.enemy.behavior;
 
+import de.dungeon.game.character.enemy.behavior.factory.BehaviorMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +14,7 @@ public class BehaviorTest {
     @BeforeEach
     void setUp() {
         behavior = new Behavior();
-        behavior.init("behavior text", 5, 10);
+        behavior.init(BehaviorMapper.build("behavior text", 5, 10));
     }
 
     @Test

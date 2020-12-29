@@ -1,6 +1,8 @@
 package de.dungeon.game.character.enemy;
 
 import de.dungeon.game.character.enemy.behavior.Behavior;
+import de.dungeon.game.character.enemy.behavior.factory.BehaviorMapper;
+import de.dungeon.game.character.enemy.factory.EnemyMapper;
 import de.dungeon.game.character.property.Dodge;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +25,8 @@ public class EnemyTest {
             createBehavior("b", 6, 10),
             createBehavior("c", 11, 20)
         ));
-        enemy = new Enemy("enemy", 15, 0, mock(Dodge.class), 1, behaviorList);
+        final var enemyMapper = EnemyMapper.build("enemy", 15, 0, 1);
+        enemy = new Enemy(enemyMapper, mock(Dodge.class), behaviorList);
     }
 
     @Test
@@ -44,7 +47,7 @@ public class EnemyTest {
 
     private Behavior createBehavior(final String text, final int min, final int max) {
         final var behavior = new Behavior();
-        behavior.init(text, min, max);
+        behavior.init(BehaviorMapper.build(text, min, max));
         return behavior;
     }
 }

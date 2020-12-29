@@ -2,6 +2,8 @@ package de.dungeon.game.view;
 
 import de.dungeon.game.character.enemy.behavior.Behavior;
 import de.dungeon.game.character.enemy.Enemy;
+import de.dungeon.game.character.enemy.behavior.factory.BehaviorMapper;
+import de.dungeon.game.character.enemy.factory.EnemyMapper;
 import de.dungeon.game.character.property.Dodge;
 import de.dungeon.game.rule.Dice;
 import org.junit.jupiter.api.Test;
@@ -16,12 +18,13 @@ class EnemyStatusViewTest extends ViewTestCase {
     @Test
     void renderShouldPrintTheEnemyStatus() {
         final var behavior = new Behavior();
-        behavior.init("do nothing", 1, 20);
+        behavior.init(BehaviorMapper.build("do nothing", 1, 20));
         final var behaviorList = new ArrayList<Behavior>() {{
             add(behavior);
         }};
 
-        final var enemy = new Enemy("Enemy A", 15, 2, (Dodge) new Dodge(mock(Dice.class)).init(7), 2, behaviorList);
+        final var enemyMapper = EnemyMapper.build("Enemy A", 15, 2, 2);
+        final var enemy = new Enemy(enemyMapper, (Dodge) new Dodge(mock(Dice.class)).init(7), behaviorList);
 
         final var view = new EnemyStatusView();
         view.setEnemy(enemy);

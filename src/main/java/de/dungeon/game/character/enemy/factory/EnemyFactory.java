@@ -38,11 +38,8 @@ public class EnemyFactory {
         final var mapper = loadData(name);
 
         return new Enemy(
-                mapper.getName(),
-                mapper.getHealth(),
-                mapper.getArmor(),
+                mapper,
                 (Dodge) new Dodge(dice).init(mapper.getDodge()),
-                mapper.getActions(),
                 createBehaviorList(mapper.getBehaviors())
         );
     }

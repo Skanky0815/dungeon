@@ -16,10 +16,10 @@ public class Damage {
         this.dice = dice;
     }
 
-    public Damage init(final int diceCount, final int diceType, final int modifier) {
-        this.diceCount = diceCount;
-        this.diceType = diceType;
-        this.modifier = modifier;
+    public Damage init(final DamageProperty property) {
+        diceCount = property.getDiceCount();
+        diceType = property.getDiceType();
+        modifier = property.getModifier();
         return this;
     }
 

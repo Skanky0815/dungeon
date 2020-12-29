@@ -1,8 +1,9 @@
 package de.dungeon.game.character.enemy.behavior.factory;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import de.dungeon.game.character.enemy.behavior.BehaviorProperty;
 
-public class BehaviorMapper {
+public class BehaviorMapper implements BehaviorProperty {
 
     private String text;
     private int min;
@@ -52,5 +53,31 @@ public class BehaviorMapper {
 
     public void setDamageMapper(DamageMapper damageMapper) {
         this.damageMapper = damageMapper;
+    }
+
+    public static BehaviorMapper build(String text, int min, int max) {
+        final var mapper = new BehaviorMapper();
+        mapper.setText(text);
+        mapper.setMin(min);
+        mapper.setMax(max);
+        return mapper;
+    }
+
+    public static BehaviorMapper build(final String text, final int min, final int max, final String type) {
+        final var mapper = build(text, min, max);
+        mapper.setType(type);
+        return mapper;
+    }
+
+    public static BehaviorMapper build(
+            final String text,
+            final int min,
+            final int max,
+            final String type,
+            final DamageMapper damageMapper
+    ) {
+        final var mapper = build(text, min, max, type);
+        mapper.setDamageMapper(damageMapper);
+        return mapper;
     }
 }
