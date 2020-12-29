@@ -32,7 +32,7 @@ class DamageHandlerTest extends ViewTestCase {
     @Test
     void makeDamageShouldMake3DamageAtTheDefender() {
         var dodgeMock = mock(Dodge.class);
-        when(dodgeMock.isTheTestSuccessfully()).thenReturn(true);
+        when(dodgeMock.isTestSuccessfully()).thenReturn(true);
 
         var attackerStub = new Character("char A", 20, 2, mock(Dodge.class));
         var defenderStub = new Character("char B", 20, 2, dodgeMock);

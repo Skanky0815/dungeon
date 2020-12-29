@@ -48,7 +48,11 @@ public class Property {
        return test(0);
     }
 
-    public boolean isTheTestSuccessfully() {
+    public boolean isTestSuccessfully() {
         return test().isSuccess();
+    }
+
+    public boolean isTestSuccessfully(final int modifier) {
+        return test(modifier).isSuccess();
     }
 }

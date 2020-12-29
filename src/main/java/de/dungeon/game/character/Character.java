@@ -43,7 +43,7 @@ public class Character {
     }
 
     public boolean tryToDoge() {
-        return dodge.isTheTestSuccessfully();
+        return dodge.isTestSuccessfully();
     }
 
     public boolean isAlive() {
