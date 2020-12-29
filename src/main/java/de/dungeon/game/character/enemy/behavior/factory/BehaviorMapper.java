@@ -34,6 +34,10 @@ public class BehaviorMapper {
         this.max = max;
     }
 
+    public boolean hasType() {
+        return null != type;
+    }
+
     public String getType() {
         return type;
     }
