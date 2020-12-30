@@ -11,7 +11,6 @@ import java.util.ResourceBundle;
 @Singleton
 public class Text {
 
-    private static final String INDICATOR_MISSING_RESOURCE = "Resource missing";
     private static final String INDICATOR_MISSING_KEY = "Missing key: ";
 
     private final ResourceBundle resourceBundle;
@@ -22,13 +21,10 @@ public class Text {
     }
 
     public String get(@NotNull final String key) {
-        if (null != resourceBundle) {
-            try {
-                return resourceBundle.getString(key);
-            } catch (final MissingResourceException e) {
-                return INDICATOR_MISSING_KEY + key;
-            }
+        try {
+            return resourceBundle.getString(key);
+        } catch (final MissingResourceException e) {
+            return INDICATOR_MISSING_KEY + key;
         }
-        return INDICATOR_MISSING_RESOURCE;
     }
 }

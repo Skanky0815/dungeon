@@ -30,6 +30,6 @@ class TextTest {
             assertEquals("Resource missing", text.get("game.exit"));
         });
 
-        System.out.println(exception.getMessage());
+        assertEquals("Can't find bundle for base name texts.main, locale en", exception.getMessage());
     }
 }
