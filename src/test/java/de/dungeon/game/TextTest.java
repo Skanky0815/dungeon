@@ -21,7 +21,7 @@ class TextTest {
     }
 
     @Test
-    void getShouldReturn() {
+    void getShouldReturnTheFoundedLang() {
         final var text = new Text("en");
 
         assertEquals("Beenden", text.get("game.exit"));
