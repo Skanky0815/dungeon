@@ -24,7 +24,7 @@ class TextTest {
     void getShouldReturnTheFoundedLang() {
         final var text = new Text("en");
 
-        assertEquals("Beenden", text.get("game.exit"));
+        assertEquals("Resource missing", text.get("game.exit"));
     }
 
 }
