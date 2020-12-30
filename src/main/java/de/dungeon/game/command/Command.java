@@ -1,6 +1,7 @@
 package de.dungeon.game.command;
 
 import de.dungeon.game.scenery.Scenery;
+import de.dungeon.game.view.View;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -11,8 +12,16 @@ public abstract class Command {
     private String failureText;
     private Scenery successAction;
     private Scenery failureAction;
+    protected final View view;
 
-    public Command init(@NotNull final String text, @Nullable final String doText) {
+    public Command(@NotNull final View view) {
+        this.view = view;
+    }
+
+    public Command init(
+            @NotNull final String text,
+            @Nullable final String doText
+    ) {
         this.text = text;
         this.doText = doText;
         return this;
@@ -34,7 +43,7 @@ public abstract class Command {
 
     public boolean doAction() throws Exception {
         if (null != doText) {
-            System.out.println(doText);
+            view.render(doText);
         }
 
         if (doing()) {
@@ -52,7 +61,7 @@ public abstract class Command {
             final boolean isSuccessful
     ) throws Exception {
         if (null != action) {
-            System.out.println(text);
+            view.render(text);
             action.run();
         }
         return isSuccessful;

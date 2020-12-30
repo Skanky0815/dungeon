@@ -5,6 +5,7 @@ import de.dungeon.game.battle.EnemyAttack;
 import de.dungeon.game.battle.PlayerAttack;
 import de.dungeon.game.character.Player;
 import de.dungeon.game.character.enemy.Enemy;
+import de.dungeon.game.view.View;
 import org.jetbrains.annotations.NotNull;
 
 public class FightCommand extends EnemyCommand {
@@ -15,10 +16,12 @@ public class FightCommand extends EnemyCommand {
 
     @Inject
     public FightCommand(
+            @NotNull final View view,
             @NotNull final Player player,
             @NotNull final PlayerAttack playerAttack,
             @NotNull final EnemyAttack enemyAttack
     ) {
+        super(view);
         this.player = player;
         this.playerAttack = playerAttack;
         this.enemyAttack = enemyAttack;
@@ -32,7 +35,7 @@ public class FightCommand extends EnemyCommand {
 
     @Override
     protected boolean doing() {
-        System.out.printf("%s versucht %s anzugreifen\n", player.getName(), enemy.getName());
+        view.render("game.battle.try_to_attack", player.getName(), enemy.getName());
         playerAttack.attack(enemy, 0);
         if (enemy.isAlive()) {
             enemyAttack.attack();

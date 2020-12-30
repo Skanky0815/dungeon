@@ -1,12 +1,17 @@
 package de.dungeon.game.view;
 
+import de.dungeon.game.Text;
 import de.dungeon.game.character.enemy.behavior.Behavior;
 import de.dungeon.game.character.enemy.Enemy;
 import org.jetbrains.annotations.NotNull;
 
-public class EnemyStatusView implements View {
+public class EnemyStatusView extends View {
 
     private Enemy enemy;
+
+    public EnemyStatusView(@NotNull final Text text) {
+        super(text);
+    }
 
     public void setEnemy(@NotNull final Enemy enemy) {
         this.enemy = enemy;
@@ -22,18 +27,17 @@ public class EnemyStatusView implements View {
                 ---------------------------------------
                 Verhalten:%s
                 ---------------------------------------
-                """;
+                """.formatted(
+                        enemy.getName(),
+                        enemy.getHealth(),
+                        enemy.getMaxHealth(),
+                        enemy.getActions(),
+                        enemy.getDodge().getValue(),
+                        enemy.getArmor(),
+                        setupBehaviors()
+                );
 
-        System.out.printf(
-                text,
-                enemy.getName(),
-                enemy.getHealth(),
-                enemy.getMaxHealth(),
-                enemy.getActions(),
-                enemy.getDodge().getValue(),
-                enemy.getArmor(),
-                setupBehaviors()
-        );
+        render(text);
     }
 
     private StringBuilder setupBehaviors() {

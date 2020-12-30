@@ -4,6 +4,7 @@ import de.dungeon.game.battle.DamageHandler;
 import de.dungeon.game.character.Player;
 import de.dungeon.game.character.enemy.Enemy;
 import de.dungeon.game.rule.Damage;
+import de.dungeon.game.view.View;
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.*;
@@ -19,7 +20,7 @@ class DamageBehaviorTest {
         final var damageHandler = mock(DamageHandler.class);
         final var player = mock(Player.class);
 
-        final var behavior = new DamageBehavior(damageHandler, player).setDamage(damage);
+        final var behavior = new DamageBehavior(damageHandler, player, mock(View.class)).setDamage(damage);
         behavior.setEnemy(enemy);
         behavior.doBehavior();
         verify(damageHandler).makeDamage(eq(42), eq(enemy), eq(player));

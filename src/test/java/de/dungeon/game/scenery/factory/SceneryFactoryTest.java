@@ -7,6 +7,7 @@ import de.dungeon.game.character.enemy.factory.EnemyFactory;
 import de.dungeon.game.command.Command;
 import de.dungeon.game.command.factory.CommandFactory;
 import de.dungeon.game.scenery.Scenery;
+import de.dungeon.game.view.View;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,13 +24,13 @@ public class SceneryFactoryTest {
 
         when(enemyFactory.create(anyString())).thenReturn(mock(Enemy.class));
 
-        when(commandFactory.create(any(), any(Enemy.class))).thenReturn((new Command() {
+        when(commandFactory.create(any(), any(Enemy.class))).thenReturn((new Command(mock(View.class)) {
             @Override
             protected boolean doing() {
                 return false;
             }
         }).init("a", "do a"));
-        when(commandFactory.create(any(), any())).thenReturn((new Command() {
+        when(commandFactory.create(any(), any())).thenReturn((new Command(mock(View.class)) {
             @Override
             protected boolean doing() {
                 return false;

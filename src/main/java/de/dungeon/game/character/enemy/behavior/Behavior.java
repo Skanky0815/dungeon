@@ -1,15 +1,22 @@
 package de.dungeon.game.character.enemy.behavior;
 
 import de.dungeon.game.character.enemy.Enemy;
+import de.dungeon.game.view.View;
 import org.jetbrains.annotations.NotNull;
 
 public class Behavior {
 
     protected Enemy enemy;
 
+    private final View view;
+
     private String text;
     private int min;
     private int max;
+
+    public Behavior(@NotNull final View view) {
+        this.view = view;
+    }
 
     public void init(@NotNull final BehaviorProperty property) {
         this.text = property.getText();
@@ -30,7 +37,7 @@ public class Behavior {
     }
 
     public void doBehavior() {
-        System.out.println(text);
+        view.render(text);
     }
 
     public String getText() {

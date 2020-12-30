@@ -6,6 +6,7 @@ import de.dungeon.game.character.enemy.Enemy;
 import de.dungeon.game.command.AttributeTestCommand;
 import de.dungeon.game.command.EnemyStatusCommand;
 import de.dungeon.game.command.FightCommand;
+import de.dungeon.game.view.View;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -31,6 +32,8 @@ public class CommandFactoryTest {
         mapper.setCommand("go");
         mapper.setText("Command Text");
         mapper.setDoText("Command Do Text");
+
+        when(injectorMock.getInstance(View.class)).thenReturn(mock(View.class));
 
         final var command = factory().create(mapper);
         assertEquals("Command Text", command.getText());

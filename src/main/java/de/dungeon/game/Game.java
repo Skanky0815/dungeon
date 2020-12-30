@@ -7,6 +7,7 @@ import de.dungeon.game.character.Player;
 import de.dungeon.game.character.player.PlayerBuilder;
 import de.dungeon.game.command.PlayerStatusCommand;
 import de.dungeon.game.scenery.factory.SceneryFactory;
+import de.dungeon.game.view.View;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
@@ -34,7 +35,7 @@ public class Game extends AbstractModule {
 
     public static void main(final String[] args) {
         try {
-            (new Game()).run();
+            new Game().run();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -48,7 +49,7 @@ public class Game extends AbstractModule {
 
     private void createPlayerAndStartTheGame(@NotNull final String name) throws Exception {
         player = PlayerBuilder.build(name, 14, 8, 0, 5).get();
-        System.out.printf(text.get("game.start"), player.getName());
+        injector.getInstance(View.class).render("game.start", player.getName());
         controller.addCommand("c", injector.getInstance(PlayerStatusCommand.class).init());
 
         final var sceneries = injector.getInstance(SceneryFactory.class).init();

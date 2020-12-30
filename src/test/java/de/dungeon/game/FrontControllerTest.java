@@ -1,17 +1,15 @@
 package de.dungeon.game;
 
 import de.dungeon.game.command.ExitCommand;
-import de.dungeon.game.view.ViewTestCase;
+import de.dungeon.game.view.View;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
 
-import static org.hamcrest.MatcherAssert.*;
-import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class FrontControllerTest extends ViewTestCase {
+public class FrontControllerTest {
 
     @Test
     void actionShouldCallTheExitCommand() throws Exception {
@@ -21,11 +19,13 @@ public class FrontControllerTest extends ViewTestCase {
         when(exitCommand.getText()).thenReturn("Quit the game.");
         when(exitCommand.init()).thenReturn(exitCommand);
 
-        (new FrontController(exitCommand, bufferReader)).action("What will you do?", null);
+        final var view = mock(View.class);
+
+        new FrontController(exitCommand, bufferReader, view).action("What will you do?", null);
 
         verify(exitCommand).doAction();
-        assertThat(outContent.toString(), containsString("What will you do?"));
-        assertThat(outContent.toString(), containsString("Quit the game."));
+        verify(view).render(contains("What will you do?"));
+        verify(view).render(contains("Quit the game."));
     }
 
     @Test
@@ -35,7 +35,9 @@ public class FrontControllerTest extends ViewTestCase {
         when(bufferReader.readLine()).thenReturn("input");
         when(exitCommand.init()).thenReturn(exitCommand);
 
-        (new FrontController(exitCommand, bufferReader)).action("What will you do?", (final String input) -> {
+        final var view = mock(View.class);
+
+        new FrontController(exitCommand, bufferReader, view).action("What will you do?", (final String input) -> {
             assertEquals("input", input);
         });
     }

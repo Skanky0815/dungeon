@@ -4,18 +4,16 @@ import de.dungeon.game.FrontController;
 import de.dungeon.game.character.enemy.Enemy;
 import de.dungeon.game.command.Command;
 import de.dungeon.game.scenery.factory.SceneryCallback;
-import de.dungeon.game.view.ViewTestCase;
+import de.dungeon.game.view.View;
 import org.junit.jupiter.api.Test;
 import org.mockito.stubbing.Answer;
 
 import java.util.ArrayList;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
-public class SceneryTest extends ViewTestCase {
+public class SceneryTest {
 
     @Test
     void runShouldCallTheControllerWithoutCommands() throws Exception {
@@ -28,9 +26,11 @@ public class SceneryTest extends ViewTestCase {
                 })
                 .thenReturn(true);
 
-        new Scenery(controllerMock).init("key", "text", new ArrayList<>()).run();
+        final var view = mock(View.class);
 
-        assertThat(outContent.toString(), containsString("No option found for number 0\n"));
+        new Scenery(controllerMock, view).init("key", "text", new ArrayList<>()).run();
+
+        verify(view).render(eq("game.scenery.option_not_found"), eq(0));
     }
 
     @Test
@@ -45,7 +45,7 @@ public class SceneryTest extends ViewTestCase {
                 .thenReturn(false)
                 .thenReturn(true);
 
-        final Command commandStub = (new Command() {
+        final Command commandStub = (new Command(mock(View.class)) {
             @Override
             protected boolean doing() {
                 assertTrue(true);
@@ -59,6 +59,6 @@ public class SceneryTest extends ViewTestCase {
         final var enemy = mock(Enemy.class);
         when(enemy.getName()).thenReturn("enemy");
 
-        new Scenery(controllerMock).init("key", "text %s text", commands, enemy).run();
+        new Scenery(controllerMock, mock(View.class)).init("key", "text %s text", commands, enemy).run();
     }
 }

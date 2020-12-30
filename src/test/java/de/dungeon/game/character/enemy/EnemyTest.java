@@ -4,6 +4,7 @@ import de.dungeon.game.character.enemy.behavior.Behavior;
 import de.dungeon.game.character.enemy.behavior.factory.BehaviorMapper;
 import de.dungeon.game.character.enemy.factory.EnemyMapper;
 import de.dungeon.game.character.property.Dodge;
+import de.dungeon.game.view.View;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -46,7 +47,7 @@ public class EnemyTest {
     }
 
     private Behavior createBehavior(final String text, final int min, final int max) {
-        final var behavior = new Behavior();
+        final var behavior = new Behavior(mock(View.class));
         behavior.init(BehaviorMapper.build(text, min, max));
         return behavior;
     }

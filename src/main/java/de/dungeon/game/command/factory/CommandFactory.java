@@ -7,6 +7,7 @@ import de.dungeon.game.character.Player;
 import de.dungeon.game.character.enemy.Enemy;
 import de.dungeon.game.character.property.Property;
 import de.dungeon.game.command.*;
+import de.dungeon.game.view.View;
 import org.jetbrains.annotations.NotNull;
 
 @Singleton
@@ -39,7 +40,7 @@ public class CommandFactory {
     }
 
     private Command createGoCommand(@NotNull final CommandMapper mapper) {
-        return (new Command() {
+        return (new Command(injector.getInstance(View.class)) {
             @Override
             protected boolean doing() {
                 return true;

@@ -2,21 +2,23 @@ package de.dungeon.game.view;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import de.dungeon.game.Text;
 import de.dungeon.game.character.Player;
 import org.jetbrains.annotations.NotNull;
 
 @Singleton
-public class PlayerStatusView implements View {
+public class PlayerStatusView extends View {
 
     private final Player player;
 
     @Inject
-    public PlayerStatusView(@NotNull final Player player) {
+    public PlayerStatusView(@NotNull final Player player, @NotNull final Text text) {
+        super(text);
         this.player = player;
     }
 
     public void render() {
-        final var status = """
+        final var text = """
             Name: %s
             Leben: %d/40
             ---------------------------------------
@@ -33,6 +35,6 @@ public class PlayerStatusView implements View {
                     player.getArmor()
             );
 
-        System.out.print(status);
+        render(text);
     }
 }

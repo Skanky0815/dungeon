@@ -5,6 +5,7 @@ import com.google.inject.Singleton;
 import de.dungeon.game.command.Command;
 import de.dungeon.game.command.ExitCommand;
 import de.dungeon.game.scenery.factory.SceneryCallback;
+import de.dungeon.game.view.View;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -17,11 +18,17 @@ import java.util.Map;
 public class FrontController {
 
     private final Map<String, Command> commands;
+    private final View view;
     private final BufferedReader reader;
 
     @Inject
-    public FrontController(@NotNull final ExitCommand exitCommand, @NotNull final BufferedReader reader) {
+    public FrontController(
+            @NotNull final ExitCommand exitCommand,
+            @NotNull final BufferedReader reader,
+            @NotNull final View view
+    ) {
         this.reader = reader;
+        this.view = view;
 
         commands = new HashMap<>() {{
             put("x", exitCommand.init());
@@ -33,7 +40,7 @@ public class FrontController {
     }
 
     public boolean action(@NotNull final String text, @Nullable final SceneryCallback callback) throws Exception {
-        System.out.println(text + setupCommands());
+        view.render(text + setupCommands() + "\n");
         try {
             final var input = reader.readLine();
             if (commands.containsKey(input)) {

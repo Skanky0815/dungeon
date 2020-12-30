@@ -1,10 +1,12 @@
 package de.dungeon.game.view;
 
+import de.dungeon.game.Text;
 import de.dungeon.game.character.player.PlayerBuilder;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 public class PlayerStatusViewTest extends ViewTestCase {
 
@@ -14,7 +16,7 @@ public class PlayerStatusViewTest extends ViewTestCase {
                 .withRangeModifier(2)
                 .get();
 
-        (new PlayerStatusView(player)).render();
+        new PlayerStatusView(player, mock(Text.class)).render();
 
         final var output = """
             Name: Ruhindil

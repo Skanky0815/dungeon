@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import de.dungeon.game.FrontController;
 import de.dungeon.game.character.enemy.Enemy;
 import de.dungeon.game.command.Command;
+import de.dungeon.game.view.View;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 public class Scenery {
 
     private final FrontController controller;
+    private final View view;
 
     private String key;
     private String text;
@@ -18,8 +20,9 @@ public class Scenery {
     private Enemy enemy;
 
     @Inject
-    public Scenery(@NotNull final FrontController controller) {
+    public Scenery(@NotNull final FrontController controller, @NotNull final View view) {
         this.controller = controller;
+        this.view = view;
     }
 
     public Scenery init(
@@ -54,11 +57,11 @@ public class Scenery {
     private void callback(@NotNull final String input) throws Exception {
         final var index = Integer.parseInt(input);
         if (index < 0 || index >= commands.size()) {
-            System.out.printf("No option found for number %d\n", index);
+            view.render("game.scenery.option_not_found", index);
             run();
         } else {
             if (commands.get(index).doAction()) {
-                System.out.println("Nächste Action");
+                view.render("game.scenery.next_scenery", null);
             } else {
                 run();
             }

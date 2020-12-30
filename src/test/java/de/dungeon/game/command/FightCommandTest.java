@@ -4,6 +4,7 @@ import de.dungeon.game.battle.EnemyAttack;
 import de.dungeon.game.battle.PlayerAttack;
 import de.dungeon.game.character.Player;
 import de.dungeon.game.character.enemy.Enemy;
+import de.dungeon.game.view.View;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -20,7 +21,7 @@ class FightCommandTest {
         
         final var player = mock(Player.class);
 
-        new FightCommand(player, playerAttack, enemyAttack).setEnemy(enemy).doing();
+        new FightCommand(mock(View.class), player, playerAttack, enemyAttack).setEnemy(enemy).doing();
 
         verify(playerAttack).attack(eq(enemy), eq(0));
         verify(enemyAttack).attack();;
@@ -35,7 +36,7 @@ class FightCommandTest {
 
         final var player = mock(Player.class);
 
-        assertTrue(new FightCommand(player, playerAttack, enemyAttack).setEnemy(enemy).doing());
+        assertTrue(new FightCommand(mock(View.class), player, playerAttack, enemyAttack).setEnemy(enemy).doing());
         verify(enemyAttack, never()).attack();
     }
 }

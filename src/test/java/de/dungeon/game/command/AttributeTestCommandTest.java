@@ -1,6 +1,7 @@
 package de.dungeon.game.command;
 
 import de.dungeon.game.character.property.Property;
+import de.dungeon.game.view.View;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,7 +14,7 @@ class AttributeTestCommandTest {
         final var propertyMock = mock(Property.class);
         when(propertyMock.isTestSuccessfully(42)).thenReturn(true);
 
-        final var command = new AttributeTestCommand().init("text", "do text", 42, propertyMock);
+        final var command = new AttributeTestCommand(mock(View.class)).init("text", "do text", 42, propertyMock);
 
         assertTrue(command.doing());
         verify(propertyMock).isTestSuccessfully(42);
