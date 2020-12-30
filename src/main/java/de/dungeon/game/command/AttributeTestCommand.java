@@ -1,5 +1,6 @@
 package de.dungeon.game.command;
 
+import com.google.inject.Inject;
 import de.dungeon.game.character.property.Property;
 import de.dungeon.game.view.View;
 import org.jetbrains.annotations.NotNull;
@@ -9,6 +10,7 @@ public class AttributeTestCommand extends Command {
     private int modifier;
     private Property property;
 
+    @Inject
     public AttributeTestCommand(@NotNull final View view) {
         super(view);
     }

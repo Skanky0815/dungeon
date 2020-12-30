@@ -1,5 +1,6 @@
 package de.dungeon.game.battle;
 
+import com.google.inject.Inject;
 import de.dungeon.game.character.Character;
 import de.dungeon.game.view.View;
 import org.jetbrains.annotations.NotNull;
@@ -8,6 +9,7 @@ public class DamageHandler {
 
     private final View view;
 
+    @Inject
     public DamageHandler(@NotNull final View view) {
         this.view = view;
     }

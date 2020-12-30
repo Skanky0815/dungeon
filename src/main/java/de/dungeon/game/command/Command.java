@@ -1,5 +1,6 @@
 package de.dungeon.game.command;
 
+import com.google.inject.Inject;
 import de.dungeon.game.scenery.Scenery;
 import de.dungeon.game.view.View;
 import org.jetbrains.annotations.NotNull;
@@ -14,6 +15,7 @@ public abstract class Command {
     private Scenery failureAction;
     protected final View view;
 
+    @Inject
     public Command(@NotNull final View view) {
         this.view = view;
     }

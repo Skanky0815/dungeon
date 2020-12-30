@@ -1,5 +1,6 @@
 package de.dungeon.game.character.enemy.behavior;
 
+import com.google.inject.Inject;
 import de.dungeon.game.character.enemy.Enemy;
 import de.dungeon.game.view.View;
 import org.jetbrains.annotations.NotNull;
@@ -14,6 +15,7 @@ public class Behavior {
     private int min;
     private int max;
 
+    @Inject
     public Behavior(@NotNull final View view) {
         this.view = view;
     }

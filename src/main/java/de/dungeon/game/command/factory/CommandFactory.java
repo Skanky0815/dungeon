@@ -31,12 +31,18 @@ public class CommandFactory {
     }
 
     public Command create(@NotNull final CommandMapper mapper, @NotNull final Enemy enemy) throws CommandException {
-        final var command = switch (mapper.getCommand()) {
+        final EnemyCommand command = switch (mapper.getCommand()) {
             case "npc_status" -> injector.getInstance(EnemyStatusCommand.class);
             case "fight" -> injector.getInstance(FightCommand.class);
-            default -> throw new UnknownCommandException(mapper.getCommand());
+            default -> null;
         };
-        return command.setEnemy(enemy);
+
+        if (null != command) {
+            command.setEnemy(enemy);
+            return command;
+        }
+
+        return create(mapper);
     }
 
     private Command createGoCommand(@NotNull final CommandMapper mapper) {

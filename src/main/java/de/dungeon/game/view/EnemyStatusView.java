@@ -1,5 +1,6 @@
 package de.dungeon.game.view;
 
+import com.google.inject.Inject;
 import de.dungeon.game.Text;
 import de.dungeon.game.character.enemy.behavior.Behavior;
 import de.dungeon.game.character.enemy.Enemy;
@@ -9,6 +10,7 @@ public class EnemyStatusView extends View {
 
     private Enemy enemy;
 
+    @Inject
     public EnemyStatusView(@NotNull final Text text) {
         super(text);
     }

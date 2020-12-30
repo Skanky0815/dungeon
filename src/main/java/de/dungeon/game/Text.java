@@ -1,5 +1,6 @@
 package de.dungeon.game;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,6 +16,7 @@ public class Text {
 
     private final ResourceBundle resourceBundle;
 
+    @Inject
     public Text(@NotNull final String language) {
         final var local = new Locale(language);
         resourceBundle = PropertyResourceBundle.getBundle("texts.main", local);
