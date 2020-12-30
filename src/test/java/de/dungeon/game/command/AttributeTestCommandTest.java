@@ -13,7 +13,7 @@ class AttributeTestCommandTest {
         final var propertyMock = mock(Property.class);
         when(propertyMock.isTestSuccessfully(42)).thenReturn(true);
 
-        final var command = (new AttributeTestCommand()).init("text", "do text", 42, propertyMock);
+        final var command = new AttributeTestCommand().init("text", "do text", 42, propertyMock);
 
         assertTrue(command.doing());
         verify(propertyMock).isTestSuccessfully(42);

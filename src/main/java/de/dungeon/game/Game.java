@@ -28,6 +28,7 @@ public class Game extends AbstractModule {
     @Override
     protected void configure() {
         bind(Player.class).toProvider(() -> player);
+        bind(Text.class).toInstance(new Text("de"));
         bind(BufferedReader.class).toInstance(new BufferedReader(new InputStreamReader(System.in)));
     }
 

@@ -11,24 +11,20 @@ import java.util.ResourceBundle;
 @Singleton
 public class Text {
 
-    private static final String INDICATOR_MISSING_RESOURCE = "Resource missing";
-    private static final String INDICATOR_MISSING_KEY = "Key missing";
+    private static final String INDICATOR_MISSING_KEY = "Missing key: ";
 
     private final ResourceBundle resourceBundle;
 
-    public Text() {
-        final var local = new Locale("de");
+    public Text(@NotNull final String language) {
+        final var local = new Locale(language);
         resourceBundle = PropertyResourceBundle.getBundle("texts.main", local);
     }
 
     public String get(@NotNull final String key) {
-        if (null != resourceBundle) {
-            try {
-                return resourceBundle.getString(key);
-            } catch (final MissingResourceException e) {
-                return INDICATOR_MISSING_KEY + key;
-            }
+        try {
+            return resourceBundle.getString(key);
+        } catch (final MissingResourceException e) {
+            return INDICATOR_MISSING_KEY + key;
         }
-        return INDICATOR_MISSING_RESOURCE;
     }
 }
