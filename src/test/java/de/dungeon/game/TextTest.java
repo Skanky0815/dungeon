@@ -2,6 +2,8 @@ package de.dungeon.game;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.MissingResourceException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class TextTest {
@@ -22,9 +24,12 @@ class TextTest {
 
     @Test
     void getShouldReturnTheFoundedLang() {
-        final var text = new Text("en");
+        final var exception = assertThrows(MissingResourceException.class, () -> {
+            final var text = new Text("en");
 
-        assertEquals("Resource missing", text.get("game.exit"));
+            assertEquals("Resource missing", text.get("game.exit"));
+        });
+
+        System.out.println(exception.getMessage());
     }
-
 }
