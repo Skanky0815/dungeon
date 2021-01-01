@@ -14,14 +14,19 @@ public class DamageHandler {
         this.view = view;
     }
 
-    public void makeDamage(int damage, @NotNull final Character attacker, @NotNull final Character defender) {
-        if (defender.tryToDoge()) {
-            damage = (int) Math.ceil(damage / 2);
-        }
-
-        var wounds = Math.max(damage - defender.getArmor(), 0);
+    public void makeDamage(final int damage, @NotNull final Character attacker, @NotNull final Character defender) {
+        final var wounds = calculateWounds(damage, attacker, defender);
         defender.takeDamage(wounds);
 
         view.render("game.battle.do_damage", attacker.getName(), defender.getName(), wounds);
+    }
+
+    public int calculateWounds(int damage, @NotNull final Character attacker, @NotNull final Character defender) {
+        if (defender.tryToDoge()) {
+            view.render("game.battle.doge_successful", defender.getName());
+            damage = (int) Math.ceil(damage / 2);
+        }
+
+        return Math.max(damage - defender.getArmor(), 0);
     }
 }

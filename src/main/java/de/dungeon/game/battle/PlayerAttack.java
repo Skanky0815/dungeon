@@ -22,6 +22,11 @@ public class PlayerAttack {
         if (player.tryToAttackWithWeapon(weapon)) {
             try {
                 damageHandler.makeDamage(weapon.getDamage(), player, enemy);
+
+                // TODO: check if defender is alive
+                    // TODO: if not remove them and the scenery
+
+                // TODO go to success
             } catch (UnknownDiceException ignore) { }
         }
     }
