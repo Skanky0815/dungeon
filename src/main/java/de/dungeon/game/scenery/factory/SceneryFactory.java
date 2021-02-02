@@ -10,6 +10,7 @@ import de.dungeon.game.character.enemy.factory.EnemyFactory;
 import de.dungeon.game.command.Command;
 import de.dungeon.game.command.factory.CommandFactory;
 import de.dungeon.game.command.factory.CommandMapper;
+import de.dungeon.game.scenery.EnemyScenery;
 import de.dungeon.game.scenery.Scenery;
 import org.jetbrains.annotations.*;
 
@@ -64,17 +65,27 @@ public class SceneryFactory {
     private void create(@NotNull final File file) throws Exception {
         final var mapper = objectMapper.readValue(file, SceneryMapper.class);
         sceneriesData.put(mapper.getKey(), mapper);
-        sceneries.put(mapper.getKey(), createScenery(injector.getInstance(Scenery.class), mapper));
+        sceneries.put(mapper.getKey(), createScenery(mapper));
     }
 
-    private Scenery createScenery(@NotNull final Scenery scenery, @NotNull final SceneryMapper mapper) throws Exception {
+    private Scenery createScenery(@NotNull final SceneryMapper mapper) throws Exception {
         final var text = mapper.getText().formatted(player.getName());
         final var key = mapper.getKey();
         if (mapper.hasEnemy()) {
-            final var enemy = enemyFactory.create(mapper.getEnemy());
-            return scenery.init(key, text, setupCommands(mapper.getCommands(), enemy), enemy);
+            return createEnemyScenery(mapper, key, text);
         }
+        final var scenery = injector.getInstance(Scenery.class);
         return scenery.init(key, text, setupCommands(mapper.getCommands()));
+    }
+
+    private Scenery createEnemyScenery(
+            @NotNull final SceneryMapper mapper,
+            @NotNull final String key,
+            @NotNull final String text
+    ) throws Exception {
+        final var enemy = enemyFactory.create(mapper.getEnemy());
+        final var scenery = injector.getInstance(EnemyScenery.class);
+        return scenery.init(key, text, setupCommands(mapper.getCommands(), enemy), enemy);
     }
 
     private ArrayList<Command> setupCommands(

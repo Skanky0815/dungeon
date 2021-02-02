@@ -34,4 +34,8 @@ public class Enemy extends Character  {
     public Behavior getBehavior(final int value) {
         return (Behavior) behaviorList.stream().filter(behavior -> behavior.isInRange(value)).toArray()[0];
     }
+
+    public void die() {
+        // TODO enemy must die!
+    }
 }

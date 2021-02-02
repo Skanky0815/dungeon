@@ -32,33 +32,4 @@ public class SceneryTest {
 
         verify(view).render(eq("game.scenery.option_not_found"), eq(0));
     }
-
-    @Test
-    void runShouldCallTheControllerWithCommandsAndEnemy() throws Exception {
-        final var controllerMock = mock(FrontController.class);
-        when(controllerMock.action(eq("text enemy text\n[0] my command\n"), any()))
-                .thenAnswer((Answer<Boolean>) invocation -> {
-                    SceneryCallback callback = invocation.getArgument(1);
-                    callback.call("0");
-                    return true;
-                })
-                .thenReturn(false)
-                .thenReturn(true);
-
-        final Command commandStub = (new Command(mock(View.class)) {
-            @Override
-            protected boolean doing() {
-                assertTrue(true);
-                return false;
-            }
-        }).init("my command", null);
-
-        final var commands = new ArrayList<Command>() {{
-            add(commandStub);
-        }};
-        final var enemy = mock(Enemy.class);
-        when(enemy.getName()).thenReturn("enemy");
-
-        new Scenery(controllerMock, mock(View.class)).init("key", "text %s text", commands, enemy).run();
-    }
 }

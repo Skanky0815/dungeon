@@ -20,7 +20,7 @@ public class DamageBehavior extends Behavior {
             @NotNull final DamageHandler damageHandler,
             @NotNull final Player player,
             @NotNull final View view
-            ) {
+    ) {
         super(view);
         this.damageHandler = damageHandler;
         this.player = player;

@@ -2,7 +2,6 @@ package de.dungeon.game.scenery;
 
 import com.google.inject.Inject;
 import de.dungeon.game.FrontController;
-import de.dungeon.game.character.enemy.Enemy;
 import de.dungeon.game.command.Command;
 import de.dungeon.game.view.View;
 import org.jetbrains.annotations.NotNull;
@@ -17,7 +16,6 @@ public class Scenery {
     private String key;
     private String text;
     private List<Command> commands;
-    private Enemy enemy;
 
     @Inject
     public Scenery(@NotNull final FrontController controller, @NotNull final View view) {
@@ -35,18 +33,9 @@ public class Scenery {
         this.commands = commands;
         return this;
     }
-    public Scenery init(
-            @NotNull final String key,
-            @NotNull final String text,
-            @NotNull final List<Command> commands,
-            @NotNull final Enemy enemy
-    ) {
-        this.enemy = enemy;
-        return this.init(key, text, commands);
-    }
 
     public void run() throws Exception {
-        final var text = new StringBuffer((null == enemy ? this.text : this.text.formatted(enemy.getName()))).append("\n");
+        final var text = new StringBuffer(this.text).append("\n");
         addCommands(text);
 
         if (!controller.action(text.toString(), this::callback)) {
