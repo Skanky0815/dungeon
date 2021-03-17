@@ -28,14 +28,24 @@ public class EnemyAttack {
 
     private int rollFroBehavior(int actions) {
         final var diceResult = dice.rollD20();
-        if (1 == diceResult) {
-            actions++;
-        }
+
         if (20 == diceResult) {
             return 0;
         }
 
+        return handleSuccess(diceResult, actions);
+    }
+
+    private int handleSuccess(int diceResult, int actions) {
         enemy.getBehavior(diceResult).doBehavior();
+
+        return handleCriticalSuccess(diceResult, actions);
+    }
+
+    private int handleCriticalSuccess(int diceResult, int actions) {
+        if (1 == diceResult) {
+            actions++;
+        }
 
         return actions;
     }

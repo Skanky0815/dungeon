@@ -37,8 +37,9 @@ public class FrontControllerTest {
 
         final var view = mock(View.class);
 
-        new FrontController(exitCommand, bufferReader, view).action("What will you do?", (final String input) -> {
-            assertEquals("input", input);
-        });
+        new FrontController(exitCommand, bufferReader, view).action(
+                "What will you do?",
+                (final String input) -> assertEquals("input", input)
+        );
     }
 }

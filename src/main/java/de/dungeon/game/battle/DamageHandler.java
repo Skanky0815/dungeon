@@ -23,10 +23,14 @@ public class DamageHandler {
 
     public int calculateWounds(int damage, @NotNull final Character attacker, @NotNull final Character defender) {
         if (defender.tryToDoge()) {
-            view.render("game.battle.doge_successful", defender.getName());
-            damage = (int) Math.ceil(damage / 2);
+            damage = calculateWoundsAfterDoge(damage, defender);
         }
 
         return Math.max(damage - defender.getArmor(), 0);
+    }
+
+    private int calculateWoundsAfterDoge(int damage, @NotNull final Character defender) {
+        view.render("game.battle.doge_successful", defender.getName());
+        return (int) Math.ceil(damage / 2);
     }
 }
