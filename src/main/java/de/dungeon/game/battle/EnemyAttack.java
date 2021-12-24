@@ -42,7 +42,7 @@ public class EnemyAttack {
         return handleCriticalSuccess(diceResult, actions);
     }
 
-    private int handleCriticalSuccess(int diceResult, int actions) {
+    private int handleCriticalSuccess(final int diceResult, int actions) {
         if (1 == diceResult) {
             actions++;
         }

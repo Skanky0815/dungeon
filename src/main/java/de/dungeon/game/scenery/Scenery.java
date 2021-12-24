@@ -60,7 +60,7 @@ public class Scenery {
     private void addCommands(@NotNull final StringBuffer text) {
         var key = 0;
         for (Command command : commands) {
-            text.append("[%d] %s\n".formatted(key++, command.getText()));
+            text.append("[%d] %s%n".formatted(key++, command.getText()));
         }
     }
 }

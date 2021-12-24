@@ -17,6 +17,7 @@ public class PlayerStatusView extends View {
         this.player = player;
     }
 
+    @Override
     public void render() {
         final var text = """
             Name: %s

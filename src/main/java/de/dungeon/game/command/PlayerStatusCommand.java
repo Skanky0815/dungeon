@@ -2,7 +2,6 @@ package de.dungeon.game.command;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import de.dungeon.game.view.View;
 import de.dungeon.game.view.PlayerStatusView;
 import org.jetbrains.annotations.NotNull;
 

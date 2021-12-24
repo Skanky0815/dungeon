@@ -1,8 +1,8 @@
 package de.dungeon.game.rule;
 
 public class TestResult {
-    final private int diceValue;
-    final private int comparativeValue;
+    private final int diceValue;
+    private final int comparativeValue;
 
     public TestResult(final int diceValue, final int comparativeValue) {
         this.diceValue = diceValue;

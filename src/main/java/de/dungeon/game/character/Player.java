@@ -39,12 +39,10 @@ public class Player extends Character {
     }
 
     public boolean tryToAttackWithWeapon(@NotNull final Weapon weapon) {
-        if (weapon.getTestProperty().isInstance(melee)) {
+        if (weapon.getTestProperty().isInstance(melee) || weapon.getTestProperty().isInstance(range)) {
             return true;
         }
-        if (weapon.getTestProperty().isInstance(range)) {
-            return true;
-        }
+
         return weapon.getTestProperty().isInstance(magic);
     }
 

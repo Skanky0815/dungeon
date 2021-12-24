@@ -27,6 +27,7 @@ public class FightCommand extends EnemyCommand {
         this.enemyAttack = enemyAttack;
     }
 
+    @Override
     public FightCommand setEnemy(@NotNull final Enemy enemy) {
         super.init("%s kämpft!".formatted(player.getName()), "%s angreifen.".formatted(enemy.getName()));
         enemyAttack.setEnemy(enemy);

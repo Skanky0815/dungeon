@@ -62,8 +62,8 @@ public class FrontController {
 
     private StringBuilder setupCommands() {
         final var text = new StringBuilder("---------------------------------------\n");
-        for (Map.Entry<String, Command> entry : commands.entrySet()) {
-            text.append("[%s] %s\n".formatted(entry.getKey(), entry.getValue().getText()));
+        for (final Map.Entry<String, Command> entry : commands.entrySet()) {
+            text.append("[%s] %s%n".formatted(entry.getKey(), entry.getValue().getText()));
         }
         text.append("\n");
 

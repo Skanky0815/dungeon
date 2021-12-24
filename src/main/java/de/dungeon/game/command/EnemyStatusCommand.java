@@ -2,7 +2,6 @@ package de.dungeon.game.command;
 
 import com.google.inject.Inject;
 import de.dungeon.game.character.enemy.Enemy;
-import de.dungeon.game.view.View;
 import de.dungeon.game.view.EnemyStatusView;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,6 +12,7 @@ public class EnemyStatusCommand extends EnemyCommand {
         super(view);
     }
 
+    @Override
     public EnemyStatusCommand setEnemy(@NotNull final Enemy enemy) {
         super.init("Den Status von %s abfragen.".formatted(enemy.getName()), null);
         ((EnemyStatusView) view).setEnemy(enemy);

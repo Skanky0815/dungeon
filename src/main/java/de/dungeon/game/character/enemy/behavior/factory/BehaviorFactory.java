@@ -25,10 +25,6 @@ public class BehaviorFactory {
     private Behavior createBehaviorByTypeOrDefault(
             @NotNull final BehaviorMapper mapper
     ) throws UnknownBehaviorTypeException {
-        if (mapper.hasType()) {
-            return typeMapper.createBehaviorByType(mapper);
-        }
-
-        return injector.getInstance(Behavior.class);
+        return mapper.hasType() ? typeMapper.createBehaviorByType(mapper) : injector.getInstance(Behavior.class);
     }
 }
